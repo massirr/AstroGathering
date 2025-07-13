@@ -5,12 +5,25 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AstroGathering.MainWindow"
         Title="AstroGathering">
-    <StackPanel Margin="20">
-        <TextBlock Text="Welcome to Avalonia!" Margin="0,0,0,20"/>
-        <ComboBox Width="200" PlaceholderText="Select an option">
-            <ComboBoxItem>Option 1</ComboBoxItem>
-            <ComboBoxItem>Option 2</ComboBoxItem>
-            <ComboBoxItem>Option 3</ComboBoxItem>
-        </ComboBox>
-    </StackPanel>
+    <Grid>
+        <StackPanel Margin="20" IsVisible="{Binding !IsLoggedIn}">
+            <TextBlock Text="Login with Google" FontSize="24" Margin="0,0,0,20"/>
+            <Button x:Name="GoogleLoginButton" 
+                    Width="200" 
+                    Height="40" 
+                    Margin="0,0,0,20"
+                    Click="OnGoogleLoginClick">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Assets/google-icon.png" Width="20" Height="20"/>
+                    <TextBlock Text="Sign in with Google" Margin="10,0,0,0"/>
+                </StackPanel>
+            </Button>
+            <TextBlock x:Name="StatusMessage" Margin="0,10"/>
+        </StackPanel>
+        
+        <StackPanel Margin="20" IsVisible="{Binding IsLoggedIn}">
+            <TextBlock Text="{Binding WelcomeMessage}" FontSize="24" Margin="0,0,0,20"/>
+            <Button Content="Logout" Click="OnLogoutClick" Width="200"/>
+        </StackPanel>
+    </Grid>
 </Window>
