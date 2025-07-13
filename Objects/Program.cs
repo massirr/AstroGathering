@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using System;
 
-namespace AstroGathering;
+namespace AstroGathering.Objects;
 
 class Program
 {
