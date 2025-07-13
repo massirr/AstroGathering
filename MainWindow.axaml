@@ -5,5 +5,12 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AstroGathering.MainWindow"
         Title="AstroGathering">
-    Welcome to Avalonia!
+    <StackPanel Margin="20">
+        <TextBlock Text="Welcome to Avalonia!" Margin="0,0,0,20"/>
+        <ComboBox Width="200" PlaceholderText="Select an option">
+            <ComboBoxItem>Option 1</ComboBoxItem>
+            <ComboBoxItem>Option 2</ComboBoxItem>
+            <ComboBoxItem>Option 3</ComboBoxItem>
+        </ComboBox>
+    </StackPanel>
 </Window>

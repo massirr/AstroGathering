@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XQOP3wjS0gk=",
+  "dgSpecHash": "aC64FQY0EEk=",
   "success": true,
   "projectFilePath": "/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/AstroGathering.csproj",
   "expectedPackageFiles": [
@@ -31,7 +31,10 @@
     "/Users/koze/.nuget/packages/skiasharp.nativeassets.webassembly/2.88.9/skiasharp.nativeassets.webassembly.2.88.9.nupkg.sha512",
     "/Users/koze/.nuget/packages/skiasharp.nativeassets.win32/2.88.9/skiasharp.nativeassets.win32.2.88.9.nupkg.sha512",
     "/Users/koze/.nuget/packages/system.io.pipelines/8.0.0/system.io.pipelines.8.0.0.nupkg.sha512",
-    "/Users/koze/.nuget/packages/tmds.dbus.protocol/0.21.2/tmds.dbus.protocol.0.21.2.nupkg.sha512"
+    "/Users/koze/.nuget/packages/tmds.dbus.protocol/0.21.2/tmds.dbus.protocol.0.21.2.nupkg.sha512",
+    "/Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/microsoft.netcore.app.ref.8.0.15.nupkg.sha512",
+    "/Users/koze/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.15/microsoft.aspnetcore.app.ref.8.0.15.nupkg.sha512",
+    "/Users/koze/.nuget/packages/microsoft.netcore.app.host.osx-arm64/8.0.15/microsoft.netcore.app.host.osx-arm64.8.0.15.nupkg.sha512"
   ],
   "logs": []
 }
