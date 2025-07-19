@@ -1,6 +1,5 @@
 .env
 NOTES.md
-.README.md
 bin/
 obj/
 *.AssemblyInfo.cs
