@@ -1,4 +1,5 @@
 .env
-.NOTES.md
+NOTES.md
+.README.md
 bin/
 obj/
