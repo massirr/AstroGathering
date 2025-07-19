@@ -5,11 +5,21 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AstroGathering.MainWindow"
         Title="AstroGathering">
+    <Window.Styles>
+        <Style Selector="Button.google-button">
+            <Setter Property="Background" Value="#4285F4"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+    </Window.Styles>
+    
     <Grid>
-        <StackPanel Margin="20">
-            <TextBlock Text="Login with Google" FontSize="24" Margin="0,0,0,20"/>
+        <StackPanel Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Welcome to AstroGathering" FontSize="28" FontWeight="Bold" Margin="0,0,0,10"/>
+            <TextBlock Text="Login to continue" FontSize="16" Margin="0,0,0,20" Opacity="0.7"/>
             <Button x:Name="GoogleLoginButton" 
-                    Width="200" 
+                    Classes="google-button"
+                    Width="250" 
                     Height="40" 
                     Margin="0,0,0,20">
                 <StackPanel Orientation="Horizontal">
