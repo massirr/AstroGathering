@@ -24,8 +24,10 @@ namespace AstroGathering.Services
             _authCompletionSource = new TaskCompletionSource<User>();
 
             _webHost = new WebHostBuilder()
-                .UseKestrel()
-                .UseUrls("http://localhost:3000")
+                .UseKestrel(options =>
+                {
+                    options.ListenLocalhost(8080); // This ensures we only listen on localhost
+                })
                 .Configure(app =>
                 {
                     app.Run(async context =>

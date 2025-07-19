@@ -3,7 +3,9 @@ using Google.Apis.Auth.OAuth2.Flows;
 using Google.Apis.Auth.OAuth2.Responses;
 using AstroGathering.Objects;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
+using Google.Apis.Util.Store;
 
 namespace AstroGathering.Services
 {
@@ -24,23 +26,33 @@ namespace AstroGathering.Services
         {
             var flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
             {
-                ClientId = _clientId,
-                ClientSecret = _clientSecret,
+                ClientSecrets = new ClientSecrets
+                {
+                    ClientId = _clientId,
+                    ClientSecret = _clientSecret
+                },
                 Scopes = new[] { 
                     "https://www.googleapis.com/auth/userinfo.email",
-                    "https://www.googleapis.com/auth/userinfo.profile"
-                }
+                    "https://www.googleapis.com/auth/userinfo.profile",
+                    "openid"
+                },
+                DataStore = new Google.Apis.Util.Store.FileDataStore("token.json")
             });
 
-            return flow.CreateAuthorizationCodeRequest(_redirectUri).Build().ToString();
+            var baseUri = flow.CreateAuthorizationCodeRequest(_redirectUri).Build().ToString();
+            return baseUri + "&access_type=offline&prompt=consent";
         }
 
         public async Task<User> ProcessAuthorizationCodeAsync(string code)
         {
             var flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
             {
-                ClientId = _clientId,
-                ClientSecret = _clientSecret
+                ClientSecrets = new ClientSecrets
+                {
+                    ClientId = _clientId,
+                    ClientSecret = _clientSecret
+                },
+                DataStore = new Google.Apis.Util.Store.FileDataStore("token.json")
             });
 
             var token = await flow.ExchangeCodeForTokenAsync(
@@ -52,7 +64,7 @@ namespace AstroGathering.Services
             var userInfo = await GetUserInfoAsync(token.AccessToken);
             return new User
             {
-                GoogleId = userInfo.Id,
+                GoogleId = userInfo.Subject,
                 Email = userInfo.Email,
                 Name = userInfo.Name,
                 AccessToken = token.AccessToken,

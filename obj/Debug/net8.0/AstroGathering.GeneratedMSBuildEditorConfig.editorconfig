@@ -26,3 +26,6 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/Pages/Home.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

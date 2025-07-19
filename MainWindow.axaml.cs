@@ -3,6 +3,8 @@ using AstroGathering.Services;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Avalonia.Interactivity;
+using System;
+using AstroGathering.Pages;
 
 namespace AstroGathering
 {
@@ -11,8 +13,7 @@ namespace AstroGathering
         private readonly GoogleAuthService _authService;
         private readonly AuthCallbackService _callbackService;
 
-        private Button GoogleLoginButton;
-        private TextBlock StatusMessage;
+        // Removed manual field declarations for GoogleLoginButton and StatusMessage
 
         public MainWindow()
         {
@@ -29,28 +30,45 @@ namespace AstroGathering
             GoogleLoginButton.Click += GoogleLoginButton_Click;
         }
 
-        private async void GoogleLoginButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        private async void GoogleLoginButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             try
             {
-                StatusMessage.Text = "Initializing authentication...";
+                Console.WriteLine("Button clicked");
+                if (StatusMessage != null)
+                    StatusMessage.Text = "Initializing authentication...";
                 GoogleLoginButton.IsEnabled = false;
 
+                Console.WriteLine("Starting callback server...");
                 var authTask = _callbackService.StartCallbackServer();
+                
+                Console.WriteLine("Getting auth URL...");
                 var authUrl = _authService.GetAuthorizationUrl();
+                Console.WriteLine($"Auth URL: {authUrl}");
+                
                 OpenBrowser(authUrl);
                 
                 var user = await authTask;
                 await _callbackService.StopCallbackServer();
                 
-                StatusMessage.Text = "Authentication successful!";
+                if (StatusMessage != null)
+                    StatusMessage.Text = "Authentication successful!";
                 
-                // TODO: Replace with your actual Home page navigation
-                // this.Content = new Home();
+                var homePage = new HomePage(user);
+                var homeWindow = new Window
+                {
+                    Title = "AstroGathering - Home",
+                    Content = homePage,
+                    Width = 800,
+                    Height = 450
+                };
+                homeWindow.Show();
+                this.Close();
             }
             catch (System.Exception ex)
             {
-                StatusMessage.Text = "Authentication failed: " + ex.Message;
+                if (StatusMessage != null)
+                    StatusMessage.Text = "Authentication failed: " + ex.Message;
                 await _callbackService.StopCallbackServer();
             }
             finally
@@ -61,17 +79,44 @@ namespace AstroGathering
 
         private void OpenBrowser(string url)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            try
             {
-                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+                Console.WriteLine($"Attempting to open URL: {url}");
+
+                // On macOS, try the open command with the -a flag to specify Safari
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    var psi = new ProcessStartInfo
+                    {
+                        FileName = "/usr/bin/open",
+                        Arguments = $"-a Safari \"{url}\"",
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        CreateNoWindow = true
+                    };
+                    
+                    var process = Process.Start(psi);
+                    string? error = process?.StandardError.ReadToEnd();
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        Console.WriteLine($"Error output: {error}");
+                    }
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    Process.Start("xdg-open", url);
+                }
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            catch (Exception ex)
             {
-                Process.Start("xdg-open", url);
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                Process.Start("open", url);
+                Console.WriteLine($"Error opening browser: {ex.Message}");
+                // As a fallback, print the URL for manual copying
+                Console.WriteLine($"Please copy and paste this URL into your browser if it doesn't open automatically: {url}");
             }
         }
     }
