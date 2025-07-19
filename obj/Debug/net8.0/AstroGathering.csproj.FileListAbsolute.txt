@@ -28,9 +28,6 @@
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Avalonia.Win32.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Avalonia.X11.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/BouncyCastle.Cryptography.dll
-/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Google.Apis.dll
-/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Google.Apis.Auth.dll
-/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Google.Apis.Core.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Google.Protobuf.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/HarfBuzzSharp.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/K4os.Compression.LZ4.dll
@@ -38,13 +35,10 @@
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/K4os.Hash.xxHash.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/MicroCom.Runtime.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/MySql.Data.dll
-/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Newtonsoft.Json.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/SkiaSharp.dll
-/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/System.CodeDom.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/System.Configuration.ConfigurationManager.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/System.Diagnostics.EventLog.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/System.IO.Pipelines.dll
-/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/System.Management.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/System.Security.Cryptography.ProtectedData.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/System.Security.Permissions.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/System.Text.Encodings.Web.dll
@@ -86,7 +80,6 @@
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/runtimes/win-x86/native/libSkiaSharp.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/runtimes/win/lib/net8.0/System.Diagnostics.EventLog.Messages.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll
-/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Management.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/runtimes/browser/lib/net8.0/System.Text.Encodings.Web.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/runtimes/win/lib/net8.0/System.Windows.Extensions.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/obj/Debug/net8.0/AstroGathering.csproj.AssemblyReference.cache

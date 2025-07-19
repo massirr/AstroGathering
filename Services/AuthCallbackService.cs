@@ -10,11 +10,11 @@ namespace AstroGathering.Services
 {
     public class AuthCallbackService
     {
-        private readonly GoogleAuthService _authService;
-        private IWebHost _webHost;
-        private TaskCompletionSource<User> _authCompletionSource;
+        private readonly DesktopOAuthService _authService;
+        private IWebHost? _webHost;
+        private TaskCompletionSource<User>? _authCompletionSource;
 
-        public AuthCallbackService(GoogleAuthService authService)
+        public AuthCallbackService(DesktopOAuthService authService)
         {
             _authService = authService;
         }
@@ -24,10 +24,8 @@ namespace AstroGathering.Services
             _authCompletionSource = new TaskCompletionSource<User>();
 
             _webHost = new WebHostBuilder()
-                .UseKestrel(options =>
-                {
-                    options.ListenLocalhost(8080); // This ensures we only listen on localhost
-                })
+                .UseKestrel()
+                .UseUrls("http://127.0.0.1:8080")
                 .Configure(app =>
                 {
                     app.Run(async context =>

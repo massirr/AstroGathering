@@ -10,7 +10,7 @@ namespace AstroGathering
 {
     public partial class MainWindow : Window
     {
-        private readonly GoogleAuthService _authService;
+        private readonly DesktopOAuthService _authService;
         private readonly AuthCallbackService _callbackService;
 
         // Removed manual field declarations for GoogleLoginButton and StatusMessage
@@ -19,7 +19,7 @@ namespace AstroGathering
         {
             InitializeComponent();
             var config = new ConfigurationService();
-            _authService = new GoogleAuthService(
+            _authService = new DesktopOAuthService(
                 config.GoogleClientId,
                 config.GoogleClientSecret,
                 config.GoogleRedirectUri

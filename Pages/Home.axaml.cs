@@ -6,11 +6,16 @@ namespace AstroGathering.Pages
 {
     public partial class HomePage : UserControl
     {
-        private User _user;
+        private User? _user;
 
-        public HomePage(User user)
+        // Parameterless constructor for XAML designer support
+        public HomePage()
         {
             InitializeComponent();
+        }
+
+        public HomePage(User user) : this()
+        {
             _user = user;
             if (UserNameText != null)
                 UserNameText.Text = $"Welcome, {user.Name}!";
