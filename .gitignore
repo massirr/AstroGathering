@@ -3,3 +3,5 @@ NOTES.md
 .README.md
 bin/
 obj/
+*.AssemblyInfo.cs
+*.AssemblyInfoInputs.cache
