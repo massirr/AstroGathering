@@ -34,7 +34,6 @@ namespace AstroGathering
         {
             try
             {
-                Console.WriteLine("Button clicked");
                 if (StatusMessage != null)
                     StatusMessage.Text = "Initializing authentication...";
                 GoogleLoginButton.IsEnabled = false;
