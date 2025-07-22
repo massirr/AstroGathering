@@ -32,7 +32,9 @@ namespace AstroGathering.Services
         {
             // Generate PKCE parameters for better security
             _codeVerifier = GenerateCodeVerifier();
+            Console.WriteLine(_codeVerifier);
             var codeChallenge = GenerateCodeChallenge(_codeVerifier);
+            Console.WriteLine(codeChallenge);
 
             var parameters = new Dictionary<string, string>
             {
@@ -117,7 +119,7 @@ namespace AstroGathering.Services
                 PropertyNameCaseInsensitive = true
             });
 
-            return userInfo ?? throw new InvalidOperationException("Failed to deserialize user info");
+            return userInfo ?? throw new InvalidOperationException($"Failed to deserialize user info. Raw JSON: {json}");
         }
 
         private static string GenerateCodeVerifier()

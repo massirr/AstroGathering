@@ -38,8 +38,8 @@ namespace AstroGathering
                     StatusMessage.Text = "Initializing authentication...";
                 GoogleLoginButton.IsEnabled = false;
 
-                Console.WriteLine("Starting callback server...");
-                var authTask = _callbackService.StartCallbackServer();
+                Console.WriteLine("Starting callback server..."); 
+                var authTask = _callbackService.StartCallbackServer(); // gets the user that's returned from the auth flow
                 
                 Console.WriteLine("Getting auth URL...");
                 var authUrl = _authService.GetAuthorizationUrl();

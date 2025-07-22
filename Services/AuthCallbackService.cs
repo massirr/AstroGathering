@@ -18,23 +18,28 @@ namespace AstroGathering.Services
         {
             _authService = authService;
         }
-
         public async Task<User> StartCallbackServer()
         {
+            // Create a TaskCompletionSource to handle the asynchronous authentication flow
             _authCompletionSource = new TaskCompletionSource<User>();
 
+            // Configure and build a temporary web server using Kestrel
             _webHost = new WebHostBuilder()
                 .UseKestrel()
                 .UseUrls("http://127.0.0.1:8080")
                 .Configure(app =>
                 {
+                    // Configure the request handling pipeline
                     app.Run(async context =>
                     {
+                        // Only handle requests to the /callback endpoint
                         if (context.Request.Path == "/callback")
                         {
+                            // Extract the authorization code from the query parameters
                             var code = context.Request.Query["code"].ToString();
                             try
                             {
+                                // Process the authorization code and get the authenticated user
                                 var user = await _authService.ProcessAuthorizationCodeAsync(code);
                                 await context.Response.WriteAsync("<html><body><h1>Authentication successful!</h1><p>You can close this window now.</p><script>window.close();</script></body></html>");
                                 _authCompletionSource.SetResult(user);
