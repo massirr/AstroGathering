@@ -22,7 +22,7 @@ namespace AstroGathering
             _authService = new DesktopOAuthService(
                 config.GoogleClientId,
                 config.GoogleClientSecret,
-                config.GoogleRedirectUri
+                config.GoogleRedirectUrl
             );
             _callbackService = new AuthCallbackService(_authService);
             

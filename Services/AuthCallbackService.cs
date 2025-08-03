@@ -26,7 +26,7 @@ namespace AstroGathering.Services
             // Configure and build a temporary web server using Kestrel
             _webHost = new WebHostBuilder()
                 .UseKestrel()
-                .UseUrls("http://127.0.0.1:8080")
+                .UseUrls("http://127.0.0.1:3000")
                 .Configure(app =>
                 {
                     // Configure the request handling pipeline
@@ -41,6 +41,12 @@ namespace AstroGathering.Services
                             {
                                 // Process the authorization code and get the authenticated user
                                 var user = await _authService.ProcessAuthorizationCodeAsync(code);
+                                Console.WriteLine("User Object Received:");
+                                Console.WriteLine($"Name: {user.Name}");
+                                Console.WriteLine($"Email: {user.Email}");
+                                Console.WriteLine($"Google ID: {user.GoogleId}");
+                                Console.WriteLine($"Created At: {user.CreatedAt}");
+                                Console.WriteLine($"Last Login: {user.LastLogin}");
                                 await context.Response.WriteAsync("<html><body><h1>Authentication successful!</h1><p>You can close this window now.</p><script>window.close();</script></body></html>");
                                 _authCompletionSource.SetResult(user);
                             }

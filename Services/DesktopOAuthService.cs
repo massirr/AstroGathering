@@ -18,28 +18,28 @@ namespace AstroGathering.Services
     {
         private readonly string _clientId;
         private readonly string _clientSecret;
-        private readonly string _redirectUri;
+        private readonly string _redirectUrl;
         private string _codeVerifier = "";
 
         public DesktopOAuthService(string clientId, string clientSecret, string redirectUri)
         {
             _clientId = clientId;
             _clientSecret = clientSecret;
-            _redirectUri = redirectUri;
+            _redirectUrl = redirectUri;
         }
 
         public string GetAuthorizationUrl()
         {
             // Generate PKCE parameters for better security
             _codeVerifier = GenerateCodeVerifier();
-            Console.WriteLine(_codeVerifier);
+            //Console.WriteLine(_codeVerifier);
             var codeChallenge = GenerateCodeChallenge(_codeVerifier);
-            Console.WriteLine(codeChallenge);
+            //Console.WriteLine(codeChallenge);
 
             var parameters = new Dictionary<string, string>
             {
                 {"client_id", _clientId},
-                {"redirect_uri", _redirectUri},
+                {"redirect_uri", _redirectUrl},
                 {"response_type", "code"},
                 {"scope", "openid profile email"},
                 {"code_challenge", codeChallenge},
@@ -64,7 +64,7 @@ namespace AstroGathering.Services
                 {"client_secret", _clientSecret},
                 {"code", code},
                 {"grant_type", "authorization_code"},
-                {"redirect_uri", _redirectUri},
+                {"redirect_uri", _redirectUrl},
                 {"code_verifier", _codeVerifier}
             };
 
@@ -114,6 +114,7 @@ namespace AstroGathering.Services
             response.EnsureSuccessStatusCode();
 
             var json = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(json);
             var userInfo = JsonSerializer.Deserialize<GoogleUserInfo>(json, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
