@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,7 +19,7 @@ namespace AstroGathering.Services
         {
             _authService = authService;
         }
-        public async Task<User> StartCallbackServer()
+        public async Task<User> StartCallbackServer(int timeoutSeconds = 300)
         {
             // Create a TaskCompletionSource to handle the asynchronous authentication flow
             _authCompletionSource = new TaskCompletionSource<User>();
@@ -61,6 +62,23 @@ namespace AstroGathering.Services
                 .Build();
 
             await _webHost.StartAsync();
+            
+            // Create a timeout task
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(timeoutSeconds));
+            var timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeoutSeconds), cts.Token);
+            
+            // Wait for either authentication completion or timeout
+            var completedTask = await Task.WhenAny(_authCompletionSource.Task, timeoutTask);
+            
+            if (completedTask == timeoutTask)
+            {
+                _authCompletionSource.SetException(new TimeoutException($"Authentication timed out after {timeoutSeconds} seconds"));
+            }
+            else
+            {
+                cts.Cancel(); // Cancel the timeout task
+            }
+            
             return await _authCompletionSource.Task;
         }
 

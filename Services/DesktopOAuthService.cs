@@ -94,7 +94,7 @@ namespace AstroGathering.Services
 
             return new User
             {
-                GoogleId = userInfo.Sub,
+                GoogleId = !string.IsNullOrEmpty(userInfo.Sub) ? userInfo.Sub : userInfo.Id,
                 Email = userInfo.Email,
                 Name = userInfo.Name,
                 AccessToken = accessToken,
@@ -151,6 +151,7 @@ namespace AstroGathering.Services
 
     public class GoogleUserInfo
     {
+        public string Id { get; set; } = string.Empty;
         public string Sub { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;

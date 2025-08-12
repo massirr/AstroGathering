@@ -82,24 +82,32 @@ namespace AstroGathering
             {
                 Console.WriteLine($"Attempting to open URL: {url}");
 
-                // On macOS, try the open command with the -a flag to specify Safari
+                // Trying the default browser first, then Safari as fallback
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 {
-                    var psi = new ProcessStartInfo
+                    // Try default browser first
+                    var defaultPsi = new ProcessStartInfo
                     {
                         FileName = "/usr/bin/open",
-                        Arguments = $"-a Safari \"{url}\"",
+                        Arguments = $"\"{url}\"",
                         UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
                         CreateNoWindow = true
                     };
                     
-                    var process = Process.Start(psi);
-                    string? error = process?.StandardError.ReadToEnd();
-                    if (!string.IsNullOrEmpty(error))
+                    var defaultProcess = Process.Start(defaultPsi);
+                    defaultProcess?.WaitForExit(2000); // Wait max 2 seconds
+                    
+                    if (defaultProcess?.ExitCode != 0)
                     {
-                        Console.WriteLine($"Error output: {error}");
+                        // Fallback to Safari if default browser fails
+                        var safariPsi = new ProcessStartInfo
+                        {
+                            FileName = "/usr/bin/open",
+                            Arguments = $"-a Safari \"{url}\"",
+                            UseShellExecute = false,
+                            CreateNoWindow = true
+                        };
+                        Process.Start(safariPsi);
                     }
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -110,12 +118,15 @@ namespace AstroGathering
                 {
                     Process.Start("xdg-open", url);
                 }
+                
+                Console.WriteLine("Browser launch initiated. Please complete authentication in the browser.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error opening browser: {ex.Message}");
                 // As a fallback, print the URL for manual copying
-                Console.WriteLine($"Please copy and paste this URL into your browser if it doesn't open automatically: {url}");
+                Console.WriteLine($"Please copy and paste this URL into your browser manually: {url}");
+                Console.WriteLine("After authentication, the callback will be handled automatically.");
             }
         }
     }
