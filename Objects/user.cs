@@ -22,7 +22,6 @@ namespace AstroGathering.Objects
         // Computed property for backwards compatibility
         public string Name => $"{FirstName} {LastName}".Trim();
 
-        // Methods from your UML diagram
         public bool Login()
         {
             LastLogin = DateTime.Now;
