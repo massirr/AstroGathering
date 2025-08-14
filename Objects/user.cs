@@ -14,6 +14,13 @@ namespace AstroGathering.Objects
         public DateTime CreatedAt { get; set; }
         public DateTime? LastLogin { get; set; }
         public bool IsAdmin { get; set; }
+        
+        // Additional properties for OAuth
+        public string? AccessToken { get; set; }
+        public string? RefreshToken { get; set; }
+        
+        // Computed property for backwards compatibility
+        public string Name => $"{FirstName} {LastName}".Trim();
 
         // Methods from your UML diagram
         public bool Login()

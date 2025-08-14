@@ -70,6 +70,7 @@
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/Microsoft.Win32.Registry.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/mscorlib.dll
 /Users/koze/.nuget/packages/mysql.data/9.3.0/lib/net8.0/MySql.Data.dll
+/Users/koze/.nuget/packages/mysqlconnector/2.4.0/lib/net8.0/MySqlConnector.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/netstandard.dll
 /Users/koze/.nuget/packages/skiasharp/2.88.9/lib/net6.0/SkiaSharp.dll
 /Users/koze/.nuget/packages/sprache/2.3.1/lib/netstandard2.1/Sprache.dll

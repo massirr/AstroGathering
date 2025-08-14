@@ -131,3 +131,4 @@
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Microsoft.Extensions.Primitives.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Microsoft.Net.Http.Headers.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Sprache.dll
+/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/MySqlConnector.dll

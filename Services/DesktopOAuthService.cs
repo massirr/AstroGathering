@@ -92,11 +92,16 @@ namespace AstroGathering.Services
             // Get user info
             var userInfo = await GetUserInfoAsync(accessToken);
 
+            // Simple name splitting
+            var names = userInfo.Name?.Split(' ') ?? new string[0];
+            
             return new User
             {
                 GoogleId = !string.IsNullOrEmpty(userInfo.Sub) ? userInfo.Sub : userInfo.Id,
                 Email = userInfo.Email,
-                Name = userInfo.Name,
+                FirstName = names.Length > 0 ? names[0] : null,
+                LastName = names.Length > 1 ? string.Join(" ", names.Skip(1)) : null,
+                ProfilePictureUrl = userInfo.Picture,
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
                 CreatedAt = DateTime.UtcNow,
