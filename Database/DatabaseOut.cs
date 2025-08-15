@@ -10,9 +10,9 @@ namespace AstroGathering.Database
         // Connection to database - UPDATE THESE VALUES FOR YOUR SETUP
         private string connectionString =
             "datasource=127.0.0.1;" +
-            "port=3307;" +              // Default MySQL port
+            "port=3307;" +              
             "username=root;" +
-            "password=;" +             // Add your MySQL password here
+            "password= ;" +           
             "database=AstroGathering;";
 
         // Method for single value queries (COUNT, etc.)
@@ -79,6 +79,7 @@ namespace AstroGathering.Database
 
         public List<User> GetAllUsers()
         {
+            //the list is appended by creating objects from each row with reader[***]
             List<User> users = new List<User>();
             string query = "SELECT * FROM users ORDER BY created_at DESC;";
             MySqlConnection connection = new MySqlConnection(connectionString);
@@ -87,7 +88,7 @@ namespace AstroGathering.Database
             try
             {
                 connection.Open();
-                MySqlDataReader reader = commandDatabase.ExecuteReader();
+                MySqlDataReader reader = commandDatabase.ExecuteReader(); //ExecuteReader() sends the SELECT query to the database
 
                 while (reader.Read())
                 {

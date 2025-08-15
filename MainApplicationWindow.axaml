@@ -1,0 +1,111 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="700"
+        x:Class="AstroGathering.MainApplicationWindow"
+        Title="AstroGathering - Dashboard"
+        WindowState="Maximized">
+    
+    <!-- Main Application Layout with Persistent Navigation -->
+    <Grid Background="#1a1235">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>    <!-- Persistent Navigation Bar -->
+            <RowDefinition Height="*"/>     <!-- Page Content Area -->
+        </Grid.RowDefinitions>
+        
+        <!-- PERSISTENT NAVIGATION BAR -->
+        <Border Grid.Row="0" 
+                Background="#2d1b69" 
+                CornerRadius="0,0,20,20">
+            <Grid Margin="30,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>  <!-- App Title -->
+                    <ColumnDefinition Width="*"/>     <!-- Spacer -->
+                    <ColumnDefinition Width="Auto"/>  <!-- Navigation Tabs -->
+                </Grid.ColumnDefinitions>
+                
+                <!-- App Title -->
+                <StackPanel Grid.Column="0" 
+                           Orientation="Horizontal" 
+                           VerticalAlignment="Center">
+                    <TextBlock Text="⭐" FontSize="24" VerticalAlignment="Center"/>
+                    <TextBlock Text="AstroGathering (Desktop)" 
+                              FontSize="18" 
+                              FontWeight="Bold" 
+                              Foreground="White" 
+                              Margin="10,0,0,0"
+                              VerticalAlignment="Center"/>
+                </StackPanel>
+                
+                <!-- Navigation Tabs -->
+                <StackPanel Grid.Column="2" 
+                           Orientation="Horizontal" 
+                           Spacing="5" 
+                           VerticalAlignment="Center">
+                    
+                    <Button x:Name="HomeTab" 
+                           Background="#4c3a8a" 
+                           Foreground="White" 
+                           CornerRadius="5" 
+                           Padding="15,8" 
+                           BorderThickness="0">
+                        <TextBlock Text="Home"/>
+                    </Button>
+                    
+                    <Button x:Name="UploadTab" 
+                           Background="Transparent" 
+                           Foreground="#b8a7d9" 
+                           CornerRadius="5" 
+                           Padding="15,8" 
+                           BorderThickness="0">
+                        <TextBlock Text="Upload"/>
+                    </Button>
+                    
+                    <Button x:Name="GalleryTab" 
+                           Background="Transparent" 
+                           Foreground="#b8a7d9" 
+                           CornerRadius="5" 
+                           Padding="15,8" 
+                           BorderThickness="0">
+                        <TextBlock Text="Gallery"/>
+                    </Button>
+                    
+                    <Button x:Name="SettingsTab" 
+                           Background="Transparent" 
+                           Foreground="#b8a7d9" 
+                           CornerRadius="5" 
+                           Padding="15,8" 
+                           BorderThickness="0">
+                        <TextBlock Text="Settings"/>
+                    </Button>
+                    
+                    <Button x:Name="AdminTab" 
+                           Background="Transparent" 
+                           Foreground="#b8a7d9" 
+                           CornerRadius="5" 
+                           Padding="15,8" 
+                           BorderThickness="0"
+                           IsVisible="False">
+                        <TextBlock Text="Admin"/>
+                    </Button>
+                    
+                    <Button x:Name="HelpTab" 
+                           Background="Transparent" 
+                           Foreground="#b8a7d9" 
+                           CornerRadius="5" 
+                           Padding="15,8" 
+                           BorderThickness="0">
+                        <TextBlock Text="Help"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+        
+        <!-- PAGE CONTENT AREA (where different pages will be loaded) -->
+        <ContentControl x:Name="PageContent" 
+                       Grid.Row="1" 
+                       Background="#1a1235"/>
+        
+    </Grid>
+</Window>

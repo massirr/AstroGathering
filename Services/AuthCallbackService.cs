@@ -43,11 +43,11 @@ namespace AstroGathering.Services
                                 // Process the authorization code and get the authenticated user
                                 var user = await _authService.ProcessAuthorizationCodeAsync(code);
                                 Console.WriteLine("User Object Received:");
-                                Console.WriteLine($"Name: {user.FirstName}");
+                                Console.WriteLine($"Name: {user.FirstName} {user.LastName}");
                                 Console.WriteLine($"Email: {user.Email}");
                                 Console.WriteLine($"Google ID: {user.GoogleId}");
                                 Console.WriteLine($"Created At: {user.CreatedAt}");
-                                Console.WriteLine($"Last Login: {user.LastLogin}");
+                                Console.WriteLine($"Last Login: {user.LastLogin}"); 
                                 await context.Response.WriteAsync("<html><body><h1>Authentication successful!</h1><p>You can close this window now.</p><script>window.close();</script></body></html>");
                                 _authCompletionSource.SetResult(user);
                             }

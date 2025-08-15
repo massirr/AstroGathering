@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="630"
+             x:Class="AstroGathering.Pages.ComingSoonPageContent">
+    
+    <!-- Coming Soon Page Content -->
+    <Grid Background="#1a1235">
+        <StackPanel HorizontalAlignment="Center" 
+                   VerticalAlignment="Center" 
+                   Spacing="30">
+            
+            <!-- Icon -->
+            <TextBlock x:Name="PageIcon" 
+                      Text="🚀" 
+                      FontSize="80" 
+                      HorizontalAlignment="Center"/>
+            
+            <!-- Title -->
+            <TextBlock x:Name="PageTitle" 
+                      Text="Coming Soon" 
+                      FontSize="36" 
+                      FontWeight="Bold" 
+                      Foreground="White" 
+                      HorizontalAlignment="Center"/>
+            
+            <!-- Description -->
+            <TextBlock x:Name="PageDescription" 
+                      Text="This feature is coming soon!" 
+                      FontSize="18" 
+                      Foreground="#b8a7d9" 
+                      HorizontalAlignment="Center" 
+                      TextAlignment="Center"
+                      TextWrapping="Wrap"
+                      MaxWidth="600"/>
+            
+            <!-- Back to Home -->
+            <StackPanel Orientation="Horizontal" 
+                       HorizontalAlignment="Center" 
+                       Spacing="10">
+                <TextBlock Text="✨" FontSize="16" VerticalAlignment="Center"/>
+                <TextBlock Text="In the meantime, explore the Home page for astronomical events!" 
+                          FontSize="14" 
+                          Foreground="#8a7ca8" 
+                          VerticalAlignment="Center"/>
+            </StackPanel>
+            
+        </StackPanel>
+    </Grid>
+</UserControl>

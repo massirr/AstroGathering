@@ -1,0 +1,142 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
+        x:Class="AstroGathering.Pages.LoginPage">
+    
+    <!-- Main Grid Layout - This is our foundation -->
+    <Grid Background="#1a1235">
+        
+        <!-- STEP 1: Create the starry background -->
+        <!-- Canvas allows us to position elements anywhere -->
+        <Canvas ClipToBounds="True">
+            
+            <!-- TOP ROW STARS (across full width) -->
+            <Ellipse Width="4" Height="4" Fill="White" Canvas.Left="80" Canvas.Top="60" Opacity="0.9"/>
+            <Ellipse Width="3" Height="3" Fill="White" Canvas.Left="280" Canvas.Top="90" Opacity="0.7"/>
+            <Ellipse Width="5" Height="5" Fill="White" Canvas.Left="480" Canvas.Top="70" Opacity="0.8"/>
+            <Ellipse Width="3" Height="3" Fill="White" Canvas.Left="720" Canvas.Top="110" Opacity="0.6"/>
+            <Ellipse Width="4" Height="4" Fill="White" Canvas.Left="920" Canvas.Top="85" Opacity="0.9"/>
+            <Ellipse Width="2" Height="2" Fill="White" Canvas.Left="1150" Canvas.Top="95" Opacity="0.5"/>
+            <Ellipse Width="3" Height="3" Fill="White" Canvas.Left="1350" Canvas.Top="65" Opacity="0.8"/>
+            <Ellipse Width="2" Height="2" Fill="White" Canvas.Left="1500" Canvas.Top="105" Opacity="0.4"/>
+            
+            <!-- MIDDLE ROW STARS -->
+            <Ellipse Width="3" Height="3" Fill="White" Canvas.Left="120" Canvas.Top="200" Opacity="0.6"/>
+            <Ellipse Width="2" Height="2" Fill="White" Canvas.Left="350" Canvas.Top="180" Opacity="0.5"/>
+            <Ellipse Width="4" Height="4" Fill="White" Canvas.Left="550" Canvas.Top="220" Opacity="0.8"/>
+            <Ellipse Width="2" Height="2" Fill="White" Canvas.Left="780" Canvas.Top="190" Opacity="0.4"/>
+            <Ellipse Width="3" Height="3" Fill="White" Canvas.Left="950" Canvas.Top="210" Opacity="0.7"/>
+            <Ellipse Width="1.5" Height="1.5" Fill="White" Canvas.Left="1180" Canvas.Top="185" Opacity="0.3"/>
+            <Ellipse Width="4" Height="4" Fill="White" Canvas.Left="1380" Canvas.Top="205" Opacity="0.9"/>
+            <Ellipse Width="2" Height="2" Fill="White" Canvas.Left="1520" Canvas.Top="195" Opacity="0.5"/>
+            
+            <!-- LOWER ROW STARS -->
+            <Ellipse Width="2" Height="2" Fill="White" Canvas.Left="60" Canvas.Top="320" Opacity="0.4"/>
+            <Ellipse Width="3" Height="3" Fill="White" Canvas.Left="250" Canvas.Top="340" Opacity="0.6"/>
+            <Ellipse Width="1.5" Height="1.5" Fill="White" Canvas.Left="420" Canvas.Top="360" Opacity="0.3"/>
+            <Ellipse Width="4" Height="4" Fill="White" Canvas.Left="650" Canvas.Top="330" Opacity="0.8"/>
+            <Ellipse Width="2" Height="2" Fill="White" Canvas.Left="850" Canvas.Top="350" Opacity="0.5"/>
+            <Ellipse Width="3" Height="3" Fill="White" Canvas.Left="1050" Canvas.Top="320" Opacity="0.7"/>
+            <Ellipse Width="1.5" Height="1.5" Fill="White" Canvas.Left="1250" Canvas.Top="365" Opacity="0.3"/>
+            <Ellipse Width="5" Height="5" Fill="White" Canvas.Left="1450" Canvas.Top="345" Opacity="0.9"/>
+            
+            <!-- BOTTOM ROW STARS -->
+            <Ellipse Width="1.5" Height="1.5" Fill="White" Canvas.Left="100" Canvas.Top="450" Opacity="0.3"/>
+            <Ellipse Width="2" Height="2" Fill="White" Canvas.Left="320" Canvas.Top="470" Opacity="0.4"/>
+            <Ellipse Width="3" Height="3" Fill="White" Canvas.Left="520" Canvas.Top="440" Opacity="0.6"/>
+            <Ellipse Width="2" Height="2" Fill="White" Canvas.Left="720" Canvas.Top="460" Opacity="0.5"/>
+            <Ellipse Width="4" Height="4" Fill="White" Canvas.Left="920" Canvas.Top="435" Opacity="0.8"/>
+            <Ellipse Width="1.5" Height="1.5" Fill="White" Canvas.Left="1120" Canvas.Top="465" Opacity="0.3"/>
+            <Ellipse Width="3" Height="3" Fill="White" Canvas.Left="1320" Canvas.Top="445" Opacity="0.7"/>
+            <Ellipse Width="2" Height="2" Fill="White" Canvas.Left="1480" Canvas.Top="455" Opacity="0.4"/>
+            
+            <!-- EXTRA RIGHT SIDE STARS for ultra-wide screens -->
+            <Ellipse Width="3" Height="3" Fill="White" Canvas.Left="1600" Canvas.Top="120" Opacity="0.6"/>
+            <Ellipse Width="2" Height="2" Fill="White" Canvas.Left="1750" Canvas.Top="250" Opacity="0.5"/>
+            <Ellipse Width="4" Height="4" Fill="White" Canvas.Left="1650" Canvas.Top="380" Opacity="0.8"/>
+            <Ellipse Width="1.5" Height="1.5" Fill="White" Canvas.Left="1800" Canvas.Top="160" Opacity="0.3"/>
+            
+        </Canvas>
+        
+        <!-- STEP 2: Create the login card in the center -->
+        <!-- Border gives us rounded corners and background -->
+        <Border Width="420" 
+                Height="380" 
+                Background="#2d1b69" 
+                CornerRadius="20" 
+                BorderThickness="1" 
+                BorderBrush="#4c3a8a"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center">
+            
+            <!-- STEP 3: Layout the card content vertically -->
+            <StackPanel Margin="40" Spacing="20">
+                
+                <!-- STEP 4: Create the star icon -->
+                <Border Width="60" 
+                        Height="60" 
+                        Background="#4c3a8a" 
+                        CornerRadius="30" 
+                        HorizontalAlignment="Center">
+                    <TextBlock Text="⭐" 
+                              FontSize="30" 
+                              HorizontalAlignment="Center" 
+                              VerticalAlignment="Center"/>
+                </Border>
+                
+                <!-- STEP 5: Main title -->
+                <TextBlock Text="Welcome to AstroGathering" 
+                          FontSize="28" 
+                          FontWeight="Bold" 
+                          Foreground="White" 
+                          HorizontalAlignment="Center" 
+                          TextAlignment="Center"/>
+                
+                <!-- STEP 6: Subtitle description -->
+                <TextBlock Text="Connect with the cosmos and share your celestial moments" 
+                          FontSize="16" 
+                          Foreground="#b8a7d9" 
+                          HorizontalAlignment="Center" 
+                          TextAlignment="Center" 
+                          TextWrapping="Wrap"/>
+                
+                <!-- STEP 7: Google login button -->
+                <Button x:Name="GoogleLoginButton" 
+                        Width="300" 
+                        Height="50" 
+                        Background="White" 
+                        Foreground="#333333" 
+                        CornerRadius="25" 
+                        FontSize="16" 
+                        FontWeight="Medium"
+                        HorizontalAlignment="Center" 
+                        HorizontalContentAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <!-- Google icon (using emoji for simplicity) -->
+                        <TextBlock Text="🌐" FontSize="18" VerticalAlignment="Center"/>
+                        <TextBlock Text="Continue with Google" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                
+                <!-- STEP 8: Terms text -->
+                <TextBlock Text="By continuing, you agree to our celestial terms of service" 
+                          FontSize="12" 
+                          Foreground="#8a7ca8" 
+                          HorizontalAlignment="Center" 
+                          TextAlignment="Center"/>
+                
+            </StackPanel>
+        </Border>
+        
+        <!-- STEP 9: Status message at bottom -->
+        <TextBlock x:Name="StatusMessage" 
+                  FontSize="14" 
+                  Foreground="#b8a7d9" 
+                  HorizontalAlignment="Center" 
+                  VerticalAlignment="Bottom" 
+                  Margin="0,0,0,40" 
+                  TextAlignment="Center"/>
+    </Grid>
+</UserControl>

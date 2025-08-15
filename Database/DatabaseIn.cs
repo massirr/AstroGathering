@@ -9,9 +9,9 @@ namespace AstroGathering.Database
         // Connection to database
         private string connectionString =
             "datasource=127.0.0.1;" +
-            "port=3307;" +              // Default MySQL port
+            "port=3307;" +       
             "username=root;" +
-            "password= ;" +             // Add your MySQL password here
+            "password= ;" +
             "database=AstroGathering;";
 
         // Generic method to insert data and return the new ID

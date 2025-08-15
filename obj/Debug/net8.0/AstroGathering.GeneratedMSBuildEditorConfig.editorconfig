@@ -24,8 +24,26 @@ build_property.EnableCodeStyleSeverity =
 [/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/MainApplicationWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/Pages/ComingSoonPageContent.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/Pages/Home.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/Pages/HomePageContent.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/Pages/LoginPage.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/Pages/Settings.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/Pages/SettingsPageContent.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

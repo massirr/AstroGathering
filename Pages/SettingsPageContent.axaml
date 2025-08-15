@@ -1,0 +1,128 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="630"
+             x:Class="AstroGathering.Pages.SettingsPageContent">
+    
+    <!-- Settings Page Content Only (no navigation) -->
+    <Grid Background="#1a1235">
+        
+        <!-- Settings Content -->
+        <ScrollViewer Margin="40,20,40,40">
+            <StackPanel Spacing="25" MaxWidth="800">
+                
+                <!-- Page Title -->
+                <StackPanel Orientation="Horizontal" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,20">
+                    <TextBlock Text="⚙️" FontSize="32" VerticalAlignment="Center"/>
+                    <TextBlock Text="Settings" 
+                              FontSize="32" 
+                              FontWeight="Bold" 
+                              Foreground="White" 
+                              Margin="15,0,0,0"
+                              VerticalAlignment="Center"/>
+                </StackPanel>
+                
+                <!-- User Profile Section -->
+                <Border Background="#2d1b69" 
+                        CornerRadius="15" 
+                        Padding="30">
+                    <StackPanel Spacing="20">
+                        <TextBlock Text="👤 User Profile" 
+                                  FontSize="20" 
+                                  FontWeight="Bold" 
+                                  Foreground="White"/>
+                        
+                        <!-- User Info Display -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" Foreground="#b8a7d9" FontWeight="Medium"/>
+                            <TextBlock x:Name="UserNameText" Grid.Row="0" Grid.Column="1" Text="Welcome!" Foreground="White"/>
+                            
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Email:" Foreground="#b8a7d9" FontWeight="Medium" Margin="0,10,0,0"/>
+                            <TextBlock x:Name="UserEmailText" Grid.Row="1" Grid.Column="1" Text="" Foreground="White" Margin="0,10,0,0"/>
+                            
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Google ID:" Foreground="#b8a7d9" FontWeight="Medium" Margin="0,10,0,0"/>
+                            <TextBlock x:Name="UserIdText" Grid.Row="2" Grid.Column="1" Text="" Foreground="White" Margin="0,10,0,0"/>
+                            
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Created:" Foreground="#b8a7d9" FontWeight="Medium" Margin="0,10,0,0"/>
+                            <TextBlock x:Name="CreatedAtText" Grid.Row="3" Grid.Column="1" Text="" Foreground="White" Margin="0,10,0,0"/>
+                            
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Last Login:" Foreground="#b8a7d9" FontWeight="Medium" Margin="0,10,0,0"/>
+                            <TextBlock x:Name="LastLoginText" Grid.Row="4" Grid.Column="1" Text="" Foreground="White" Margin="0,10,0,0"/>
+                        </Grid>
+                        
+                        <!-- Update Profile Button -->
+                        <Button Background="#4c3a8a" 
+                               Foreground="White" 
+                               CornerRadius="10" 
+                               Height="40" 
+                               Width="150"
+                               HorizontalAlignment="Left">
+                            <TextBlock Text="Update Profile"/>
+                        </Button>
+                    </StackPanel>
+                </Border>
+                
+                <!-- App Settings Section -->
+                <Border Background="#2d1b69" 
+                        CornerRadius="15" 
+                        Padding="30">
+                    <StackPanel Spacing="15">
+                        <TextBlock Text="🔧 App Settings" 
+                                  FontSize="20" 
+                                  FontWeight="Bold" 
+                                  Foreground="White"/>
+                        
+                        <CheckBox Content="Enable notifications for astronomical events" 
+                                 Foreground="#b8a7d9" 
+                                 IsChecked="True"/>
+                        <CheckBox Content="Dark mode (always on for cosmic theme)" 
+                                 Foreground="#b8a7d9" 
+                                 IsChecked="True" 
+                                 IsEnabled="False"/>
+                        <CheckBox Content="Auto-sync calendar events" 
+                                 Foreground="#b8a7d9" 
+                                 IsChecked="True"/>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Actions Section -->
+                <Border Background="#2d1b69" 
+                        CornerRadius="15" 
+                        Padding="30">
+                    <StackPanel Spacing="15">
+                        <TextBlock Text="🚀 Actions" 
+                                  FontSize="20" 
+                                  FontWeight="Bold" 
+                                  Foreground="White"/>
+                        
+                        <Button x:Name="LogoutButton" 
+                               Background="#6b4c8a" 
+                               Foreground="White" 
+                               CornerRadius="10" 
+                               Height="40" 
+                               Width="120"
+                               HorizontalAlignment="Left">
+                            <TextBlock Text="Logout"/>
+                        </Button>
+                    </StackPanel>
+                </Border>
+                
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
