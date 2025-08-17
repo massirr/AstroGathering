@@ -1,7 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using AstroGathering.Objects;
-using AstroGathering.Services;
 using System;
 using System.Threading.Tasks;
 using System.Linq;
@@ -13,13 +12,11 @@ namespace AstroGathering.Pages
     {
         private User? _user;
         private DateTime _currentMonth = DateTime.Now;
-        private AstronomyService? _astronomyService;
 
         // Parameterless constructor for XAML designer support
         public HomePage()
         {
             InitializeComponent();
-            InitializeAstronomyService();
             InitializeEvents();
             LoadCalendarData();
         }
@@ -27,23 +24,6 @@ namespace AstroGathering.Pages
         public HomePage(User user) : this()
         {
             _user = user;
-        }
-
-        private void InitializeAstronomyService()
-        {
-            try
-            {
-                var config = new ConfigurationService();
-                _astronomyService = new AstronomyService(
-                    config.AstronomyApiKey, 
-                    config.AstronomyApiExpires, 
-                    config.AstronomyApiSignature
-                );
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to initialize astronomy service: {ex.Message}");
-            }
         }
 
         private void InitializeEvents()
@@ -71,7 +51,7 @@ namespace AstroGathering.Pages
             LoadMonthlySummary();
         }
 
-        private async void PopulateCalendarGrid()
+        private void PopulateCalendarGrid()
         {
             if (CalendarGrid == null) return;
 
@@ -90,30 +70,10 @@ namespace AstroGathering.Pages
             var daysInMonth = DateTime.DaysInMonth(_currentMonth.Year, _currentMonth.Month);
             var firstDayOfWeek = (int)firstDay.DayOfWeek; // 0 = Sunday
             
-            // Get events for the entire month to determine which days have events
-            var monthlyEvents = new Dictionary<int, int>(); // day -> event count
-            
-            if (_astronomyService != null)
-            {
-                for (int day = 1; day <= daysInMonth; day++)
-                {
-                    try
-                    {
-                        var date = new DateTime(_currentMonth.Year, _currentMonth.Month, day);
-                        var events = await _astronomyService.GetEventsForDateAsync(date);
-                        monthlyEvents[day] = events.Count;
-                    }
-                    catch
-                    {
-                        monthlyEvents[day] = 0;
-                    }
-                }
-            }
-
-            // Add calendar day buttons
+            // Add calendar day buttons (no events for now)
             for (int day = 1; day <= daysInMonth; day++)
             {
-                var dayButton = CreateDayButton(day, monthlyEvents.GetValueOrDefault(day, 0));
+                var dayButton = CreateDayButton(day, 0); // 0 events
                 
                 // Calculate position in grid
                 var totalDays = firstDayOfWeek + day - 1;
@@ -229,121 +189,57 @@ namespace AstroGathering.Pages
                    day == DateTime.Today.Day;
         }
 
-        private async void OnDaySelected(int day)
+        private void OnDaySelected(int day)
         {
             try
             {
                 var selectedDate = new DateTime(_currentMonth.Year, _currentMonth.Month, day);
                 
-                if (_astronomyService != null && TodaysEventsText != null)
+                if (TodaysEventsText != null)
                 {
-                    var events = await _astronomyService.GetEventsForDateAsync(selectedDate);
-                    if (events.Count > 0)
-                    {
-                        var eventLines = events.Select(e => $"🔹 {e.Description} at {e.Time}");
-                        var eventText = $"Events for {selectedDate:MMM dd}:\n\n" + 
-                                       string.Join("\n\n", eventLines); // Extra spacing between events
-                        TodaysEventsText.Text = eventText;
-                    }
-                    else
-                    {
-                        TodaysEventsText.Text = $"No events on {selectedDate:MMM dd}. Perfect for general stargazing!";
-                    }
+                    TodaysEventsText.Text = $"Selected {selectedDate:MMM dd}. Calendar functionality preserved - no API dependencies.";
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error loading events for day {day}: {ex.Message}");
+                Console.WriteLine($"Error selecting day {day}: {ex.Message}");
             }
         }
 
-        private async void LoadTodaysEvents()
+        private void LoadTodaysEvents()
         {
             if (TodaysEventsText != null)
             {
                 try
                 {
-                    if (_astronomyService != null)
-                    {
-                        var events = await _astronomyService.GetEventsForDateAsync(DateTime.Today);
-                        if (events.Count > 0)
-                        {
-                            var eventLines = events.Select(e => $"🔹 {e.Description} at {e.Time}");
-                            var eventText = string.Join("\n\n", eventLines); // Add extra spacing between events
-                            TodaysEventsText.Text = eventText;
-                        }
-                        else
-                        {
-                            TodaysEventsText.Text = "No events today. Perfect for general stargazing!";
-                        }
-                    }
-                    else
-                    {
-                        TodaysEventsText.Text = "Astronomy service unavailable";
-                    }
+                    TodaysEventsText.Text = "Calendar ready! Click any day to select it. API dependencies removed.";
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error loading today's events: {ex.Message}");
-                    TodaysEventsText.Text = "Error loading events. Check your API key.";
+                    TodaysEventsText.Text = "Calendar ready!";
                 }
             }
         }
 
-        private async void LoadMonthlySummary()
+        private void LoadMonthlySummary()
         {
             try
             {
-                if (_astronomyService != null)
-                {
-                    // Get events for the entire month
-                    var startOfMonth = new DateTime(_currentMonth.Year, _currentMonth.Month, 1);
-                    var daysInMonth = DateTime.DaysInMonth(_currentMonth.Year, _currentMonth.Month);
-                    
-                    int totalEvents = 0, meteorShowers = 0, moonPhases = 0, planetaryEvents = 0;
-                    
-                    for (int day = 1; day <= daysInMonth; day++)
-                    {
-                        var date = startOfMonth.AddDays(day - 1);
-                        var events = await _astronomyService.GetEventsForDateAsync(date);
-                        
-                        totalEvents += events.Count;
-                        
-                        foreach (var eventItem in events)
-                        {
-                            if (eventItem.EventType.Contains("Meteor", StringComparison.OrdinalIgnoreCase))
-                                meteorShowers++;
-                            else if (eventItem.EventType.Contains("Moon", StringComparison.OrdinalIgnoreCase))
-                                moonPhases++;
-                            else if (eventItem.EventType.Contains("Planetary", StringComparison.OrdinalIgnoreCase) || 
-                                    eventItem.EventType.Contains("Opposition", StringComparison.OrdinalIgnoreCase))
-                                planetaryEvents++;
-                        }
-                    }
-                    
-                    // Update UI with real data
-                    if (TotalEventsText != null) TotalEventsText.Text = totalEvents.ToString();
-                    if (MeteorShowersText != null) MeteorShowersText.Text = meteorShowers.ToString();
-                    if (MoonPhasesText != null) MoonPhasesText.Text = moonPhases.ToString();
-                    if (PlanetaryEventsText != null) PlanetaryEventsText.Text = planetaryEvents.ToString();
-                }
-                else
-                {
-                    // Fallback to mock data
-                    if (TotalEventsText != null) TotalEventsText.Text = "3";
-                    if (MeteorShowersText != null) MeteorShowersText.Text = "1";
-                    if (MoonPhasesText != null) MoonPhasesText.Text = "1";
-                    if (PlanetaryEventsText != null) PlanetaryEventsText.Text = "1";
-                }
+                // Static placeholder data since API is removed
+                if (TotalEventsText != null) TotalEventsText.Text = "0";
+                if (MeteorShowersText != null) MeteorShowersText.Text = "0";
+                if (MoonPhasesText != null) MoonPhasesText.Text = "0";
+                if (PlanetaryEventsText != null) PlanetaryEventsText.Text = "0";
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error loading monthly summary: {ex.Message}");
-                // Fallback to mock data on error
-                if (TotalEventsText != null) TotalEventsText.Text = "3";
-                if (MeteorShowersText != null) MeteorShowersText.Text = "1";
-                if (MoonPhasesText != null) MoonPhasesText.Text = "1";
-                if (PlanetaryEventsText != null) PlanetaryEventsText.Text = "1";
+                // Fallback values
+                if (TotalEventsText != null) TotalEventsText.Text = "0";
+                if (MeteorShowersText != null) MeteorShowersText.Text = "0";
+                if (MoonPhasesText != null) MoonPhasesText.Text = "0";
+                if (PlanetaryEventsText != null) PlanetaryEventsText.Text = "0";
             }
         }
 
