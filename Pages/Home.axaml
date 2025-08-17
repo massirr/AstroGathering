@@ -5,115 +5,20 @@
              mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="700"
              x:Class="AstroGathering.Pages.HomePage">
     
-    <!-- Main Home Page Layout -->
-    <Grid Background="#1a1235">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>    <!-- Navigation Bar -->
-            <RowDefinition Height="*"/>     <!-- Main Content -->
-        </Grid.RowDefinitions>
-        
-        <!-- NAVIGATION BAR -->
-        <Border Grid.Row="0" 
-                Background="#2d1b69" 
-                CornerRadius="0,0,20,20">
-            <Grid Margin="30,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>  <!-- App Title -->
-                    <ColumnDefinition Width="*"/>     <!-- Spacer -->
-                    <ColumnDefinition Width="Auto"/>  <!-- Navigation Tabs -->
-                </Grid.ColumnDefinitions>
-                
-                <!-- App Title -->
-                <StackPanel Grid.Column="0" 
-                           Orientation="Horizontal" 
-                           VerticalAlignment="Center">
-                    <TextBlock Text="⭐" FontSize="24" VerticalAlignment="Center"/>
-                    <TextBlock Text="AstroGathering (Desktop)" 
-                              FontSize="18" 
-                              FontWeight="Bold" 
-                              Foreground="White" 
-                              Margin="10,0,0,0"
-                              VerticalAlignment="Center"/>
-                </StackPanel>
-                
-                <!-- Navigation Tabs -->
-                <StackPanel Grid.Column="2" 
-                           Orientation="Horizontal" 
-                           Spacing="5" 
-                           VerticalAlignment="Center">
-                    
-                    <Button x:Name="HomeTab" 
-                           Background="#4c3a8a" 
-                           Foreground="White" 
-                           CornerRadius="5" 
-                           Padding="15,8" 
-                           BorderThickness="0">
-                        <TextBlock Text="Home"/>
-                    </Button>
-                    
-                    <Button x:Name="UploadTab" 
-                           Background="Transparent" 
-                           Foreground="#b8a7d9" 
-                           CornerRadius="5" 
-                           Padding="15,8" 
-                           BorderThickness="0">
-                        <TextBlock Text="Upload"/>
-                    </Button>
-                    
-                    <Button x:Name="GalleryTab" 
-                           Background="Transparent" 
-                           Foreground="#b8a7d9" 
-                           CornerRadius="5" 
-                           Padding="15,8" 
-                           BorderThickness="0">
-                        <TextBlock Text="Gallery"/>
-                    </Button>
-                    
-                    <Button x:Name="SettingsTab" 
-                           Background="Transparent" 
-                           Foreground="#b8a7d9" 
-                           CornerRadius="5" 
-                           Padding="15,8" 
-                           BorderThickness="0">
-                        <TextBlock Text="Settings"/>
-                    </Button>
-                    
-                    <Button x:Name="AdminTab" 
-                           Background="Transparent" 
-                           Foreground="#b8a7d9" 
-                           CornerRadius="5" 
-                           Padding="15,8" 
-                           BorderThickness="0"
-                           IsVisible="False">
-                        <TextBlock Text="Admin"/>
-                    </Button>
-                    
-                    <Button x:Name="HelpTab" 
-                           Background="Transparent" 
-                           Foreground="#b8a7d9" 
-                           CornerRadius="5" 
-                           Padding="15,8" 
-                           BorderThickness="0">
-                        <TextBlock Text="Help"/>
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </Border>
-        
-        <!-- MAIN CONTENT AREA -->
-        <Grid Grid.Row="1" Margin="30,20,30,30">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>  <!-- Left: Calendar -->
-                <ColumnDefinition Width="20"/> <!-- Spacer -->
-                <ColumnDefinition Width="1*"/>  <!-- Right: Highlights -->
-            </Grid.ColumnDefinitions>
+    <!-- Main Home Page Content (without navigation) -->
+    <Grid Background="#1a1235" Margin="40,30,40,40">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>  <!-- Left: Calendar (bigger) -->
+            <ColumnDefinition Width="30"/> <!-- Spacer -->
+            <ColumnDefinition Width="1.5*"/>  <!-- Right: Highlights (wider) -->
+        </Grid.ColumnDefinitions>
             
             <!-- LEFT COLUMN: Astronomical Calendar -->
             <Border Grid.Column="0" 
                     Background="#2d1b69" 
                     CornerRadius="20" 
-                    Padding="25">
-                <StackPanel Spacing="20">
+                    Padding="30">
+                <StackPanel Spacing="25">
                     
                     <!-- Calendar Header -->
                     <StackPanel Orientation="Horizontal" 
@@ -162,42 +67,37 @@
                     <!-- Calendar Grid -->
                     <Border Background="#1a1235" 
                            CornerRadius="10" 
-                           Padding="15">
+                           Padding="20">
                         <Grid x:Name="CalendarGrid">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>  <!-- Day headers -->
-                                <RowDefinition Height="*"/>   <!-- Calendar days -->
+                                <RowDefinition Height="35"/>  <!-- Day headers -->
+                                <RowDefinition Height="*"/>   <!-- Week 1 -->
+                                <RowDefinition Height="*"/>   <!-- Week 2 -->
+                                <RowDefinition Height="*"/>   <!-- Week 3 -->
+                                <RowDefinition Height="*"/>   <!-- Week 4 -->
+                                <RowDefinition Height="*"/>   <!-- Week 5 -->
+                                <RowDefinition Height="*"/>   <!-- Week 6 -->
                             </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
                             
                             <!-- Day Headers -->
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <TextBlock Grid.Column="0" Text="Su" Foreground="#8a7ca8" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="1" Text="Mo" Foreground="#8a7ca8" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="2" Text="Tu" Foreground="#8a7ca8" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="3" Text="We" Foreground="#8a7ca8" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="4" Text="Th" Foreground="#8a7ca8" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="5" Text="Fr" Foreground="#8a7ca8" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="6" Text="Sa" Foreground="#8a7ca8" HorizontalAlignment="Center"/>
-                            </Grid>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Su" Foreground="#8a7ca8" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Medium"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="Mo" Foreground="#8a7ca8" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Medium"/>
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="Tu" Foreground="#8a7ca8" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Medium"/>
+                            <TextBlock Grid.Row="0" Grid.Column="3" Text="We" Foreground="#8a7ca8" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Medium"/>
+                            <TextBlock Grid.Row="0" Grid.Column="4" Text="Th" Foreground="#8a7ca8" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Medium"/>
+                            <TextBlock Grid.Row="0" Grid.Column="5" Text="Fr" Foreground="#8a7ca8" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Medium"/>
+                            <TextBlock Grid.Row="0" Grid.Column="6" Text="Sa" Foreground="#8a7ca8" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Medium"/>
                             
-                            <!-- Simple Calendar Days Display -->
-                            <TextBlock Grid.Row="1" 
-                                      Text="Calendar will be populated here\nwith astronomical events" 
-                                      Foreground="#b8a7d9" 
-                                      HorizontalAlignment="Center" 
-                                      VerticalAlignment="Center" 
-                                      TextAlignment="Center" 
-                                      FontSize="14"/>
+                            <!-- Calendar days will be populated programmatically -->
                         </Grid>
                     </Border>
                     
@@ -211,21 +111,21 @@
             </Border>
             
             <!-- RIGHT COLUMN: Today's Highlights & Summary -->
-            <StackPanel Grid.Column="2" Spacing="20">
+            <StackPanel Grid.Column="2" Spacing="25">
                 
                 <!-- Today's Highlights -->
                 <Border Background="#2d1b69" 
                         CornerRadius="20" 
-                        Padding="25">
-                    <StackPanel Spacing="15">
+                        Padding="30">
+                    <StackPanel Spacing="20">
                         
                         <!-- Highlights Header -->
                         <StackPanel Orientation="Horizontal" 
                                    HorizontalAlignment="Center" 
                                    Spacing="15">
-                            <TextBlock Text="⭐" FontSize="24" VerticalAlignment="Center"/>
+                            <TextBlock Text="⭐" FontSize="26" VerticalAlignment="Center"/>
                             <TextBlock Text="Today's Highlights" 
-                                      FontSize="20" 
+                                      FontSize="22" 
                                       FontWeight="Bold" 
                                       Foreground="White" 
                                       VerticalAlignment="Center"/>
@@ -234,16 +134,20 @@
                         <!-- Today's Events -->
                         <Border Background="#1a1235" 
                                CornerRadius="10" 
-                               Padding="20" 
-                               MinHeight="80">
-                            <TextBlock x:Name="TodaysEventsText" 
-                                      Text="No events today. Perfect for general stargazing!" 
-                                      Foreground="#b8a7d9" 
-                                      FontSize="14" 
-                                      TextWrapping="Wrap" 
-                                      HorizontalAlignment="Center" 
-                                      VerticalAlignment="Center" 
-                                      TextAlignment="Center"/>
+                               Padding="25" 
+                               MinHeight="120">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                                         MaxHeight="200">
+                                <TextBlock x:Name="TodaysEventsText" 
+                                          Text="No events today. Perfect for general stargazing!" 
+                                          Foreground="#b8a7d9" 
+                                          FontSize="15" 
+                                          LineHeight="22"
+                                          TextWrapping="Wrap" 
+                                          HorizontalAlignment="Left" 
+                                          VerticalAlignment="Top" 
+                                          TextAlignment="Left"/>
+                            </ScrollViewer>
                         </Border>
                     </StackPanel>
                 </Border>
@@ -251,16 +155,16 @@
                 <!-- This Month Summary -->
                 <Border Background="#2d1b69" 
                         CornerRadius="20" 
-                        Padding="25">
-                    <StackPanel Spacing="15">
+                        Padding="30">
+                    <StackPanel Spacing="20">
                         
                         <!-- Summary Header -->
                         <StackPanel Orientation="Horizontal" 
                                    HorizontalAlignment="Center" 
                                    Spacing="15">
-                            <TextBlock Text="📊" FontSize="24" VerticalAlignment="Center"/>
+                            <TextBlock Text="📊" FontSize="26" VerticalAlignment="Center"/>
                             <TextBlock Text="This Month Summary" 
-                                      FontSize="20" 
+                                      FontSize="22" 
                                       FontWeight="Bold" 
                                       Foreground="White" 
                                       VerticalAlignment="Center"/>
@@ -269,7 +173,7 @@
                         <!-- Summary Stats -->
                         <Border Background="#1a1235" 
                                CornerRadius="10" 
-                               Padding="20">
+                               Padding="25">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -285,58 +189,57 @@
                                 <TextBlock Grid.Row="0" Grid.Column="0" 
                                           Text="Total Events" 
                                           Foreground="#b8a7d9" 
-                                          FontSize="14"/>
+                                          FontSize="16"/>
                                 <TextBlock Grid.Row="0" Grid.Column="1" 
                                           x:Name="TotalEventsText" 
                                           Text="3" 
                                           Foreground="White" 
-                                          FontSize="14" 
+                                          FontSize="16" 
                                           FontWeight="Bold"/>
                                 
                                 <TextBlock Grid.Row="1" Grid.Column="0" 
                                           Text="Meteor Showers" 
                                           Foreground="#b8a7d9" 
-                                          FontSize="14" 
-                                          Margin="0,8,0,0"/>
+                                          FontSize="16" 
+                                          Margin="0,12,0,0"/>
                                 <TextBlock Grid.Row="1" Grid.Column="1" 
                                           x:Name="MeteorShowersText" 
                                           Text="1" 
                                           Foreground="White" 
-                                          FontSize="14" 
+                                          FontSize="16" 
                                           FontWeight="Bold" 
-                                          Margin="0,8,0,0"/>
+                                          Margin="0,12,0,0"/>
                                 
                                 <TextBlock Grid.Row="2" Grid.Column="0" 
                                           Text="Moon Phases" 
                                           Foreground="#b8a7d9" 
-                                          FontSize="14" 
-                                          Margin="0,8,0,0"/>
+                                          FontSize="16" 
+                                          Margin="0,12,0,0"/>
                                 <TextBlock Grid.Row="2" Grid.Column="1" 
                                           x:Name="MoonPhasesText" 
                                           Text="1" 
                                           Foreground="White" 
-                                          FontSize="14" 
+                                          FontSize="16" 
                                           FontWeight="Bold" 
-                                          Margin="0,8,0,0"/>
+                                          Margin="0,12,0,0"/>
                                 
                                 <TextBlock Grid.Row="3" Grid.Column="0" 
                                           Text="Planetary Events" 
                                           Foreground="#b8a7d9" 
-                                          FontSize="14" 
-                                          Margin="0,8,0,0"/>
+                                          FontSize="16" 
+                                          Margin="0,12,0,0"/>
                                 <TextBlock Grid.Row="3" Grid.Column="1" 
                                           x:Name="PlanetaryEventsText" 
                                           Text="1" 
                                           Foreground="White" 
-                                          FontSize="14" 
+                                          FontSize="16" 
                                           FontWeight="Bold" 
-                                          Margin="0,8,0,0"/>
+                                          Margin="0,12,0,0"/>
                             </Grid>
                         </Border>
                     </StackPanel>
                 </Border>
                 
             </StackPanel>
-        </Grid>
     </Grid>
 </UserControl>

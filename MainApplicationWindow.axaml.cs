@@ -110,7 +110,7 @@ namespace AstroGathering
         // Page loading methods
         private void LoadHomePage()
         {
-            var homePage = new HomePageContent(_user);
+            var homePage = new HomePage(_user);
             if (PageContent != null)
             {
                 PageContent.Content = homePage;
@@ -120,7 +120,7 @@ namespace AstroGathering
 
         private void LoadSettingsPage()
         {
-            var settingsPage = new SettingsPageContent(_user);
+            var settingsPage = new SettingsPage(_user);
             if (PageContent != null)
             {
                 PageContent.Content = settingsPage;
