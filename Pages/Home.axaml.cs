@@ -27,7 +27,6 @@ namespace AstroGathering.Pages
         public HomePage(User user) : this()
         {
             _user = user;
-            // Navigation is now handled by MainApplicationWindow, not here
         }
 
         private void InitializeAstronomyService()
@@ -35,7 +34,11 @@ namespace AstroGathering.Pages
             try
             {
                 var config = new ConfigurationService();
-                _astronomyService = new AstronomyService(config.AstronomyApiKey);
+                _astronomyService = new AstronomyService(
+                    config.AstronomyApiKey, 
+                    config.AstronomyApiExpires, 
+                    config.AstronomyApiSignature
+                );
             }
             catch (Exception ex)
             {
@@ -237,8 +240,9 @@ namespace AstroGathering.Pages
                     var events = await _astronomyService.GetEventsForDateAsync(selectedDate);
                     if (events.Count > 0)
                     {
+                        var eventLines = events.Select(e => $"🔹 {e.Description} at {e.Time}");
                         var eventText = $"Events for {selectedDate:MMM dd}:\n\n" + 
-                                       string.Join("\n", events.Select(e => $"🔹 {e.Description} at {e.Time}"));
+                                       string.Join("\n\n", eventLines); // Extra spacing between events
                         TodaysEventsText.Text = eventText;
                     }
                     else
@@ -264,7 +268,8 @@ namespace AstroGathering.Pages
                         var events = await _astronomyService.GetEventsForDateAsync(DateTime.Today);
                         if (events.Count > 0)
                         {
-                            var eventText = string.Join("\n", events.Select(e => $"🔹 {e.Description} at {e.Time}"));
+                            var eventLines = events.Select(e => $"🔹 {e.Description} at {e.Time}");
+                            var eventText = string.Join("\n\n", eventLines); // Add extra spacing between events
                             TodaysEventsText.Text = eventText;
                         }
                         else

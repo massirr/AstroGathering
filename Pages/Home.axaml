@@ -8,9 +8,9 @@
     <!-- Main Home Page Content (without navigation) -->
     <Grid Background="#1a1235" Margin="40,30,40,40">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>  <!-- Left: Calendar (bigger) -->
+            <ColumnDefinition Width="1.8*"/>  <!-- Left: Calendar -->
             <ColumnDefinition Width="30"/> <!-- Spacer -->
-            <ColumnDefinition Width="1.5*"/>  <!-- Right: Highlights (wider) -->
+            <ColumnDefinition Width="2*"/>  <!-- Right: Highlights (even wider) -->
         </Grid.ColumnDefinitions>
             
             <!-- LEFT COLUMN: Astronomical Calendar -->
@@ -135,18 +135,20 @@
                         <Border Background="#1a1235" 
                                CornerRadius="10" 
                                Padding="25" 
-                               MinHeight="120">
+                               MinHeight="150">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" 
-                                         MaxHeight="200">
+                                         MaxHeight="300"
+                                         HorizontalScrollBarVisibility="Disabled">
                                 <TextBlock x:Name="TodaysEventsText" 
                                           Text="No events today. Perfect for general stargazing!" 
                                           Foreground="#b8a7d9" 
-                                          FontSize="15" 
-                                          LineHeight="22"
+                                          FontSize="14" 
+                                          LineHeight="20"
                                           TextWrapping="Wrap" 
                                           HorizontalAlignment="Left" 
                                           VerticalAlignment="Top" 
-                                          TextAlignment="Left"/>
+                                          TextAlignment="Left"
+                                          MaxWidth="400"/>
                             </ScrollViewer>
                         </Border>
                     </StackPanel>
