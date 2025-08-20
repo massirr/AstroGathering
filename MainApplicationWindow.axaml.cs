@@ -130,7 +130,7 @@ namespace AstroGathering
 
         private void LoadUploadPage()
         {
-            var uploadPage = new ComingSoonPageContent("Upload", "📸 Upload your amazing astrophotography!");
+            var uploadPage = new UploadPage(_user);
             if (PageContent != null)
             {
                 PageContent.Content = uploadPage;

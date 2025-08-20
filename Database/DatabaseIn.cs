@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using AstroGathering.Objects;
 
@@ -40,6 +41,25 @@ namespace AstroGathering.Database
             return -1; // Return -1 if insert failed
         }
 
+        // Async insert method for better performance
+        private async Task<int> InsertAsync(string query)
+        {
+            using var connection = new MySqlConnection(connectionString);
+            using var command = new MySqlCommand(query, connection);
+
+            try
+            {
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+                return (int)command.LastInsertedId;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Insert Error: {ex.Message}");
+                return -1;
+            }
+        }
+
         // USER OPERATIONS
         public int InsertUser(User user)
         {
@@ -56,10 +76,21 @@ namespace AstroGathering.Database
             string dateTaken = photo.DateTaken?.ToString("yyyy-MM-dd HH:mm:ss") ?? "NULL";
             
             string query = $"INSERT INTO photos (user_id, image_url, location, description, date_taken, time_uploaded) " +
-                $"VALUES ({photo.UserId}, '{photo.ImageUrl}', '{photo.Location}', '{photo.Description}', " +
+                $"VALUES ({photo.UserId}, '{photo.ImageUrl}', '{photo.Location?.Replace("'", "''")}', '{photo.Description?.Replace("'", "''")}', " +
                 $"'{dateTaken}', NOW());";
 
             return Insert(query);
+        }
+
+        public async Task<int> InsertPhotoAsync(Photo photo)
+        {
+            string dateTaken = photo.DateTaken?.ToString("yyyy-MM-dd HH:mm:ss") ?? "NULL";
+            
+            string query = $"INSERT INTO photos (user_id, image_url, location, description, date_taken, time_uploaded) " +
+                $"VALUES ({photo.UserId}, '{photo.ImageUrl}', '{photo.Location?.Replace("'", "''")}', '{photo.Description?.Replace("'", "''")}', " +
+                $"'{dateTaken}', NOW());";
+
+            return await InsertAsync(query);
         }
 
         // EVENT OPERATIONS
@@ -121,9 +152,9 @@ namespace AstroGathering.Database
         public int InsertAstronomicalEvent(AstronomicalEvent astronomicalEvent)
         {
             string query = "INSERT INTO astronomical_events (name, type, event_date, description, time_info, latitude, longitude, api_source) " +
-                $"VALUES ('{astronomicalEvent.Name.Replace("'", "''")}', " +
+                $"VALUES ('{astronomicalEvent.EventName.Replace("'", "''")}', " + // Using EventName
                 $"'{astronomicalEvent.Type.Replace("'", "''")}', " +
-                $"'{astronomicalEvent.Date:yyyy-MM-dd}', " +
+                $"'{astronomicalEvent.EventDate:yyyy-MM-dd}', " + // Using EventDate
                 $"'{astronomicalEvent.Description.Replace("'", "''")}', " +
                 $"'{astronomicalEvent.Time.Replace("'", "''")}', " +
                 $"{(astronomicalEvent.Latitude?.ToString() ?? "NULL")}, " +
@@ -140,9 +171,9 @@ namespace AstroGathering.Database
             var valuesList = new List<string>();
             foreach (var astroEvent in events)
             {
-                var values = $"('{astroEvent.Name.Replace("'", "''")}', " +
+                var values = $"('{astroEvent.EventName.Replace("'", "''")}', " + // Using EventName
                     $"'{astroEvent.Type.Replace("'", "''")}', " +
-                    $"'{astroEvent.Date:yyyy-MM-dd}', " +
+                    $"'{astroEvent.EventDate:yyyy-MM-dd}', " + // Using EventDate
                     $"'{astroEvent.Description.Replace("'", "''")}', " +
                     $"'{astroEvent.ImageUrl.Replace("'", "''")}', " +
                     $"'{astroEvent.HdImageUrl.Replace("'", "''")}', " +

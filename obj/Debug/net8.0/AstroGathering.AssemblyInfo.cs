@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AstroGathering")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cd58f37535bb3f812caef7bf48d2b9d6903bedd5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+26b3ffeef50614ccecce0dd249f47c4330438f9a")]
 [assembly: System.Reflection.AssemblyProductAttribute("AstroGathering")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AstroGathering")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

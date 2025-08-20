@@ -133,3 +133,10 @@
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/obj/Debug/net8.0/AstroGathering.pdb
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/obj/Debug/net8.0/AstroGathering.genruntimeconfig.cache
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/obj/Debug/net8.0/ref/AstroGathering.dll
+/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Azure.Core.dll
+/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Azure.Storage.Blobs.dll
+/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Azure.Storage.Common.dll
+/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/System.ClientModel.dll
+/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/System.IO.Hashing.dll
+/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/System.Memory.Data.dll

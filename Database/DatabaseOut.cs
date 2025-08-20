@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using AstroGathering.Objects;
 
@@ -137,7 +138,7 @@ namespace AstroGathering.Database
                     {
                         PhotoId = Convert.ToInt32(reader["photo_id"]),
                         UserId = Convert.ToInt32(reader["user_id"]),
-                        ImageUrl = reader["image_url"].ToString(),
+                        ImageUrl = reader["image_url"].ToString() ?? "",
                         Location = reader["location"]?.ToString(),
                         Description = reader["description"]?.ToString(),
                         DateTaken = reader["date_taken"] != DBNull.Value ? Convert.ToDateTime(reader["date_taken"]) : null,
@@ -148,6 +149,48 @@ namespace AstroGathering.Database
             catch (Exception ex)
             {
                 Console.WriteLine($"Get All Photos Error: {ex.Message}");
+            }
+            finally
+            {
+                connection?.Close();
+            }
+
+            return photos;
+        }
+
+        public async Task<List<Photo>> GetAllPhotosAsync()
+        {
+            var photos = new List<Photo>();
+            MySqlConnection? connection = null;
+
+            try
+            {
+                connection = new MySqlConnection(connectionString);
+                await connection.OpenAsync();
+
+                string query = "SELECT * FROM photos ORDER BY time_uploaded DESC;";
+                var command = new MySqlCommand(query, connection);
+                var reader = await command.ExecuteReaderAsync();
+
+                while (await reader.ReadAsync())
+                {
+                    photos.Add(new Photo
+                    {
+                        PhotoId = Convert.ToInt32(reader["photo_id"]),
+                        UserId = Convert.ToInt32(reader["user_id"]),
+                        ImageUrl = reader["image_url"].ToString() ?? "",
+                        Location = reader["location"]?.ToString(),
+                        Description = reader["description"]?.ToString(),
+                        DateTaken = reader["date_taken"] != DBNull.Value ? Convert.ToDateTime(reader["date_taken"]) : null,
+                        TimeUploaded = Convert.ToDateTime(reader["time_uploaded"])
+                    });
+                }
+
+                Console.WriteLine($"Found {photos.Count} user photos");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Get All Photos Async Error: {ex.Message}");
             }
             finally
             {
@@ -342,10 +385,10 @@ namespace AstroGathering.Database
                 {
                     events.Add(new AstronomicalEvent
                     {
-                        Id = Convert.ToInt32(reader["id"]),
-                        Name = reader["name"].ToString() ?? "",
+                        EventId = Convert.ToInt32(reader["id"]), // Map id to EventId
+                        EventName = reader["name"].ToString() ?? "", // Map name to EventName
                         Type = reader["type"].ToString() ?? "",
-                        Date = Convert.ToDateTime(reader["event_date"]),
+                        EventDate = Convert.ToDateTime(reader["event_date"]), // Map event_date to EventDate
                         Description = reader["description"].ToString() ?? "",
                         ImageUrl = reader["image_url"].ToString() ?? "",
                         HdImageUrl = reader["hd_image_url"].ToString() ?? "",
@@ -391,10 +434,10 @@ namespace AstroGathering.Database
                 {
                     events.Add(new AstronomicalEvent
                     {
-                        Id = Convert.ToInt32(reader["id"]),
-                        Name = reader["name"].ToString() ?? "",
+                        EventId = Convert.ToInt32(reader["id"]), // Map id to EventId
+                        EventName = reader["name"].ToString() ?? "", // Map name to EventName
                         Type = reader["type"].ToString() ?? "",
-                        Date = Convert.ToDateTime(reader["event_date"]),
+                        EventDate = Convert.ToDateTime(reader["event_date"]), // Map event_date to EventDate
                         Description = reader["description"].ToString() ?? "",
                         ImageUrl = reader["image_url"].ToString() ?? "",
                         HdImageUrl = reader["hd_image_url"].ToString() ?? "",
@@ -472,10 +515,10 @@ namespace AstroGathering.Database
                 {
                     events.Add(new AstronomicalEvent
                     {
-                        Id = Convert.ToInt32(reader["id"]),
-                        Name = reader["name"].ToString() ?? "",
+                        EventId = Convert.ToInt32(reader["id"]), // Map id to EventId
+                        EventName = reader["name"].ToString() ?? "", // Map name to EventName
                         Type = reader["type"].ToString() ?? "",
-                        Date = Convert.ToDateTime(reader["event_date"]),
+                        EventDate = Convert.ToDateTime(reader["event_date"]), // Map event_date to EventDate
                         Description = reader["description"].ToString() ?? "",
                         ImageUrl = reader["image_url"].ToString() ?? "",
                         HdImageUrl = reader["hd_image_url"].ToString() ?? "",

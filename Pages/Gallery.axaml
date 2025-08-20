@@ -132,12 +132,28 @@
                                             </StackPanel>
                                         </Border>
                                         
-                                        <!-- Actual Image -->
+                                        <!-- Actual Image with better error handling -->
                                         <Image x:Name="PhotoImage"
-                                              Source="{Binding ImageUrl}" 
+                                              Source="{Binding ImageUrl}"
                                               Stretch="UniformToFill" 
                                               HorizontalAlignment="Center" 
-                                              VerticalAlignment="Center"/>
+                                              VerticalAlignment="Center"
+                                              IsVisible="True"
+                                              RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                        
+                                        <!-- Show URL for debugging -->
+                                        <Border HorizontalAlignment="Left" 
+                                               VerticalAlignment="Bottom" 
+                                               Background="#CC000000"
+                                               CornerRadius="3"
+                                               Padding="5,2"
+                                               Margin="5">
+                                            <TextBlock Text="{Binding Name}" 
+                                                      FontSize="8" 
+                                                      Foreground="White" 
+                                                      TextWrapping="Wrap"
+                                                      MaxWidth="300"/>
+                                        </Border>
                                     </Grid>
                                 </Border>
                                 

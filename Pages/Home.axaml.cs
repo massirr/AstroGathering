@@ -241,7 +241,7 @@ namespace AstroGathering.Pages
                 if (_monthlyEvents.ContainsKey(selectedDate))
                 {
                     var events = _monthlyEvents[selectedDate];
-                    var eventText = string.Join("\n", events.Select(e => $"• {e.Name}: {e.Description}"));
+                    var eventText = string.Join("\n", events.Select(e => $"• {e.EventName}: {e.Description}")); // Updated to use EventName
                     
                     if (TodaysEventsText != null)
                     {
@@ -272,7 +272,7 @@ namespace AstroGathering.Pages
                     if (_monthlyEvents.ContainsKey(today) && _currentMonth.Month == today.Month && _currentMonth.Year == today.Year)
                     {
                         var events = _monthlyEvents[today];
-                        var eventText = string.Join("\n", events.Select(e => $"• {e.Name}: {e.Description}"));
+                        var eventText = string.Join("\n", events.Select(e => $"• {e.EventName}: {e.Description}")); // Updated to use EventName
                         TodaysEventsText.Text = $"Today's Events:\n{eventText}";
                     }
                     else

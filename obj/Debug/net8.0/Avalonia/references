@@ -22,6 +22,9 @@
 /Users/koze/.nuget/packages/avalonia.win32/11.3.2/lib/net8.0/Avalonia.Win32.Automation.dll
 /Users/koze/.nuget/packages/avalonia.win32/11.3.2/lib/net8.0/Avalonia.Win32.dll
 /Users/koze/.nuget/packages/avalonia.x11/11.3.2/lib/net8.0/Avalonia.X11.dll
+/Users/koze/.nuget/packages/azure.core/1.44.1/lib/net6.0/Azure.Core.dll
+/Users/koze/.nuget/packages/azure.storage.blobs/12.25.0/lib/net8.0/Azure.Storage.Blobs.dll
+/Users/koze/.nuget/packages/azure.storage.common/12.24.0/lib/net8.0/Azure.Storage.Common.dll
 /Users/koze/.nuget/packages/bouncycastle.cryptography/2.5.1/lib/net6.0/BouncyCastle.Cryptography.dll
 /Users/koze/.nuget/packages/dotnetenv/3.1.1/lib/netstandard1.3/DotNetEnv.dll
 /Users/koze/.nuget/packages/google.protobuf/3.30.0/lib/net5.0/Google.Protobuf.dll
@@ -44,6 +47,7 @@
 /Users/koze/.nuget/packages/microsoft.aspnetcore.server.kestrel.transport.abstractions/2.3.0/lib/netstandard2.0/Microsoft.AspNetCore.Server.Kestrel.Transport.Abstractions.dll
 /Users/koze/.nuget/packages/microsoft.aspnetcore.server.kestrel.transport.sockets/2.3.0/lib/netstandard2.0/Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.dll
 /Users/koze/.nuget/packages/microsoft.aspnetcore.webutilities/2.3.0/lib/netstandard2.0/Microsoft.AspNetCore.WebUtilities.dll
+/Users/koze/.nuget/packages/microsoft.bcl.asyncinterfaces/6.0.0/lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/Microsoft.CSharp.dll
 /Users/koze/.nuget/packages/microsoft.extensions.configuration.abstractions/9.0.7/lib/net8.0/Microsoft.Extensions.Configuration.Abstractions.dll
 /Users/koze/.nuget/packages/microsoft.extensions.configuration.binder/8.0.2/lib/net8.0/Microsoft.Extensions.Configuration.Binder.dll
@@ -77,6 +81,7 @@
 /Users/koze/.nuget/packages/sprache/2.3.1/lib/netstandard2.1/Sprache.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.AppContext.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.Buffers.dll
+/Users/koze/.nuget/packages/system.clientmodel/1.1.0/lib/net6.0/System.ClientModel.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.Collections.Concurrent.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.Collections.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.Collections.Immutable.dll
@@ -125,6 +130,7 @@
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.IO.FileSystem.DriveInfo.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.IO.FileSystem.Primitives.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.IO.FileSystem.Watcher.dll
+/Users/koze/.nuget/packages/system.io.hashing/8.0.0/lib/net8.0/System.IO.Hashing.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.IO.IsolatedStorage.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.IO.MemoryMappedFiles.dll
 /Users/koze/.nuget/packages/system.io.pipelines/9.0.0/lib/net8.0/System.IO.Pipelines.dll
@@ -135,6 +141,7 @@
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.Linq.Expressions.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.Linq.Parallel.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.Linq.Queryable.dll
+/Users/koze/.nuget/packages/system.memory.data/6.0.0/lib/net6.0/System.Memory.Data.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.Memory.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.Net.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/System.Net.Http.dll

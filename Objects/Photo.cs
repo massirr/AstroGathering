@@ -7,7 +7,7 @@ namespace AstroGathering.Objects
     {
         public int PhotoId { get; set; }
         public int UserId { get; set; }
-        public string ImageUrl { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
         public string? Location { get; set; }
         public string? Description { get; set; }
         public DateTime? DateTaken { get; set; }
@@ -34,13 +34,13 @@ namespace AstroGathering.Objects
 
         public List<string> GetPhotoTags()
         {
-            // This would be populated by the Data class
+            // This would be populated by the DatabaseOut class
             return new List<string>();
         }
 
         public int GetLikes()
         {
-            // This would be calculated by the Data class
+            // This would be calculated by the DatabaseOut class
             return 0;
         }
     }

@@ -70,7 +70,7 @@ namespace AstroGathering.Services
                     // Group cached events by date
                     foreach (var cachedEvent in cachedEvents)
                     {
-                        var eventDate = cachedEvent.Date.Date;
+                        var eventDate = cachedEvent.EventDate.Date; // Updated to use EventDate
                         if (!monthlyEvents.ContainsKey(eventDate))
                             monthlyEvents[eventDate] = new List<AstronomicalEvent>();
                         monthlyEvents[eventDate].Add(cachedEvent);
@@ -94,7 +94,7 @@ namespace AstroGathering.Services
                 foreach (var apodEvent in apodEvents)
                 {
                     apodEvent.Source = "NASA_APOD";
-                    var eventDate = apodEvent.Date.Date;
+                    var eventDate = apodEvent.EventDate.Date; // Updated to use EventDate
                     if (!monthlyEvents.ContainsKey(eventDate))
                         monthlyEvents[eventDate] = new List<AstronomicalEvent>();
                     monthlyEvents[eventDate].Add(apodEvent);
@@ -199,9 +199,9 @@ namespace AstroGathering.Services
 
                     return new AstronomicalEvent
                     {
-                        Name = $"🌌 {title}",
+                        EventName = $"🌌 {title}", // Updated to use EventName
                         Type = "Astronomy Feature",
-                        Date = date,
+                        EventDate = date, // Updated to use EventDate
                         Description = truncatedExplanation,
                         ImageUrl = imageUrl,
                         HdImageUrl = hdImageUrl,
@@ -297,9 +297,9 @@ namespace AstroGathering.Services
                                 
                                 events.Add(new AstronomicalEvent
                                 {
-                                    Name = $"🌌 Asteroid {name}{hazardText}",
+                                    EventName = $"🌌 Asteroid {name}{hazardText}", // Updated to use EventName
                                     Type = "Near Earth Object",
-                                    Date = date,
+                                    EventDate = date, // Updated to use EventDate
                                     Description = $"Distance: {FormatDistance(distanceKm)} km, Size: ~{FormatSize(diameterM)} m",
                                     Time = "Close approach today"
                                 });
@@ -373,9 +373,9 @@ namespace AstroGathering.Services
                                                 
                                                 monthlyEvents[neoDate].Add(new AstronomicalEvent
                                                 {
-                                                    Name = $"🌌 Asteroid {name}{hazardText}",
+                                                    EventName = $"🌌 Asteroid {name}{hazardText}", // Updated to use EventName
                                                     Type = "Near Earth Object",
-                                                    Date = neoDate,
+                                                    EventDate = neoDate, // Updated to use EventDate
                                                     Description = $"Distance: {FormatDistance(distanceKm)} km, Size: ~{FormatSize(diameterM)} m",
                                                     Time = "Close approach today"
                                                 });
@@ -419,9 +419,9 @@ namespace AstroGathering.Services
                     var emoji = GetMoonPhaseEmoji(phase);
                     events.Add(new AstronomicalEvent
                     {
-                        Name = $"{emoji} Moon Phase: {phase}",
+                        EventName = $"{emoji} Moon Phase: {phase}", // Updated to use EventName
                         Type = "Moon Phase",
-                        Date = date,
+                        EventDate = date, // Updated to use EventDate
                         Description = $"The moon is in {phase} phase today",
                         Time = "Visible at night"
                     });
