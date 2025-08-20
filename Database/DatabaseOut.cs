@@ -315,5 +315,190 @@ namespace AstroGathering.Database
 
             return helpSections;
         }
+
+        // ASTRONOMICAL EVENTS OPERATIONS
+        public List<AstronomicalEvent> GetAstronomicalEventsForMonth(DateTime month)
+        {
+            var events = new List<AstronomicalEvent>();
+            MySqlConnection? connection = null;
+
+            try
+            {
+                var firstDay = new DateTime(month.Year, month.Month, 1);
+                var lastDay = firstDay.AddMonths(1).AddDays(-1);
+
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+
+                string query = "SELECT id, name, type, event_date, description, image_url, hd_image_url, time_info, latitude, longitude, api_source, created_at " +
+                    "FROM astronomical_events " +
+                    $"WHERE event_date >= '{firstDay:yyyy-MM-dd}' AND event_date <= '{lastDay:yyyy-MM-dd}' " +
+                    "ORDER BY event_date ASC, type ASC;";
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    events.Add(new AstronomicalEvent
+                    {
+                        Id = Convert.ToInt32(reader["id"]),
+                        Name = reader["name"].ToString() ?? "",
+                        Type = reader["type"].ToString() ?? "",
+                        Date = Convert.ToDateTime(reader["event_date"]),
+                        Description = reader["description"].ToString() ?? "",
+                        ImageUrl = reader["image_url"].ToString() ?? "",
+                        HdImageUrl = reader["hd_image_url"].ToString() ?? "",
+                        Time = reader["time_info"].ToString() ?? "",
+                        Latitude = reader["latitude"] == DBNull.Value ? null : Convert.ToDouble(reader["latitude"]),
+                        Longitude = reader["longitude"] == DBNull.Value ? null : Convert.ToDouble(reader["longitude"]),
+                        Source = reader["api_source"].ToString() ?? "",
+                        CreatedAt = Convert.ToDateTime(reader["created_at"])
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Get Astronomical Events Error: {ex.Message}");
+            }
+            finally
+            {
+                connection?.Close();
+            }
+
+            return events;
+        }
+
+        public List<AstronomicalEvent> GetAstronomicalEventsForDate(DateTime date)
+        {
+            var events = new List<AstronomicalEvent>();
+            MySqlConnection? connection = null;
+
+            try
+            {
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+
+                string query = "SELECT id, name, type, event_date, description, image_url, hd_image_url, time_info, latitude, longitude, api_source, created_at " +
+                    "FROM astronomical_events " +
+                    $"WHERE event_date = '{date:yyyy-MM-dd}' " +
+                    "ORDER BY type ASC, name ASC;";
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    events.Add(new AstronomicalEvent
+                    {
+                        Id = Convert.ToInt32(reader["id"]),
+                        Name = reader["name"].ToString() ?? "",
+                        Type = reader["type"].ToString() ?? "",
+                        Date = Convert.ToDateTime(reader["event_date"]),
+                        Description = reader["description"].ToString() ?? "",
+                        ImageUrl = reader["image_url"].ToString() ?? "",
+                        HdImageUrl = reader["hd_image_url"].ToString() ?? "",
+                        Time = reader["time_info"].ToString() ?? "",
+                        Latitude = reader["latitude"] == DBNull.Value ? null : Convert.ToDouble(reader["latitude"]),
+                        Longitude = reader["longitude"] == DBNull.Value ? null : Convert.ToDouble(reader["longitude"]),
+                        Source = reader["api_source"].ToString() ?? "",
+                        CreatedAt = Convert.ToDateTime(reader["created_at"])
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Get Astronomical Events for Date Error: {ex.Message}");
+            }
+            finally
+            {
+                connection?.Close();
+            }
+
+            return events;
+        }
+
+        public bool HasAstronomicalEventsForMonth(DateTime month)
+        {
+            MySqlConnection? connection = null;
+
+            try
+            {
+                var firstDay = new DateTime(month.Year, month.Month, 1);
+                var lastDay = firstDay.AddMonths(1).AddDays(-1);
+
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+
+                string query = "SELECT COUNT(*) FROM astronomical_events " +
+                    $"WHERE event_date >= '{firstDay:yyyy-MM-dd}' AND event_date <= '{lastDay:yyyy-MM-dd}';";
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                var result = command.ExecuteScalar();
+
+                return Convert.ToInt32(result) > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Check Astronomical Events Error: {ex.Message}");
+                return false;
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
+
+        // Method to get all astronomical events that have images for the gallery
+        public List<AstronomicalEvent> GetAllAstronomicalEventsWithImages()
+        {
+            var events = new List<AstronomicalEvent>();
+            MySqlConnection? connection = null;
+
+            try
+            {
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+
+                string query = "SELECT id, name, type, event_date, description, image_url, hd_image_url, time_info, latitude, longitude, api_source, created_at " +
+                    "FROM astronomical_events " +
+                    "WHERE image_url IS NOT NULL AND image_url != '' " +
+                    "ORDER BY event_date DESC, created_at DESC;";
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    events.Add(new AstronomicalEvent
+                    {
+                        Id = Convert.ToInt32(reader["id"]),
+                        Name = reader["name"].ToString() ?? "",
+                        Type = reader["type"].ToString() ?? "",
+                        Date = Convert.ToDateTime(reader["event_date"]),
+                        Description = reader["description"].ToString() ?? "",
+                        ImageUrl = reader["image_url"].ToString() ?? "",
+                        HdImageUrl = reader["hd_image_url"].ToString() ?? "",
+                        Time = reader["time_info"].ToString() ?? "",
+                        Latitude = reader["latitude"] == DBNull.Value ? null : Convert.ToDouble(reader["latitude"]),
+                        Longitude = reader["longitude"] == DBNull.Value ? null : Convert.ToDouble(reader["longitude"]),
+                        Source = reader["api_source"].ToString() ?? "",
+                        CreatedAt = Convert.ToDateTime(reader["created_at"])
+                    });
+                }
+
+                Console.WriteLine($"Found {events.Count} astronomical events with images for gallery");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Get Astronomical Events With Images Error: {ex.Message}");
+            }
+            finally
+            {
+                connection?.Close();
+            }
+
+            return events;
+        }
     }
 }

@@ -140,7 +140,7 @@ namespace AstroGathering
 
         private void LoadGalleryPage()
         {
-            var galleryPage = new ComingSoonPageContent("Gallery", "🖼️ Browse stunning celestial images!");
+            var galleryPage = new GalleryPage();
             if (PageContent != null)
             {
                 PageContent.Content = galleryPage;

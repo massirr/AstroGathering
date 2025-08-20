@@ -78,6 +78,7 @@
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Microsoft.Net.Http.Headers.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/MySql.Data.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/MySqlConnector.dll
+/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Newtonsoft.Json.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/SkiaSharp.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/Sprache.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/System.Configuration.ConfigurationManager.dll

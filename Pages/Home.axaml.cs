@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using AstroGathering.Objects;
+using AstroGathering.Services;
 using System;
 using System.Threading.Tasks;
 using System.Linq;
@@ -12,13 +13,17 @@ namespace AstroGathering.Pages
     {
         private User? _user;
         private DateTime _currentMonth = DateTime.Now;
+        private int _selectedDay = DateTime.Today.Day; // Track which day is selected
+        private readonly NasaApiService _nasaService;
+        private Dictionary<DateTime, List<AstronomicalEvent>> _monthlyEvents = new();
 
         // Parameterless constructor for XAML designer support
         public HomePage()
         {
             InitializeComponent();
+            _nasaService = new NasaApiService();
             InitializeEvents();
-            LoadCalendarData();
+            _ = LoadCalendarData(); // Fire and forget for constructor
         }
 
         public HomePage(User user) : this()
@@ -35,7 +40,7 @@ namespace AstroGathering.Pages
                 NextMonthButton.Click += OnNextMonthClick;
         }
 
-        private void LoadCalendarData()
+        private async Task LoadCalendarData()
         {
             // Update current month display
             if (CurrentMonthText != null)
@@ -43,17 +48,40 @@ namespace AstroGathering.Pages
                 CurrentMonthText.Text = _currentMonth.ToString("MMMM yyyy");
             }
             
+            // Load events for the month
+            await LoadEventsForMonth();
+            
             // Load calendar grid with event indicators
             PopulateCalendarGrid();
             
             // Load today's events and monthly summary
-            LoadTodaysEvents();
+            await LoadTodaysEvents();
             LoadMonthlySummary();
+        }
+
+        private async Task LoadEventsForMonth()
+        {
+            try
+            {
+                Console.WriteLine($"Loading events for {_currentMonth:MMMM yyyy}");
+                
+                // Use the new monthly batch API call
+                _monthlyEvents = await _nasaService.GetMonthlyEventsAsync(_currentMonth);
+                
+                Console.WriteLine($"Loaded {_monthlyEvents.Count} days with events");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading events for month: {ex.Message}");
+                _monthlyEvents.Clear();
+            }
         }
 
         private void PopulateCalendarGrid()
         {
             if (CalendarGrid == null) return;
+
+            Console.WriteLine($"PopulateCalendarGrid: Selected day {_selectedDay}, Total events for month: {_monthlyEvents.Count} dates");
 
             // Clear existing calendar day controls (keep headers)
             var toRemove = CalendarGrid.Children
@@ -70,10 +98,13 @@ namespace AstroGathering.Pages
             var daysInMonth = DateTime.DaysInMonth(_currentMonth.Year, _currentMonth.Month);
             var firstDayOfWeek = (int)firstDay.DayOfWeek; // 0 = Sunday
             
-            // Add calendar day buttons (no events for now)
+            // Add calendar day buttons with event indicators
             for (int day = 1; day <= daysInMonth; day++)
             {
-                var dayButton = CreateDayButton(day, 0); // 0 events
+                var currentDate = new DateTime(_currentMonth.Year, _currentMonth.Month, day);
+                var eventCount = _monthlyEvents.ContainsKey(currentDate) ? _monthlyEvents[currentDate].Count : 0;
+                
+                var dayButton = CreateDayButton(day, eventCount);
                 
                 // Calculate position in grid
                 var totalDays = firstDayOfWeek + day - 1;
@@ -157,8 +188,11 @@ namespace AstroGathering.Pages
 
         private Avalonia.Media.IBrush GetDayBorder(int day)
         {
+            if (day == _selectedDay && _currentMonth.Month == DateTime.Today.Month && _currentMonth.Year == DateTime.Today.Year)
+                return Avalonia.Media.Brush.Parse("#ffffff"); // Selected day - white border
+            
             if (IsToday(day))
-                return Avalonia.Media.Brush.Parse("#ffffff"); // Today - white border
+                return Avalonia.Media.Brush.Parse("#ffaa00"); // Today - orange border
             
             return Avalonia.Media.Brush.Parse("#444444"); // Normal - gray border
         }
@@ -193,11 +227,33 @@ namespace AstroGathering.Pages
         {
             try
             {
+                Console.WriteLine($"Day {day} selected");
+                
+                // Update selected day
+                _selectedDay = day;
+                
+                // Refresh the calendar to update visual selection
+                PopulateCalendarGrid();
+                
                 var selectedDate = new DateTime(_currentMonth.Year, _currentMonth.Month, day);
                 
-                if (TodaysEventsText != null)
+                // Update today's events display with selected day's events
+                if (_monthlyEvents.ContainsKey(selectedDate))
                 {
-                    TodaysEventsText.Text = $"Selected {selectedDate:MMM dd}. Calendar functionality preserved - no API dependencies.";
+                    var events = _monthlyEvents[selectedDate];
+                    var eventText = string.Join("\n", events.Select(e => $"• {e.Name}: {e.Description}"));
+                    
+                    if (TodaysEventsText != null)
+                    {
+                        TodaysEventsText.Text = $"Events for {selectedDate:MMM dd}:\n{eventText}";
+                    }
+                }
+                else
+                {
+                    if (TodaysEventsText != null)
+                    {
+                        TodaysEventsText.Text = $"No events for {selectedDate:MMM dd}.";
+                    }
                 }
             }
             catch (Exception ex)
@@ -206,18 +262,28 @@ namespace AstroGathering.Pages
             }
         }
 
-        private void LoadTodaysEvents()
+        private async Task LoadTodaysEvents()
         {
             if (TodaysEventsText != null)
             {
                 try
                 {
-                    TodaysEventsText.Text = "Calendar ready! Click any day to select it. API dependencies removed.";
+                    var today = DateTime.Today;
+                    if (_monthlyEvents.ContainsKey(today) && _currentMonth.Month == today.Month && _currentMonth.Year == today.Year)
+                    {
+                        var events = _monthlyEvents[today];
+                        var eventText = string.Join("\n", events.Select(e => $"• {e.Name}: {e.Description}"));
+                        TodaysEventsText.Text = $"Today's Events:\n{eventText}";
+                    }
+                    else
+                    {
+                        TodaysEventsText.Text = "No astronomical events for today.";
+                    }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error loading today's events: {ex.Message}");
-                    TodaysEventsText.Text = "Calendar ready!";
+                    TodaysEventsText.Text = "Error loading events";
                 }
             }
         }
@@ -226,11 +292,15 @@ namespace AstroGathering.Pages
         {
             try
             {
-                // Static placeholder data since API is removed
-                if (TotalEventsText != null) TotalEventsText.Text = "0";
-                if (MeteorShowersText != null) MeteorShowersText.Text = "0";
-                if (MoonPhasesText != null) MoonPhasesText.Text = "0";
-                if (PlanetaryEventsText != null) PlanetaryEventsText.Text = "0";
+                var totalEvents = _monthlyEvents.Values.SelectMany(events => events).Count();
+                var meteorShowers = _monthlyEvents.Values.SelectMany(events => events).Count(e => e.Type == "Near Earth Object");
+                var moonPhases = _monthlyEvents.Values.SelectMany(events => events).Count(e => e.Type == "Moon Phase");
+                var planetaryEvents = _monthlyEvents.Values.SelectMany(events => events).Count(e => e.Type == "Astronomy Feature");
+
+                if (TotalEventsText != null) TotalEventsText.Text = totalEvents.ToString();
+                if (MeteorShowersText != null) MeteorShowersText.Text = meteorShowers.ToString();
+                if (MoonPhasesText != null) MoonPhasesText.Text = moonPhases.ToString();
+                if (PlanetaryEventsText != null) PlanetaryEventsText.Text = planetaryEvents.ToString();
             }
             catch (Exception ex)
             {
@@ -244,16 +314,18 @@ namespace AstroGathering.Pages
         }
 
         // Calendar navigation
-        private void OnPrevMonthClick(object? sender, RoutedEventArgs e)
+        private async void OnPrevMonthClick(object? sender, RoutedEventArgs e)
         {
             _currentMonth = _currentMonth.AddMonths(-1);
-            LoadCalendarData();
+            _selectedDay = 1; // Reset selection to first day when changing months
+            await LoadCalendarData();
         }
 
-        private void OnNextMonthClick(object? sender, RoutedEventArgs e)
+        private async void OnNextMonthClick(object? sender, RoutedEventArgs e)
         {
             _currentMonth = _currentMonth.AddMonths(1);
-            LoadCalendarData();
+            _selectedDay = 1; // Reset selection to first day when changing months
+            await LoadCalendarData();
         }
     }
 }

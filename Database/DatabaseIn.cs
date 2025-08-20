@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using MySql.Data.MySqlClient;
 using AstroGathering.Objects;
 
@@ -113,6 +115,62 @@ namespace AstroGathering.Database
                 $"VALUES ('{helpContent.Title}', '{helpContent.Content}', NOW());";
 
             return Insert(query);
+        }
+
+        // ASTRONOMICAL EVENTS OPERATIONS
+        public int InsertAstronomicalEvent(AstronomicalEvent astronomicalEvent)
+        {
+            string query = "INSERT INTO astronomical_events (name, type, event_date, description, time_info, latitude, longitude, api_source) " +
+                $"VALUES ('{astronomicalEvent.Name.Replace("'", "''")}', " +
+                $"'{astronomicalEvent.Type.Replace("'", "''")}', " +
+                $"'{astronomicalEvent.Date:yyyy-MM-dd}', " +
+                $"'{astronomicalEvent.Description.Replace("'", "''")}', " +
+                $"'{astronomicalEvent.Time.Replace("'", "''")}', " +
+                $"{(astronomicalEvent.Latitude?.ToString() ?? "NULL")}, " +
+                $"{(astronomicalEvent.Longitude?.ToString() ?? "NULL")}, " +
+                $"'{astronomicalEvent.Source.Replace("'", "''")}');";
+
+            return Insert(query);
+        }
+
+        public bool InsertAstronomicalEvents(List<AstronomicalEvent> events)
+        {
+            if (!events.Any()) return true;
+
+            var valuesList = new List<string>();
+            foreach (var astroEvent in events)
+            {
+                var values = $"('{astroEvent.Name.Replace("'", "''")}', " +
+                    $"'{astroEvent.Type.Replace("'", "''")}', " +
+                    $"'{astroEvent.Date:yyyy-MM-dd}', " +
+                    $"'{astroEvent.Description.Replace("'", "''")}', " +
+                    $"'{astroEvent.ImageUrl.Replace("'", "''")}', " +
+                    $"'{astroEvent.HdImageUrl.Replace("'", "''")}', " +
+                    $"'{astroEvent.Time.Replace("'", "''")}', " +
+                    $"{(astroEvent.Latitude?.ToString() ?? "NULL")}, " +
+                    $"{(astroEvent.Longitude?.ToString() ?? "NULL")}, " +
+                    $"'{astroEvent.Source.Replace("'", "''")}')";
+                valuesList.Add(values);
+            }
+
+            string query = "INSERT INTO astronomical_events (name, type, event_date, description, image_url, hd_image_url, time_info, latitude, longitude, api_source) " +
+                $"VALUES {string.Join(", ", valuesList)} " +
+                "ON DUPLICATE KEY UPDATE " +
+                "name = VALUES(name), description = VALUES(description), image_url = VALUES(image_url), hd_image_url = VALUES(hd_image_url), " +
+                "time_info = VALUES(time_info), latitude = VALUES(latitude), longitude = VALUES(longitude), updated_at = NOW();";
+
+            return Insert(query) > 0;
+        }
+
+        public bool ClearAstronomicalEventsForMonth(DateTime month)
+        {
+            var firstDay = new DateTime(month.Year, month.Month, 1);
+            var lastDay = firstDay.AddMonths(1).AddDays(-1);
+
+            string query = $"DELETE FROM astronomical_events " +
+                $"WHERE event_date >= '{firstDay:yyyy-MM-dd}' AND event_date <= '{lastDay:yyyy-MM-dd}';";
+
+            return Insert(query) >= 0; // Allow 0 deleted rows
         }
     }
 }
