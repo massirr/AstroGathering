@@ -1,11 +1,16 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
+using Avalonia.Media.Imaging;
 using AstroGathering.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.IO;
+using System.Threading;
+using System.ComponentModel;
 
 namespace AstroGathering.Pages
 {
@@ -60,14 +65,7 @@ namespace AstroGathering.Pages
                     IsUserPhoto = false
                 }).Where(photo => !string.IsNullOrEmpty(photo.ImageUrl));
 
-                // For debugging: Replace first photo with a known working image
                 var eventPhotosList = eventPhotos.ToList();
-                if (eventPhotosList.Any())
-                {
-                    eventPhotosList[0].ImageUrl = "https://httpbin.org/image/jpeg";
-                    eventPhotosList[0].Name = "Test Image (httpbin)";
-                    eventPhotosList[0].CleanName = "Test Image (httpbin)";
-                }
 
                 // Debug: Log first few image URLs
                 Console.WriteLine($"Sample image URLs from events:");
@@ -110,7 +108,7 @@ namespace AstroGathering.Pages
 
                 Console.WriteLine($"Total photos to display: {allPhotos.Count}");
 
-                // Update UI on main thread
+                // Update UI on main thread first to show the cards
                 await Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     PhotoGrid!.ItemsSource = allPhotos;
@@ -131,6 +129,34 @@ namespace AstroGathering.Pages
                         NoPhotosPanel!.IsVisible = true;
                         Console.WriteLine("No photos found, showing no photos panel");
                     }
+                });
+
+                // Load images asynchronously after UI is shown
+                Console.WriteLine("Starting async image loading...");
+                _ = Task.Run(async () =>
+                {
+                    var semaphore = new SemaphoreSlim(3, 3); // Limit to 3 concurrent downloads
+                    var tasks = allPhotos.Select(async photo =>
+                    {
+                        await semaphore.WaitAsync();
+                        try
+                        {
+                            await photo.LoadImageAsync();
+                            // Trigger UI update on main thread
+                            await Dispatcher.UIThread.InvokeAsync(() =>
+                            {
+                                // Force UI refresh for this item
+                                PhotoGrid?.InvalidateVisual();
+                            });
+                        }
+                        finally
+                        {
+                            semaphore.Release();
+                        }
+                    });
+                    
+                    await Task.WhenAll(tasks);
+                    Console.WriteLine("All images loaded!");
                 });
             }
             catch (Exception ex)
@@ -246,7 +272,7 @@ namespace AstroGathering.Pages
     }
 
     // Data model for gallery photos
-    public class GalleryPhoto
+    public class GalleryPhoto : INotifyPropertyChanged
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -263,5 +289,52 @@ namespace AstroGathering.Pages
         public bool IsUserPhoto { get; set; }
         public string Location { get; set; } = string.Empty;
         public string Tags { get; set; } = string.Empty;
+        
+        // Add bitmap property for loaded images
+        private Bitmap? _loadedImage;
+        public Bitmap? LoadedImage 
+        { 
+            get => _loadedImage;
+            set 
+            {
+                _loadedImage = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LoadedImage)));
+            }
+        }
+        
+        public bool IsImageLoaded { get; set; } = false;
+        public string LoadingStatus { get; set; } = "Loading...";
+        
+        public event PropertyChangedEventHandler? PropertyChanged;
+        
+        public async Task LoadImageAsync()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(ImageUrl))
+                {
+                    LoadingStatus = "No image URL";
+                    return;
+                }
+
+                using var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("User-Agent", "AstroGathering/1.0");
+                
+                var imageData = await httpClient.GetByteArrayAsync(ImageUrl);
+                using var stream = new MemoryStream(imageData);
+                
+                LoadedImage = new Bitmap(stream);
+                IsImageLoaded = true;
+                LoadingStatus = "Loaded";
+                
+                Console.WriteLine($"✅ Successfully loaded image: {CleanName}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Failed to load image {CleanName}: {ex.Message}");
+                LoadingStatus = "Failed to load";
+                IsImageLoaded = false;
+            }
+        }
     }
 }
