@@ -1,7 +1,6 @@
--- AstroGathering Database Schema - Based on ERD
 -- This creates the complete database structure as shown in your ERD
 
-CREATE DATABASE IF NOT EXISTS astrogathering;
+CREATE DATABASE IF NOT EXISTS AstroGathering;
 USE astrogathering;
 
 -- Drop tables in reverse dependency order if they exist
