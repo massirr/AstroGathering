@@ -116,45 +116,12 @@
                                 <!-- Image Section -->
                                 <Border Grid.Row="0" 
                                        CornerRadius="12,12,0,0" 
-                                       ClipToBounds="True">
-                                    <Grid>
-                                        <!-- Placeholder for when image fails to load -->
-                                        <Border Background="#1a1235" 
-                                               CornerRadius="12,12,0,0">
-                                            <StackPanel HorizontalAlignment="Center" 
-                                                       VerticalAlignment="Center" 
-                                                       Spacing="10">
-                                                <TextBlock Text="🌌" FontSize="32" HorizontalAlignment="Center"/>
-                                                <TextBlock Text="Loading..." 
-                                                          FontSize="12" 
-                                                          Foreground="#8a7ca8" 
-                                                          HorizontalAlignment="Center"/>
-                                            </StackPanel>
-                                        </Border>
-                                        
-                                        <!-- Actual Image with better error handling -->
-                                        <Image x:Name="PhotoImage"
-                                              Source="{Binding ImageUrl}"
-                                              Stretch="UniformToFill" 
-                                              HorizontalAlignment="Center" 
-                                              VerticalAlignment="Center"
-                                              IsVisible="True"
-                                              RenderOptions.BitmapInterpolationMode="HighQuality"/>
-                                        
-                                        <!-- Show URL for debugging -->
-                                        <Border HorizontalAlignment="Left" 
-                                               VerticalAlignment="Bottom" 
-                                               Background="#CC000000"
-                                               CornerRadius="3"
-                                               Padding="5,2"
-                                               Margin="5">
-                                            <TextBlock Text="{Binding Name}" 
-                                                      FontSize="8" 
-                                                      Foreground="White" 
-                                                      TextWrapping="Wrap"
-                                                      MaxWidth="300"/>
-                                        </Border>
-                                    </Grid>
+                                       ClipToBounds="True"
+                                       Background="#1a1235">
+                                    <Image Source="{Binding LoadedImage}"
+                                           Stretch="UniformToFill" 
+                                           HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center"/>
                                 </Border>
                                 
                                 <!-- Content Section -->

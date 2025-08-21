@@ -140,3 +140,5 @@
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/System.ClientModel.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/System.IO.Hashing.dll
 /Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/System.Memory.Data.dll
+/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/DialogHost.Avalonia.dll
+/Users/koze/Library/CloudStorage/OneDrive-ThomasMore/TM/InspirationLab/AstroGathering/bin/Debug/net8.0/MsBox.Avalonia.dll

@@ -46,23 +46,27 @@
           "dependencies": {
             "Avalonia": {
               "target": "Package",
-              "version": "[11.3.2, )"
+              "version": "[11.3.4, )"
             },
             "Avalonia.Desktop": {
               "target": "Package",
-              "version": "[11.3.2, )"
+              "version": "[11.3.4, )"
             },
             "Avalonia.Diagnostics": {
               "target": "Package",
-              "version": "[11.3.2, )"
+              "version": "[11.3.4, )"
             },
             "Avalonia.Fonts.Inter": {
               "target": "Package",
-              "version": "[11.3.2, )"
+              "version": "[11.3.4, )"
+            },
+            "Avalonia.FreeDesktop": {
+              "target": "Package",
+              "version": "[11.3.4, )"
             },
             "Avalonia.Themes.Fluent": {
               "target": "Package",
-              "version": "[11.3.2, )"
+              "version": "[11.3.4, )"
             },
             "Azure.Storage.Blobs": {
               "target": "Package",
@@ -71,6 +75,10 @@
             "DotNetEnv": {
               "target": "Package",
               "version": "[3.1.1, )"
+            },
+            "MessageBox.Avalonia": {
+              "target": "Package",
+              "version": "[*, )"
             },
             "Microsoft.AspNetCore.Server.Kestrel": {
               "target": "Package",
