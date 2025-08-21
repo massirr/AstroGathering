@@ -2,48 +2,87 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="830"
              x:Class="AstroGathering.Pages.SettingsPage">
     
-    <!-- Settings Page with Cosmic Theme -->
+    <!-- Enhanced Settings Page with Profile and Admin sections -->
     <Grid Background="#1a1235">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>  <!-- Profile Section -->
+            <ColumnDefinition Width="*"/>    <!-- Stats and Admin Section -->
+        </Grid.ColumnDefinitions>
         
-        <!-- Title Bar -->
-        <Border Height="60" 
-                VerticalAlignment="Top"
-                Background="#2d1b69"
-                CornerRadius="0,0,20,20">
-            <StackPanel Orientation="Horizontal" 
-                       Margin="30,0" 
-                       VerticalAlignment="Center">
-                <TextBlock Text="⚙️" FontSize="24" VerticalAlignment="Center"/>
-                <TextBlock Text="Settings" 
-                          FontSize="24" 
-                          FontWeight="Bold" 
-                          Foreground="White" 
-                          Margin="15,0,0,0"
-                          VerticalAlignment="Center"/>
-            </StackPanel>
-        </Border>
-        
-        <!-- Settings Content -->
-        <ScrollViewer Margin="40,80,40,40">
+        <!-- Left Column: Profile Section -->
+        <ScrollViewer Grid.Column="0" Margin="40,40,20,40">
             <StackPanel Spacing="25">
+                
+                <!-- Header -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                    <TextBlock Text="⚙️" FontSize="24" VerticalAlignment="Center"/>
+                    <TextBlock Text="Profile Settings" 
+                              FontSize="24" 
+                              FontWeight="Bold" 
+                              Foreground="White" 
+                              Margin="15,0,0,0"
+                              VerticalAlignment="Center"/>
+                </StackPanel>
                 
                 <!-- User Profile Section -->
                 <Border Background="#2d1b69" 
                         CornerRadius="15" 
-                        Padding="30">
+                        Padding="25">
                     <StackPanel Spacing="20">
-                        <TextBlock Text="👤 User Profile" 
-                                  FontSize="20" 
+                        <TextBlock Text="👤 Profile Information" 
+                                  FontSize="18" 
                                   FontWeight="Bold" 
                                   Foreground="White"/>
                         
-                        <!-- User Info Display -->
+                        <!-- Profile Picture and Basic Info -->
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Profile Picture -->
+                            <Border Grid.Column="0" 
+                                    Width="70" 
+                                    Height="70" 
+                                    CornerRadius="35" 
+                                    Background="#4c3a8a"
+                                    ClipToBounds="True">
+                                <TextBlock x:Name="ProfileInitials"
+                                          Text="ID" 
+                                          FontSize="24" 
+                                          FontWeight="Bold"
+                                          Foreground="White"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                            </Border>
+                            
+                            <!-- Basic Info -->
+                            <StackPanel Grid.Column="1" Margin="15,0,0,0" Spacing="5">
+                                <TextBlock x:Name="UserNameText" 
+                                          Text="Welcome!" 
+                                          FontSize="16" 
+                                          FontWeight="Bold"
+                                          Foreground="White"/>
+                                <TextBlock x:Name="UserEmailText" 
+                                          Text="" 
+                                          FontSize="12" 
+                                          Foreground="#b8a7d9"/>
+                                <TextBlock x:Name="AdminBadge" 
+                                          Text="🔰 Administrator" 
+                                          FontSize="11" 
+                                          Foreground="#FFD700"
+                                          IsVisible="False"/>
+                            </StackPanel>
+                        </Grid>
+                        
+                        <!-- Detailed Info Grid -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -51,83 +90,296 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" Foreground="#b8a7d9" FontWeight="Medium"/>
-                            <TextBlock x:Name="UserNameText" Grid.Row="0" Grid.Column="1" Text="Welcome!" Foreground="White"/>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Google ID:" Foreground="#b8a7d9" FontWeight="Medium"/>
+                            <TextBlock x:Name="UserIdText" Grid.Row="0" Grid.Column="1" Text="" Foreground="White" FontSize="12"/>
                             
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Email:" Foreground="#b8a7d9" FontWeight="Medium" Margin="0,10,0,0"/>
-                            <TextBlock x:Name="UserEmailText" Grid.Row="1" Grid.Column="1" Text="" Foreground="White" Margin="0,10,0,0"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Joined:" Foreground="#b8a7d9" FontWeight="Medium" Margin="0,10,0,0"/>
+                            <TextBlock x:Name="CreatedAtText" Grid.Row="1" Grid.Column="1" Text="" Foreground="White" FontSize="12" Margin="0,10,0,0"/>
                             
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Google ID:" Foreground="#b8a7d9" FontWeight="Medium" Margin="0,10,0,0"/>
-                            <TextBlock x:Name="UserIdText" Grid.Row="2" Grid.Column="1" Text="" Foreground="White" Margin="0,10,0,0"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Last Login:" Foreground="#b8a7d9" FontWeight="Medium" Margin="0,10,0,0"/>
+                            <TextBlock x:Name="LastLoginText" Grid.Row="2" Grid.Column="1" Text="" Foreground="White" FontSize="12" Margin="0,10,0,0"/>
                             
-                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Created:" Foreground="#b8a7d9" FontWeight="Medium" Margin="0,10,0,0"/>
-                            <TextBlock x:Name="CreatedAtText" Grid.Row="3" Grid.Column="1" Text="" Foreground="White" Margin="0,10,0,0"/>
-                            
-                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Last Login:" Foreground="#b8a7d9" FontWeight="Medium" Margin="0,10,0,0"/>
-                            <TextBlock x:Name="LastLoginText" Grid.Row="4" Grid.Column="1" Text="" Foreground="White" Margin="0,10,0,0"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Status:" Foreground="#b8a7d9" FontWeight="Medium" Margin="0,10,0,0"/>
+                            <TextBlock x:Name="UserStatusText" Grid.Row="3" Grid.Column="1" Text="Active Member" Foreground="#90EE90" FontSize="12" Margin="0,10,0,0"/>
                         </Grid>
-                        
-                        <!-- Update Profile Button -->
-                        <Button Background="#4c3a8a" 
-                               Foreground="White" 
-                               CornerRadius="10" 
-                               Height="40" 
-                               Width="150"
-                               HorizontalAlignment="Left">
-                            <TextBlock Text="Update Profile"/>
-                        </Button>
-                    </StackPanel>
-                </Border>
-                
-                <!-- App Settings Section -->
-                <Border Background="#2d1b69" 
-                        CornerRadius="15" 
-                        Padding="30">
-                    <StackPanel Spacing="15">
-                        <TextBlock Text="🔧 App Settings" 
-                                  FontSize="20" 
-                                  FontWeight="Bold" 
-                                  Foreground="White"/>
-                        
-                        <CheckBox Content="Enable notifications for astronomical events" 
-                                 Foreground="#b8a7d9" 
-                                 IsChecked="True"/>
-                        <CheckBox Content="Dark mode (always on for cosmic theme)" 
-                                 Foreground="#b8a7d9" 
-                                 IsChecked="True" 
-                                 IsEnabled="False"/>
-                        <CheckBox Content="Auto-sync calendar events" 
-                                 Foreground="#b8a7d9" 
-                                 IsChecked="True"/>
                     </StackPanel>
                 </Border>
                 
                 <!-- Actions Section -->
                 <Border Background="#2d1b69" 
                         CornerRadius="15" 
-                        Padding="30">
+                        Padding="25">
                     <StackPanel Spacing="15">
-                        <TextBlock Text="🚀 Actions" 
-                                  FontSize="20" 
+                        <TextBlock Text="🚀 Account Actions" 
+                                  FontSize="16" 
                                   FontWeight="Bold" 
                                   Foreground="White"/>
                         
-                        <Button x:Name="LogoutButton" 
-                               Background="#6b4c8a" 
+                        <Button Background="#6b4c8a" 
                                Foreground="White" 
-                               CornerRadius="10" 
-                               Height="40" 
-                               Width="120"
+                               CornerRadius="8" 
+                               Height="35" 
+                               Width="140"
                                HorizontalAlignment="Left">
-                            <TextBlock Text="Logout"/>
+                            <TextBlock Text="Update Profile"/>
+                        </Button>
+                        
+                        <Button x:Name="LogoutButton" 
+                               Background="#d32f2f" 
+                               Foreground="White" 
+                               CornerRadius="8" 
+                               Height="35" 
+                               Width="100"
+                               HorizontalAlignment="Left">
+                            <TextBlock Text="Sign Out"/>
                         </Button>
                     </StackPanel>
                 </Border>
                 
             </StackPanel>
         </ScrollViewer>
+        
+        <!-- Right Column: Stats and Admin Section -->
+        <ScrollViewer Grid.Column="1" Margin="20,40,40,40">
+            <StackPanel Spacing="25">
+                
+                <!-- User Statistics -->
+                <Border Background="#2d1b69" 
+                        CornerRadius="15" 
+                        Padding="25">
+                    <StackPanel Spacing="20">
+                        <TextBlock Text="📊 Your Statistics" 
+                                  FontSize="18" 
+                                  FontWeight="Bold" 
+                                  Foreground="White"/>
+                        
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Photos Uploaded -->
+                            <Border Grid.Column="0" 
+                                    Background="#1a1235" 
+                                    CornerRadius="10" 
+                                    Padding="20"
+                                    Margin="0,0,10,0">
+                                <StackPanel HorizontalAlignment="Center" Spacing="5">
+                                    <TextBlock Text="📸" FontSize="24" HorizontalAlignment="Center"/>
+                                    <TextBlock x:Name="PhotosUploadedText" 
+                                              Text="24" 
+                                              FontSize="28" 
+                                              FontWeight="Bold"
+                                              Foreground="White" 
+                                              HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Photos Uploaded" 
+                                              FontSize="12" 
+                                              Foreground="#b8a7d9" 
+                                              HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                            
+                            <!-- Likes Received -->
+                            <Border Grid.Column="1" 
+                                    Background="#1a1235" 
+                                    CornerRadius="10" 
+                                    Padding="20"
+                                    Margin="10,0,0,0">
+                                <StackPanel HorizontalAlignment="Center" Spacing="5">
+                                    <TextBlock Text="❤️" FontSize="24" HorizontalAlignment="Center"/>
+                                    <TextBlock x:Name="LikesReceivedText" 
+                                              Text="456" 
+                                              FontSize="28" 
+                                              FontWeight="Bold"
+                                              Foreground="White" 
+                                              HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Likes Received" 
+                                              FontSize="12" 
+                                              Foreground="#b8a7d9" 
+                                              HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Admin Panel (Only visible to admins) -->
+                <Border x:Name="AdminPanel" 
+                        Background="#2d1b69" 
+                        CornerRadius="15" 
+                        Padding="25"
+                        IsVisible="False">
+                    <StackPanel Spacing="20">
+                        <TextBlock Text="🔧 Administration Panel" 
+                                  FontSize="18" 
+                                  FontWeight="Bold" 
+                                  Foreground="#FFD700"/>
+                        
+                        <!-- Admin Stats -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Border Grid.Column="0" 
+                                    Background="#1a1235" 
+                                    CornerRadius="8" 
+                                    Padding="15"
+                                    Margin="0,0,5,0">
+                                <StackPanel HorizontalAlignment="Center" Spacing="3">
+                                    <TextBlock x:Name="TotalUsersText" 
+                                              Text="0" 
+                                              FontSize="20" 
+                                              FontWeight="Bold"
+                                              Foreground="White" 
+                                              HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Total Users" 
+                                              FontSize="10" 
+                                              Foreground="#b8a7d9" 
+                                              HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                            
+                            <Border Grid.Column="1" 
+                                    Background="#1a1235" 
+                                    CornerRadius="8" 
+                                    Padding="15"
+                                    Margin="5,0">
+                                <StackPanel HorizontalAlignment="Center" Spacing="3">
+                                    <TextBlock x:Name="TotalPhotosText" 
+                                              Text="0" 
+                                              FontSize="20" 
+                                              FontWeight="Bold"
+                                              Foreground="White" 
+                                              HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Total Photos" 
+                                              FontSize="10" 
+                                              Foreground="#b8a7d9" 
+                                              HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                            
+                            <Border Grid.Column="2" 
+                                    Background="#1a1235" 
+                                    CornerRadius="8" 
+                                    Padding="15"
+                                    Margin="5,0,0,0">
+                                <StackPanel HorizontalAlignment="Center" Spacing="3">
+                                    <TextBlock x:Name="PendingReportsText" 
+                                              Text="0" 
+                                              FontSize="20" 
+                                              FontWeight="Bold"
+                                              Foreground="#FF6B6B" 
+                                              HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Reports" 
+                                              FontSize="10" 
+                                              Foreground="#b8a7d9" 
+                                              HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        
+                        <!-- Admin Action Buttons -->
+                        <StackPanel Orientation="Horizontal" Spacing="15">
+                            <Button x:Name="ManageUsersBtn"
+                                    Background="#4c3a8a" 
+                                    Foreground="White" 
+                                    CornerRadius="8" 
+                                    Height="35" 
+                                    Padding="15,0">
+                                <TextBlock Text="👥 Manage Users"/>
+                            </Button>
+                            
+                            <Button x:Name="ContentModerationBtn"
+                                    Background="#4c3a8a" 
+                                    Foreground="White" 
+                                    CornerRadius="8" 
+                                    Height="35" 
+                                    Padding="15,0">
+                                <TextBlock Text="🛡️ Content Moderation"/>
+                            </Button>
+                        </StackPanel>
+                        
+                        <!-- Quick User Management -->
+                        <StackPanel Spacing="15">
+                            <TextBlock Text="Quick Actions:" 
+                                      FontSize="14" 
+                                      FontWeight="Medium" 
+                                      Foreground="White"/>
+                            
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBox x:Name="UserEmailInput"
+                                        Grid.Column="0"
+                                        Height="35"
+                                        Background="#1a1235"
+                                        Foreground="White"
+                                        BorderBrush="#4c3a8a"
+                                        CornerRadius="6"
+                                        Padding="10,0"
+                                        Watermark="Enter user email..."
+                                        Margin="0,0,10,0"/>
+                                
+                                <Button x:Name="MakeAdminBtn"
+                                        Grid.Column="1"
+                                        Background="#FFA500" 
+                                        Foreground="White" 
+                                        CornerRadius="6" 
+                                        Height="35" 
+                                        Padding="10,0"
+                                        Margin="0,0,5,0">
+                                    <TextBlock Text="Make Admin"/>
+                                </Button>
+                                
+                                <Button x:Name="RemoveAdminBtn"
+                                        Grid.Column="2"
+                                        Background="#FF6B6B" 
+                                        Foreground="White" 
+                                        CornerRadius="6" 
+                                        Height="35" 
+                                        Padding="10,0">
+                                    <TextBlock Text="Remove Admin"/>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        
+                    </StackPanel>
+                </Border>
+                
+                <!-- App Settings (Available to all users) -->
+                <Border Background="#2d1b69" 
+                        CornerRadius="15" 
+                        Padding="25">
+                    <StackPanel Spacing="15">
+                        <TextBlock Text="🔧 App Preferences" 
+                                  FontSize="16" 
+                                  FontWeight="Bold" 
+                                  Foreground="White"/>
+                        
+                        <CheckBox Content="Enable notifications for astronomical events" 
+                                 Foreground="#b8a7d9" 
+                                 IsChecked="True"/>
+                        <CheckBox Content="Auto-sync calendar events" 
+                                 Foreground="#b8a7d9" 
+                                 IsChecked="True"/>
+                        <CheckBox Content="Show community photos in gallery" 
+                                 Foreground="#b8a7d9" 
+                                 IsChecked="True"/>
+                    </StackPanel>
+                </Border>
+                
+            </StackPanel>
+        </ScrollViewer>
+        
     </Grid>
 </UserControl>

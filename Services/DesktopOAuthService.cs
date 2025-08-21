@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AstroGathering.Objects;
+using AstroGathering.Database;
 
 namespace AstroGathering.Services
 {
@@ -54,59 +55,101 @@ namespace AstroGathering.Services
             return $"https://accounts.google.com/o/oauth2/v2/auth?{queryString}";
         }
 
+        // Keep the old method name for backward compatibility
         public async Task<User> ProcessAuthorizationCodeAsync(string code)
+        {
+            return await GetUserAsync(code);
+        }
+
+        public async Task<User> GetUserAsync(string code)
+        {
+            // Exchange authorization code for tokens
+            var tokenResponse = await ExchangeCodeForTokensAsync(code);
+            
+            if (string.IsNullOrEmpty(tokenResponse.AccessToken))
+                throw new Exception("Access token is null or empty");
+
+            // Get user info from Google
+            var userInfo = await GetUserInfoAsync(tokenResponse.AccessToken);
+            var googleId = !string.IsNullOrEmpty(userInfo.Sub) ? userInfo.Sub : userInfo.Id;
+            
+            // Try to load existing user from database
+            var database = new DatabaseOut();
+            var existingUser = database.GetUserByEmail(userInfo.Email);
+            
+            // Simple name splitting for OAuth data
+            var names = userInfo.Name?.Split(' ') ?? new string[0];
+            
+            if (existingUser != null)
+            {
+                // User exists - update with fresh OAuth data and return
+                existingUser.AccessToken = tokenResponse.AccessToken;
+                existingUser.RefreshToken = tokenResponse.RefreshToken;
+                existingUser.LastLogin = DateTime.UtcNow;
+                existingUser.ProfilePictureUrl = userInfo.Picture; // Update profile picture
+                
+                // Update first/last name if not set
+                if (string.IsNullOrEmpty(existingUser.FirstName) && names.Length > 0)
+                    existingUser.FirstName = names[0];
+                if (string.IsNullOrEmpty(existingUser.LastName) && names.Length > 1)
+                    existingUser.LastName = string.Join(" ", names.Skip(1));
+                
+                // Update last login in database
+                var databaseIn = new DatabaseIn();
+                databaseIn.UpdateUserLastLogin(existingUser.UserId, DateTime.UtcNow);
+                
+                return existingUser;
+            }
+            else
+            {
+                // New user - create with OAuth data
+                var newUser = new User
+                {
+                    GoogleId = googleId,
+                    Email = userInfo.Email,
+                    FirstName = names.Length > 0 ? names[0] : null,
+                    LastName = names.Length > 1 ? string.Join(" ", names.Skip(1)) : null,
+                    ProfilePictureUrl = userInfo.Picture,
+                    AccessToken = tokenResponse.AccessToken,
+                    RefreshToken = tokenResponse.RefreshToken,
+                    CreatedAt = DateTime.UtcNow,
+                    LastLogin = DateTime.UtcNow,
+                    IsAdmin = false // New users start as non-admin
+                };
+                
+                // Insert into database and get the user ID
+                var databaseIn = new DatabaseIn();
+                newUser.UserId = databaseIn.InsertUser(newUser);
+                
+                return newUser;
+            }
+        }
+
+        private async Task<TokenResponse> ExchangeCodeForTokensAsync(string code)
         {
             using var httpClient = new HttpClient();
             
-            var tokenRequest = new Dictionary<string, string>
+            var parameters = new Dictionary<string, string>
             {
+                {"code", code},
                 {"client_id", _clientId},
                 {"client_secret", _clientSecret},
-                {"code", code},
-                {"grant_type", "authorization_code"},
                 {"redirect_uri", _redirectUrl},
+                {"grant_type", "authorization_code"},
                 {"code_verifier", _codeVerifier}
             };
 
-            var tokenContent = new FormUrlEncodedContent(tokenRequest);
-            var tokenResponse = await httpClient.PostAsync("https://oauth2.googleapis.com/token", tokenContent);
-            
-            if (!tokenResponse.IsSuccessStatusCode)
+            var content = new FormUrlEncodedContent(parameters);
+            var response = await httpClient.PostAsync("https://oauth2.googleapis.com/token", content);
+            response.EnsureSuccessStatusCode();
+
+            var json = await response.Content.ReadAsStringAsync();
+            var tokenResponse = JsonSerializer.Deserialize<TokenResponse>(json, new JsonSerializerOptions
             {
-                var errorContent = await tokenResponse.Content.ReadAsStringAsync();
-                throw new Exception($"Token exchange failed: {errorContent}");
-            }
+                PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+            });
 
-            var tokenJson = await tokenResponse.Content.ReadAsStringAsync();
-            var tokenData = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(tokenJson);
-            
-            if (tokenData == null)
-                throw new Exception("Failed to deserialize token response");
-
-            var accessToken = tokenData["access_token"].GetString();
-            var refreshToken = tokenData.ContainsKey("refresh_token") ? tokenData["refresh_token"].GetString() : null;
-
-            if (string.IsNullOrEmpty(accessToken))
-                throw new Exception("Access token is null or empty");
-
-            // Get user info
-            var userInfo = await GetUserInfoAsync(accessToken);
-
-            // Simple name splitting
-            var names = userInfo.Name?.Split(' ') ?? new string[0];
-            
-            return new User
-            {
-                GoogleId = !string.IsNullOrEmpty(userInfo.Sub) ? userInfo.Sub : userInfo.Id,
-                Email = userInfo.Email,
-                FirstName = names.Length > 0 ? names[0] : null,
-                LastName = names.Length > 1 ? string.Join(" ", names.Skip(1)) : null,
-                ProfilePictureUrl = userInfo.Picture,
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
-                CreatedAt = DateTime.UtcNow,
-                LastLogin = DateTime.UtcNow
-            };
+            return tokenResponse ?? throw new Exception("Token response is null");
         }
 
         private async Task<GoogleUserInfo> GetUserInfoAsync(string accessToken)
@@ -152,6 +195,14 @@ namespace AstroGathering.Services
                     .Replace('/', '_');
             }
         }
+    }
+
+    public class TokenResponse
+    {
+        public string AccessToken { get; set; } = string.Empty;
+        public string RefreshToken { get; set; } = string.Empty;
+        public string TokenType { get; set; } = string.Empty;
+        public int ExpiresIn { get; set; }
     }
 
     public class GoogleUserInfo

@@ -21,18 +21,11 @@ namespace AstroGathering
 
         private void InitializeNavigation()
         {
-            // Show admin tab if user is admin
-            if (_user?.IsAdmin == true && AdminTab != null)
-            {
-                AdminTab.IsVisible = true;
-            }
-            
             // Connect navigation events
             if (HomeTab != null) HomeTab.Click += OnHomeClick;
             if (UploadTab != null) UploadTab.Click += OnUploadClick;
             if (GalleryTab != null) GalleryTab.Click += OnGalleryClick;
             if (SettingsTab != null) SettingsTab.Click += OnSettingsClick;
-            if (AdminTab != null) AdminTab.Click += OnAdminClick;
             if (HelpTab != null) HelpTab.Click += OnHelpClick;
         }
 
@@ -45,7 +38,6 @@ namespace AstroGathering
             ResetTabStyle(UploadTab);
             ResetTabStyle(GalleryTab);
             ResetTabStyle(SettingsTab);
-            ResetTabStyle(AdminTab);
             ResetTabStyle(HelpTab);
             
             // Highlight the active tab
@@ -55,7 +47,6 @@ namespace AstroGathering
                 "Upload" => UploadTab,
                 "Gallery" => GalleryTab,
                 "Settings" => SettingsTab,
-                "Admin" => AdminTab,
                 "Help" => HelpTab,
                 _ => HomeTab
             };
@@ -95,11 +86,6 @@ namespace AstroGathering
         private void OnSettingsClick(object? sender, RoutedEventArgs e)
         {
             LoadSettingsPage();
-        }
-
-        private void OnAdminClick(object? sender, RoutedEventArgs e)
-        {
-            LoadAdminPage();
         }
 
         private void OnHelpClick(object? sender, RoutedEventArgs e)
@@ -148,19 +134,9 @@ namespace AstroGathering
             UpdateTabHighlight("Gallery");
         }
 
-        private void LoadAdminPage()
-        {
-            var adminPage = new ComingSoonPageContent("Admin", "⚡ Manage users and astronomical data!");
-            if (PageContent != null)
-            {
-                PageContent.Content = adminPage;
-            }
-            UpdateTabHighlight("Admin");
-        }
-
         private void LoadHelpPage()
         {
-            var helpPage = new ComingSoonPageContent("Help", "❓ Get help with AstroGathering features!");
+            var helpPage = new AstroGathering.Pages.HelpPage(_user);
             if (PageContent != null)
             {
                 PageContent.Content = helpPage;

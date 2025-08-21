@@ -1,0 +1,443 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="830"
+             x:Class="AstroGathering.Pages.HelpPage">
+    
+    <!-- Help Page with Cosmic Theme -->
+    <Grid Background="#1a1235">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>  <!-- Sidebar Navigation -->
+            <ColumnDefinition Width="*"/>    <!-- Main Content -->
+        </Grid.ColumnDefinitions>
+        
+        <!-- Sidebar Navigation -->
+        <Border Grid.Column="0" 
+                Background="#2d1b69" 
+                CornerRadius="0,20,20,0"
+                Margin="0,0,20,0">
+            <StackPanel Margin="30,40">
+                
+                <!-- Header -->
+                <StackPanel Orientation="Horizontal" 
+                           Margin="0,0,0,30">
+                    <TextBlock Text="❓" FontSize="24" VerticalAlignment="Center"/>
+                    <TextBlock Text="Help Center" 
+                              FontSize="24" 
+                              FontWeight="Bold" 
+                              Foreground="White" 
+                              Margin="15,0,0,0"
+                              VerticalAlignment="Center"/>
+                </StackPanel>
+                
+                <!-- Navigation Buttons -->
+                <StackPanel Spacing="15">
+                    
+                    <Button x:Name="HelpSupportBtn"
+                            Background="#4c3a8a" 
+                            Foreground="White" 
+                            CornerRadius="10" 
+                            Height="50"
+                            Width="240"
+                            HorizontalAlignment="Left"
+                            HorizontalContentAlignment="Left"
+                            Padding="15,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🆘" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="Help &amp; Support" 
+                                      FontSize="14" 
+                                      FontWeight="Medium"
+                                      Margin="10,0,0,0"
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button x:Name="DataSourcesBtn"
+                            Background="#3d2d5a" 
+                            Foreground="White" 
+                            CornerRadius="10" 
+                            Height="50"
+                            Width="240"
+                            HorizontalAlignment="Left"
+                            HorizontalContentAlignment="Left"
+                            Padding="15,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🗄️" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="Data Sources" 
+                                      FontSize="14" 
+                                      FontWeight="Medium"
+                                      Margin="10,0,0,0"
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button x:Name="ContactSupportBtn"
+                            Background="#3d2d5a" 
+                            Foreground="White" 
+                            CornerRadius="10" 
+                            Height="50"
+                            Width="240"
+                            HorizontalAlignment="Left"
+                            HorizontalContentAlignment="Left"
+                            Padding="15,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="💬" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="Contact &amp; Support" 
+                                      FontSize="14" 
+                                      FontWeight="Medium"
+                                      Margin="10,0,0,0"
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button x:Name="AboutBtn"
+                            Background="#3d2d5a" 
+                            Foreground="White" 
+                            CornerRadius="10" 
+                            Height="50"
+                            Width="240"
+                            HorizontalAlignment="Left"
+                            HorizontalContentAlignment="Left"
+                            Padding="15,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="ℹ️" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="About" 
+                                      FontSize="14" 
+                                      FontWeight="Medium"
+                                      Margin="10,0,0,0"
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button x:Name="PrivacyBtn"
+                            Background="#3d2d5a" 
+                            Foreground="White" 
+                            CornerRadius="10" 
+                            Height="50"
+                            Width="240"
+                            HorizontalAlignment="Left"
+                            HorizontalContentAlignment="Left"
+                            Padding="15,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🔒" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="Terms &amp; Privacy" 
+                                      FontSize="14" 
+                                      FontWeight="Medium"
+                                      Margin="10,0,0,0"
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        
+        <!-- Main Content Area -->
+        <ScrollViewer Grid.Column="1" 
+                     Margin="20,40,40,40"
+                     HorizontalScrollBarVisibility="Disabled"
+                     VerticalScrollBarVisibility="Auto">
+            
+            <!-- Content will be dynamically loaded here -->
+            <StackPanel x:Name="MainContent">
+                
+                <!-- Default: Help & Support Section -->
+                <StackPanel x:Name="HelpSupportContent" IsVisible="True">
+                    <TextBlock Text="Help &amp; Support" 
+                              FontSize="32" 
+                              FontWeight="Bold" 
+                              Foreground="White" 
+                              Margin="0,0,0,20"/>
+                    
+                    <TextBlock Text="Step by step instructions to help you get the most out of AstroGathering" 
+                              FontSize="16" 
+                              Foreground="#B0B0B0" 
+                              Margin="0,0,0,30"/>
+                    
+                    <!-- Getting Started -->
+                    <Border Background="#2d1b69" 
+                            CornerRadius="15" 
+                            Padding="25"
+                            Margin="0,0,0,20">
+                        <StackPanel Spacing="15">
+                            <TextBlock Text="🚀 Getting Started" 
+                                      FontSize="20" 
+                                      FontWeight="Bold" 
+                                      Foreground="White"/>
+                            <TextBlock Text="1. Sign in with your Google account to access all features" 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"/>
+                            <TextBlock Text="2. Explore the Home page to see upcoming astronomical events" 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"/>
+                            <TextBlock Text="3. Upload your astrophotography to the Gallery" 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"/>
+                            <TextBlock Text="4. Browse community photos and NASA's Astronomy Picture of the Day" 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <!-- Features Guide -->
+                    <Border Background="#2d1b69" 
+                            CornerRadius="15" 
+                            Padding="25"
+                            Margin="0,0,0,20">
+                        <StackPanel Spacing="15">
+                            <TextBlock Text="🌟 Features Guide" 
+                                      FontSize="20" 
+                                      FontWeight="Bold" 
+                                      Foreground="White"/>
+                            <StackPanel Spacing="10">
+                                <TextBlock Text="📅 Home Calendar: View astronomical events for any month" 
+                                          FontSize="14" 
+                                          Foreground="#E0E0E0"/>
+                                <TextBlock Text="📸 Gallery: Browse and upload astrophotography" 
+                                          FontSize="14" 
+                                          Foreground="#E0E0E0"/>
+                                <TextBlock Text="☁️ Upload: Share your celestial captures with the community" 
+                                          FontSize="14" 
+                                          Foreground="#E0E0E0"/>
+                                <TextBlock Text="⚙️ Settings: Manage your profile and app preferences" 
+                                          FontSize="14" 
+                                          Foreground="#E0E0E0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    
+                </StackPanel>
+                
+                <!-- Data Sources Section -->
+                <StackPanel x:Name="DataSourcesContent" IsVisible="False">
+                    <TextBlock Text="Data Sources" 
+                              FontSize="32" 
+                              FontWeight="Bold" 
+                              Foreground="White" 
+                              Margin="0,0,0,20"/>
+                    
+                    <TextBlock Text="Learn about the APIs and services that power AstroGathering" 
+                              FontSize="16" 
+                              Foreground="#B0B0B0" 
+                              Margin="0,0,0,30"/>
+                    
+                    <!-- NASA APOD -->
+                    <Border Background="#2d1b69" 
+                            CornerRadius="15" 
+                            Padding="25"
+                            Margin="0,0,0,20">
+                        <StackPanel Spacing="15">
+                            <TextBlock Text="🚀 NASA APOD API" 
+                                      FontSize="20" 
+                                      FontWeight="Bold" 
+                                      Foreground="White"/>
+                            <TextBlock Text="NASA's Astronomy Picture of the Day provides daily stunning images and explanations of our universe." 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"
+                                      TextWrapping="Wrap"/>
+                            <TextBlock Text="Source: api.nasa.gov/planetary/apod" 
+                                      FontSize="12" 
+                                      Foreground="#B0B0B0"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <!-- Azure Storage -->
+                    <Border Background="#2d1b69" 
+                            CornerRadius="15" 
+                            Padding="25"
+                            Margin="0,0,0,20">
+                        <StackPanel Spacing="15">
+                            <TextBlock Text="☁️ Azure Blob Storage" 
+                                      FontSize="20" 
+                                      FontWeight="Bold" 
+                                      Foreground="White"/>
+                            <TextBlock Text="Your uploaded photos are securely stored in Microsoft Azure cloud storage for fast, reliable access." 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"
+                                      TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+                    
+                </StackPanel>
+                
+                <!-- Contact & Support Section -->
+                <StackPanel x:Name="ContactSupportContent" IsVisible="False">
+                    <TextBlock Text="Contact &amp; Support" 
+                              FontSize="32" 
+                              FontWeight="Bold" 
+                              Foreground="White" 
+                              Margin="0,0,0,20"/>
+                    
+                    <TextBlock Text="Send us a message - we're here to help!" 
+                              FontSize="16" 
+                              Foreground="#B0B0B0" 
+                              Margin="0,0,0,30"/>
+                    
+                    <!-- Contact Form -->
+                    <Border Background="#2d1b69" 
+                            CornerRadius="15" 
+                            Padding="25"
+                            Margin="0,0,0,20">
+                        <StackPanel Spacing="20">
+                            <TextBlock Text="💬 Send us a Message" 
+                                      FontSize="20" 
+                                      FontWeight="Bold" 
+                                      Foreground="White"/>
+                            
+                            <StackPanel Spacing="15">
+                                <TextBlock Text="Subject:" Foreground="#B0B0B0"/>
+                                <TextBox x:Name="SubjectTextBox"
+                                        Height="40"
+                                        Background="#1a1235"
+                                        Foreground="White"
+                                        BorderBrush="#4c3a8a"
+                                        CornerRadius="8"
+                                        Padding="10"/>
+                                
+                                <TextBlock Text="Message:" Foreground="#B0B0B0"/>
+                                <TextBox x:Name="MessageTextBox"
+                                        Height="120"
+                                        Background="#1a1235"
+                                        Foreground="White"
+                                        BorderBrush="#4c3a8a"
+                                        CornerRadius="8"
+                                        Padding="10"
+                                        TextWrapping="Wrap"
+                                        AcceptsReturn="True"/>
+                                
+                                <Button Background="#4c3a8a" 
+                                       Foreground="White" 
+                                       CornerRadius="10" 
+                                       Height="40" 
+                                       Width="150"
+                                       HorizontalAlignment="Left">
+                                    <TextBlock Text="Send Message"/>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    
+                </StackPanel>
+                
+                <!-- About Section -->
+                <StackPanel x:Name="AboutContent" IsVisible="False">
+                    <TextBlock Text="About AstroGathering" 
+                              FontSize="32" 
+                              FontWeight="Bold" 
+                              Foreground="White" 
+                              Margin="0,0,0,20"/>
+                    
+                    <TextBlock Text="Learn about our mission and the features that make AstroGathering special" 
+                              FontSize="16" 
+                              Foreground="#B0B0B0" 
+                              Margin="0,0,0,30"/>
+                    
+                    <!-- Mission -->
+                    <Border Background="#2d1b69" 
+                            CornerRadius="15" 
+                            Padding="25"
+                            Margin="0,0,0,20">
+                        <StackPanel Spacing="15">
+                            <TextBlock Text="🌌 Our Mission" 
+                                      FontSize="20" 
+                                      FontWeight="Bold" 
+                                      Foreground="White"/>
+                            <TextBlock Text="AstroGathering brings together astronomy enthusiasts to share their passion for the cosmos. We provide a platform to discover celestial events, share astrophotography, and connect with fellow stargazers." 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"
+                                      TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <!-- Developer -->
+                    <Border Background="#2d1b69" 
+                            CornerRadius="15" 
+                            Padding="25"
+                            Margin="0,0,0,20">
+                        <StackPanel Spacing="15">
+                            <TextBlock Text="👨‍💻 Developer" 
+                                      FontSize="20" 
+                                      FontWeight="Bold" 
+                                      Foreground="White"/>
+                            <TextBlock Text="Developed by Irakoze Darlo at Thomas More InspirationLab" 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"/>
+                            <TextBlock Text="Version 1.0.0 - August 2025" 
+                                      FontSize="12" 
+                                      Foreground="#B0B0B0"/>
+                        </StackPanel>
+                    </Border>
+                    
+                </StackPanel>
+                
+                <!-- Privacy & Terms Section -->
+                <StackPanel x:Name="PrivacyContent" IsVisible="False">
+                    <TextBlock Text="Terms &amp; Privacy" 
+                              FontSize="32" 
+                              FontWeight="Bold" 
+                              Foreground="White" 
+                              Margin="0,0,0,20"/>
+                    
+                    <TextBlock Text="How we handle your data and protect your privacy" 
+                              FontSize="16" 
+                              Foreground="#B0B0B0" 
+                              Margin="0,0,0,30"/>
+                    
+                    <!-- Privacy Policy -->
+                    <Border Background="#2d1b69" 
+                            CornerRadius="15" 
+                            Padding="25"
+                            Margin="0,0,0,20">
+                        <StackPanel Spacing="15">
+                            <TextBlock Text="🔒 Privacy Policy" 
+                                      FontSize="20" 
+                                      FontWeight="Bold" 
+                                      Foreground="White"/>
+                            <TextBlock Text="• We only collect necessary information via Google OAuth for authentication" 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"/>
+                            <TextBlock Text="• Your uploaded photos are stored securely in Azure cloud storage" 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"/>
+                            <TextBlock Text="• We never share your personal information with third parties" 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"/>
+                            <TextBlock Text="• You can delete your account and data at any time" 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <!-- Terms of Service -->
+                    <Border Background="#2d1b69" 
+                            CornerRadius="15" 
+                            Padding="25"
+                            Margin="0,0,0,20">
+                        <StackPanel Spacing="15">
+                            <TextBlock Text="📜 Terms of Service" 
+                                      FontSize="20" 
+                                      FontWeight="Bold" 
+                                      Foreground="White"/>
+                            <TextBlock Text="• Use AstroGathering responsibly and respectfully" 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"/>
+                            <TextBlock Text="• Only upload your own astrophotography or properly credited images" 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"/>
+                            <TextBlock Text="• Be kind and supportive to fellow astronomy enthusiasts" 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"/>
+                            <TextBlock Text="• Report any inappropriate content or behavior" 
+                                      FontSize="14" 
+                                      Foreground="#E0E0E0"/>
+                        </StackPanel>
+                    </Border>
+                    
+                </StackPanel>
+                
+            </StackPanel>
+        </ScrollViewer>
+        
+    </Grid>
+</UserControl>

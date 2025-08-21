@@ -203,5 +203,17 @@ namespace AstroGathering.Database
 
             return Insert(query) >= 0; // Allow 0 deleted rows
         }
+
+        public bool UpdateUserLastLogin(int userId, DateTime lastLogin)
+        {
+            string query = $"UPDATE users SET last_login = '{lastLogin:yyyy-MM-dd HH:mm:ss}' WHERE user_id = {userId};";
+            return Insert(query) >= 0;
+        }
+
+        public bool SetUserAsAdmin(string email, bool isAdmin = true)
+        {
+            string query = $"UPDATE users SET is_admin = {(isAdmin ? 1 : 0)} WHERE email = '{email}';";
+            return Insert(query) > 0;
+        }
     }
 }

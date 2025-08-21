@@ -26,6 +26,7 @@
 /Users/koze/.nuget/packages/azure.storage.blobs/12.25.0/lib/net8.0/Azure.Storage.Blobs.dll
 /Users/koze/.nuget/packages/azure.storage.common/12.24.0/lib/net8.0/Azure.Storage.Common.dll
 /Users/koze/.nuget/packages/bouncycastle.cryptography/2.5.1/lib/net6.0/BouncyCastle.Cryptography.dll
+/Users/koze/.nuget/packages/dialoghost.avalonia/0.8.1/lib/netstandard2.0/DialogHost.Avalonia.dll
 /Users/koze/.nuget/packages/dotnetenv/3.1.1/lib/netstandard1.3/DotNetEnv.dll
 /Users/koze/.nuget/packages/google.protobuf/3.30.0/lib/net5.0/Google.Protobuf.dll
 /Users/koze/.nuget/packages/harfbuzzsharp/8.3.1.1/lib/net8.0/HarfBuzzSharp.dll
@@ -72,6 +73,7 @@
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/Microsoft.VisualBasic.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/Microsoft.Win32.Primitives.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/Microsoft.Win32.Registry.dll
+/Users/koze/.nuget/packages/messagebox.avalonia/3.2.0/lib/netstandard2.0/MsBox.Avalonia.dll
 /Users/koze/.nuget/packages/microsoft.netcore.app.ref/8.0.15/ref/net8.0/mscorlib.dll
 /Users/koze/.nuget/packages/mysql.data/9.3.0/lib/net8.0/MySql.Data.dll
 /Users/koze/.nuget/packages/mysqlconnector/2.4.0/lib/net8.0/MySqlConnector.dll

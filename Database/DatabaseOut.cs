@@ -543,5 +543,231 @@ namespace AstroGathering.Database
 
             return events;
         }
+
+        // ADMIN OPERATIONS
+        public int GetTotalUsersCount()
+        {
+            MySqlConnection? connection = null;
+            try
+            {
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+
+                string query = "SELECT COUNT(*) FROM users";
+                using var command = new MySqlCommand(query, connection);
+                
+                var result = command.ExecuteScalar();
+                return Convert.ToInt32(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Get Total Users Count Error: {ex.Message}");
+                return 0;
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
+
+        public int GetTotalPhotosCount()
+        {
+            MySqlConnection? connection = null;
+            try
+            {
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+
+                string query = "SELECT COUNT(*) FROM photos";
+                using var command = new MySqlCommand(query, connection);
+                
+                var result = command.ExecuteScalar();
+                return Convert.ToInt32(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Get Total Photos Count Error: {ex.Message}");
+                return 0;
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
+
+        public int GetPendingReportsCount()
+        {
+            MySqlConnection? connection = null;
+            try
+            {
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+
+                string query = "SELECT COUNT(*) FROM reports WHERE report_status = 'Pending'";
+                using var command = new MySqlCommand(query, connection);
+                
+                var result = command.ExecuteScalar();
+                return Convert.ToInt32(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Get Pending Reports Count Error: {ex.Message}");
+                return 0;
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
+
+        public int GetUserPhotosCount(int userId)
+        {
+            MySqlConnection? connection = null;
+            try
+            {
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+
+                string query = "SELECT COUNT(*) FROM photos WHERE user_id = @userId";
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userId);
+                
+                var result = command.ExecuteScalar();
+                return Convert.ToInt32(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Get User Photos Count Error: {ex.Message}");
+                return 0;
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
+
+        public int GetUserLikesCount(int userId)
+        {
+            MySqlConnection? connection = null;
+            try
+            {
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+
+                string query = @"SELECT COUNT(*) FROM likes l 
+                               INNER JOIN photos p ON l.photo_id = p.photo_id 
+                               WHERE p.user_id = @userId";
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userId);
+                
+                var result = command.ExecuteScalar();
+                return Convert.ToInt32(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Get User Likes Count Error: {ex.Message}");
+                return 0;
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
+
+        public User? GetUserByEmail(string email)
+        {
+            MySqlConnection? connection = null;
+            try
+            {
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+
+                string query = @"SELECT user_id, google_id, email, profile_picture_url, 
+                               first_name, last_name, created_at, last_login, is_admin 
+                               FROM users WHERE email = @email";
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@email", email);
+
+                using var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    return new User
+                    {
+                        UserId = Convert.ToInt32(reader["user_id"]),
+                        GoogleId = reader["google_id"]?.ToString() ?? "",
+                        Email = reader["email"]?.ToString() ?? "",
+                        ProfilePictureUrl = reader["profile_picture_url"]?.ToString(),
+                        FirstName = reader["first_name"]?.ToString(),
+                        LastName = reader["last_name"]?.ToString(),
+                        CreatedAt = Convert.ToDateTime(reader["created_at"]),
+                        LastLogin = reader["last_login"] == DBNull.Value ? null : Convert.ToDateTime(reader["last_login"]),
+                        IsAdmin = Convert.ToBoolean(reader["is_admin"])
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Get User By Email Error: {ex.Message}");
+            }
+            finally
+            {
+                connection?.Close();
+            }
+
+            return null;
+        }
+
+        public bool UpdateUserAdminStatus(string email, bool isAdmin)
+        {
+            MySqlConnection? connection = null;
+            try
+            {
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+
+                string query = "UPDATE users SET is_admin = @isAdmin WHERE email = @email";
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@isAdmin", isAdmin);
+                command.Parameters.AddWithValue("@email", email);
+
+                int rowsAffected = command.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Update User Admin Status Error: {ex.Message}");
+                return false;
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
+
+        public bool MakeUserAdmin(string email)
+        {
+            MySqlConnection? connection = null;
+            try
+            {
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+
+                string query = "UPDATE users SET is_admin = true WHERE email = @email";
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@email", email);
+
+                int rowsAffected = command.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Make User Admin Error: {ex.Message}");
+                return false;
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
     }
 }

