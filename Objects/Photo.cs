@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace AstroGathering.Objects
 {
@@ -12,36 +11,5 @@ namespace AstroGathering.Objects
         public string? Description { get; set; }
         public DateTime? DateTaken { get; set; }
         public DateTime TimeUploaded { get; set; }
-
-        // Methods from UML diagram
-        public bool UploadPhoto()
-        {
-            TimeUploaded = DateTime.Now;
-            return true;
-        }
-
-        public bool DeletePhoto()
-        {
-            // Logic to delete photo
-            return true;
-        }
-
-        public bool UpdateDescription(string description)
-        {
-            Description = description;
-            return true;
-        }
-
-        public List<string> GetPhotoTags()
-        {
-            // This would be populated by the DatabaseOut class
-            return new List<string>();
-        }
-
-        public int GetLikes()
-        {
-            // This would be calculated by the DatabaseOut class
-            return 0;
-        }
     }
 }

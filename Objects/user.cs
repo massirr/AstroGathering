@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace AstroGathering.Objects
 {
@@ -15,35 +14,11 @@ namespace AstroGathering.Objects
         public DateTime? LastLogin { get; set; }
         public bool IsAdmin { get; set; }
         
-        // Additional properties for OAuth
+        // OAuth properties - used by DesktopOAuthService
         public string? AccessToken { get; set; }
         public string? RefreshToken { get; set; }
         
         // Computed property for backwards compatibility
         public string Name => $"{FirstName} {LastName}".Trim();
-
-        public bool Login()
-        {
-            LastLogin = DateTime.Now;
-            return true;
-        }
-
-        public void Logout()
-        {
-            // Handle logout logic
-        }
-
-        public bool UpdateProfile(string? firstName, string? lastName, string? profilePictureUrl)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            ProfilePictureUrl = profilePictureUrl;
-            return true;
-        }
-
-        public bool IsAdminUser()
-        {
-            return IsAdmin;
-        }
     }
 }

@@ -58,28 +58,6 @@ namespace AstroGathering.Services
             }
         }
 
-        public async Task<bool> DeletePhotoAsync(string imageUrl)
-        {
-            try
-            {
-                var blobServiceClient = new BlobServiceClient(_connectionString);
-                var containerClient = blobServiceClient.GetBlobContainerClient(_containerName);
-                
-                // Extract blob name from URL
-                var uri = new Uri(imageUrl);
-                var blobName = Path.GetFileName(uri.LocalPath);
-                var blobClient = containerClient.GetBlobClient(blobName);
-                
-                // Delete the blob
-                var response = await blobClient.DeleteIfExistsAsync();
-                return response.Value;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Failed to delete photo from Azure Blob Storage: {ex.Message}", ex);
-            }
-        }
-
         private string GetContentType(string fileExtension)
         {
             return fileExtension.ToLower() switch
