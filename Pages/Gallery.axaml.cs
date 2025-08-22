@@ -16,13 +16,9 @@ namespace AstroGathering.Pages
 {
     public partial class GalleryPage : UserControl
     {
-        private readonly DatabaseOut _databaseOut;
-        private List<GalleryPhoto> _photos = new();
-
         public GalleryPage()
         {
             InitializeComponent();
-            _databaseOut = new DatabaseOut();
             _ = LoadPhotosAsync(); // Fire and forget for constructor
         }
 
@@ -172,44 +168,6 @@ namespace AstroGathering.Pages
             }
         }
 
-        private void UpdatePhotoCount()
-        {
-            if (PhotoCountText != null)
-            {
-                var count = _photos.Count;
-                PhotoCountText.Text = count == 1 ? "1 photo found" : $"{count} photos found";
-            }
-        }
-
-        private void UpdateGalleryDisplay()
-        {
-            if (_photos.Any())
-            {
-                ShowPhotosState();
-                if (PhotoGrid != null)
-                {
-                    PhotoGrid.ItemsSource = _photos;
-                }
-            }
-            else
-            {
-                ShowNoPhotosState();
-            }
-        }
-
-        private void ShowPhotosState()
-        {
-            if (LoadingPanel != null) LoadingPanel.IsVisible = false;
-            if (NoPhotosPanel != null) NoPhotosPanel.IsVisible = false;
-            if (PhotoGrid != null) PhotoGrid.IsVisible = true;
-        }
-
-        private void ShowNoPhotosState()
-        {
-            if (LoadingPanel != null) LoadingPanel.IsVisible = false;
-            if (PhotoGrid != null) PhotoGrid.IsVisible = false;
-            if (NoPhotosPanel != null) NoPhotosPanel.IsVisible = true;
-        }
 
         private string CleanPhotoName(string name)
         {

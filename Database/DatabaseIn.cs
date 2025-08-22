@@ -70,17 +70,7 @@ namespace AstroGathering.Database
             return Insert(query);
         }
 
-        // PHOTO OPERATIONS  
-        public int InsertPhoto(Photo photo)
-        {
-            string dateTaken = photo.DateTaken?.ToString("yyyy-MM-dd HH:mm:ss") ?? "NULL";
-            
-            string query = $"INSERT INTO photos (user_id, image_url, location, description, date_taken, time_uploaded) " +
-                $"VALUES ({photo.UserId}, '{photo.ImageUrl}', '{photo.Location?.Replace("'", "''")}', '{photo.Description?.Replace("'", "''")}', " +
-                $"'{dateTaken}', NOW());";
-
-            return Insert(query);
-        }
+        // PHOTO OPERATIONS
 
         public async Task<int> InsertPhotoAsync(Photo photo)
         {
@@ -91,16 +81,6 @@ namespace AstroGathering.Database
                 $"'{dateTaken}', NOW());";
 
             return await InsertAsync(query);
-        }
-
-        // EVENT OPERATIONS
-        public int InsertEvent(Event eventObj)
-        {
-            string query = $"INSERT INTO events (user_id, event_name, description, event_date, created_at) " +
-                $"VALUES ({eventObj.UserId}, '{eventObj.EventName}', '{eventObj.Description}', " +
-                $"'{eventObj.EventDate.ToString("yyyy-MM-dd HH:mm:ss")}', NOW());";
-
-            return Insert(query);
         }
 
         // TAG OPERATIONS
@@ -120,49 +100,7 @@ namespace AstroGathering.Database
             return Insert(query) > 0;
         }
 
-        // LIKE OPERATIONS
-        public bool AddLike(int userId, int photoId)
-        {
-            string query = $"INSERT INTO likes (user_id, photo_id, liked_at) " +
-                $"VALUES ({userId}, {photoId}, NOW()) " +
-                $"ON DUPLICATE KEY UPDATE liked_at = NOW();";
-
-            return Insert(query) >= 0; // LastInsertedId might be 0 for ON DUPLICATE KEY
-        }
-
-        // REPORT OPERATIONS
-        public int InsertReport(Report report)
-        {
-            string query = $"INSERT INTO reports (user_id, photo_id, reason, date_reported, report_status) " +
-                $"VALUES ({report.UserId}, {report.PhotoId}, '{report.Reason}', NOW(), 'Pending');";
-
-            return Insert(query);
-        }
-
-        // HELP CONTENT OPERATIONS
-        public int InsertHelpContent(HelpContent helpContent)
-        {
-            string query = $"INSERT INTO help_content (title, content, last_updated) " +
-                $"VALUES ('{helpContent.Title}', '{helpContent.Content}', NOW());";
-
-            return Insert(query);
-        }
-
         // ASTRONOMICAL EVENTS OPERATIONS
-        public int InsertAstronomicalEvent(AstronomicalEvent astronomicalEvent)
-        {
-            string query = "INSERT INTO astronomical_events (name, type, event_date, description, time_info, latitude, longitude, api_source) " +
-                $"VALUES ('{astronomicalEvent.EventName.Replace("'", "''")}', " + // Using EventName
-                $"'{astronomicalEvent.Type.Replace("'", "''")}', " +
-                $"'{astronomicalEvent.EventDate:yyyy-MM-dd}', " + // Using EventDate
-                $"'{astronomicalEvent.Description.Replace("'", "''")}', " +
-                $"'{astronomicalEvent.Time.Replace("'", "''")}', " +
-                $"{(astronomicalEvent.Latitude?.ToString() ?? "NULL")}, " +
-                $"{(astronomicalEvent.Longitude?.ToString() ?? "NULL")}, " +
-                $"'{astronomicalEvent.Source.Replace("'", "''")}');";
-
-            return Insert(query);
-        }
 
         public bool InsertAstronomicalEvents(List<AstronomicalEvent> events)
         {
@@ -208,12 +146,6 @@ namespace AstroGathering.Database
         {
             string query = $"UPDATE users SET last_login = '{lastLogin:yyyy-MM-dd HH:mm:ss}' WHERE user_id = {userId};";
             return Insert(query) >= 0;
-        }
-
-        public bool SetUserAsAdmin(string email, bool isAdmin = true)
-        {
-            string query = $"UPDATE users SET is_admin = {(isAdmin ? 1 : 0)} WHERE email = '{email}';";
-            return Insert(query) > 0;
         }
     }
 }

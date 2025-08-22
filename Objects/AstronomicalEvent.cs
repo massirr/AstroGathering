@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace AstroGathering.Objects
 {
@@ -20,17 +19,5 @@ namespace AstroGathering.Objects
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public string Source { get; set; } = string.Empty; // "NASA_APOD", "NASA_NEO", "MOON_PHASE"
 
-        // Methods from UML diagram
-        public List<AstronomicalEvent> GetUpcomingEvents()
-        {
-            // This would be populated by the DatabaseOut class
-            return new List<AstronomicalEvent>();
-        }
-
-        public List<AstronomicalEvent> GetEventsByDate(DateTime date)
-        {
-            // This would be populated by the DatabaseOut class
-            return new List<AstronomicalEvent>();
-        }
     }
 }

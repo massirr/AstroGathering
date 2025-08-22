@@ -213,12 +213,15 @@
                         Padding="25"
                         IsVisible="False">
                     <StackPanel Spacing="20">
-                        <TextBlock Text="🔧 Administration Panel" 
+                        <TextBlock Text="🛡️ Admin Panel" 
                                   FontSize="18" 
                                   FontWeight="Bold" 
-                                  Foreground="#FFD700"/>
+                                  Foreground="White"/>
+                        <TextBlock Text="Manage users, content, and community moderation" 
+                                  FontSize="12" 
+                                  Foreground="#b8a7d9"/>
                         
-                        <!-- Admin Stats -->
+                        <!-- Admin Stats Cards -->
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -226,131 +229,136 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             
+                            <!-- Total Users -->
                             <Border Grid.Column="0" 
                                     Background="#1a1235" 
-                                    CornerRadius="8" 
-                                    Padding="15"
-                                    Margin="0,0,5,0">
-                                <StackPanel HorizontalAlignment="Center" Spacing="3">
+                                    CornerRadius="12" 
+                                    Padding="20"
+                                    Margin="0,0,10,0">
+                                <StackPanel HorizontalAlignment="Center" Spacing="8">
+                                    <Border Width="48" Height="48" 
+                                            Background="#4c3a8a" 
+                                            CornerRadius="24" 
+                                            HorizontalAlignment="Center">
+                                        <TextBlock Text="👥" 
+                                                  FontSize="20" 
+                                                  HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"/>
+                                    </Border>
                                     <TextBlock x:Name="TotalUsersText" 
-                                              Text="0" 
-                                              FontSize="20" 
+                                              Text="3" 
+                                              FontSize="24" 
                                               FontWeight="Bold"
                                               Foreground="White" 
                                               HorizontalAlignment="Center"/>
                                     <TextBlock Text="Total Users" 
-                                              FontSize="10" 
+                                              FontSize="12" 
                                               Foreground="#b8a7d9" 
                                               HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </Border>
                             
+                            <!-- Total Photos -->
                             <Border Grid.Column="1" 
                                     Background="#1a1235" 
-                                    CornerRadius="8" 
-                                    Padding="15"
+                                    CornerRadius="12" 
+                                    Padding="20"
                                     Margin="5,0">
-                                <StackPanel HorizontalAlignment="Center" Spacing="3">
+                                <StackPanel HorizontalAlignment="Center" Spacing="8">
+                                    <Border Width="48" Height="48" 
+                                            Background="#1976D2" 
+                                            CornerRadius="24" 
+                                            HorizontalAlignment="Center">
+                                        <TextBlock Text="🖼️" 
+                                                  FontSize="20" 
+                                                  HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"/>
+                                    </Border>
                                     <TextBlock x:Name="TotalPhotosText" 
-                                              Text="0" 
-                                              FontSize="20" 
+                                              Text="3" 
+                                              FontSize="24" 
                                               FontWeight="Bold"
                                               Foreground="White" 
                                               HorizontalAlignment="Center"/>
                                     <TextBlock Text="Total Photos" 
-                                              FontSize="10" 
+                                              FontSize="12" 
                                               Foreground="#b8a7d9" 
                                               HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </Border>
                             
+                            <!-- Pending Review -->
                             <Border Grid.Column="2" 
                                     Background="#1a1235" 
-                                    CornerRadius="8" 
-                                    Padding="15"
-                                    Margin="5,0,0,0">
-                                <StackPanel HorizontalAlignment="Center" Spacing="3">
+                                    CornerRadius="12" 
+                                    Padding="20"
+                                    Margin="10,0,0,0">
+                                <StackPanel HorizontalAlignment="Center" Spacing="8">
+                                    <Border Width="48" Height="48" 
+                                            Background="#FFA500" 
+                                            CornerRadius="24" 
+                                            HorizontalAlignment="Center">
+                                        <TextBlock Text="⚠️" 
+                                                  FontSize="20" 
+                                                  HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"/>
+                                    </Border>
                                     <TextBlock x:Name="PendingReportsText" 
-                                              Text="0" 
-                                              FontSize="20" 
+                                              Text="2" 
+                                              FontSize="24" 
                                               FontWeight="Bold"
-                                              Foreground="#FF6B6B" 
+                                              Foreground="#FFA500" 
                                               HorizontalAlignment="Center"/>
-                                    <TextBlock Text="Reports" 
-                                              FontSize="10" 
+                                    <TextBlock Text="Pending Review" 
+                                              FontSize="12" 
                                               Foreground="#b8a7d9" 
                                               HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </Border>
                         </Grid>
                         
-                        <!-- Admin Action Buttons -->
-                        <StackPanel Orientation="Horizontal" Spacing="15">
-                            <Button x:Name="ManageUsersBtn"
-                                    Background="#4c3a8a" 
-                                    Foreground="White" 
-                                    CornerRadius="8" 
-                                    Height="35" 
-                                    Padding="15,0">
-                                <TextBlock Text="👥 Manage Users"/>
-                            </Button>
+                        <!-- Admin Data Tables -->
+                        <StackPanel Spacing="20">
                             
-                            <Button x:Name="ContentModerationBtn"
-                                    Background="#4c3a8a" 
-                                    Foreground="White" 
-                                    CornerRadius="8" 
-                                    Height="35" 
-                                    Padding="15,0">
-                                <TextBlock Text="🛡️ Content Moderation"/>
-                            </Button>
-                        </StackPanel>
-                        
-                        <!-- Quick User Management -->
-                        <StackPanel Spacing="15">
-                            <TextBlock Text="Quick Actions:" 
-                                      FontSize="14" 
-                                      FontWeight="Medium" 
-                                      Foreground="White"/>
+                            <!-- Recent Users Section -->
+                            <Border Background="#1a1235" CornerRadius="12" Padding="20">
+                                <StackPanel Spacing="12">
+                                    <TextBlock Text="Recent Users" 
+                                              FontSize="16" 
+                                              FontWeight="Bold" 
+                                              Foreground="White"/>
+                                    <ScrollViewer x:Name="UsersScrollViewer" Height="200">
+                                        <StackPanel x:Name="UsersPanel" Spacing="8"/>
+                                    </ScrollViewer>
+                                </StackPanel>
+                            </Border>
                             
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <TextBox x:Name="UserEmailInput"
-                                        Grid.Column="0"
-                                        Height="35"
-                                        Background="#1a1235"
-                                        Foreground="White"
-                                        BorderBrush="#4c3a8a"
-                                        CornerRadius="6"
-                                        Padding="10,0"
-                                        Watermark="Enter user email..."
-                                        Margin="0,0,10,0"/>
-                                
-                                <Button x:Name="MakeAdminBtn"
-                                        Grid.Column="1"
-                                        Background="#FFA500" 
-                                        Foreground="White" 
-                                        CornerRadius="6" 
-                                        Height="35" 
-                                        Padding="10,0"
-                                        Margin="0,0,5,0">
-                                    <TextBlock Text="Make Admin"/>
-                                </Button>
-                                
-                                <Button x:Name="RemoveAdminBtn"
-                                        Grid.Column="2"
-                                        Background="#FF6B6B" 
-                                        Foreground="White" 
-                                        CornerRadius="6" 
-                                        Height="35" 
-                                        Padding="10,0">
-                                    <TextBlock Text="Remove Admin"/>
-                                </Button>
-                            </Grid>
+                            <!-- Recent Photos Section -->
+                            <Border Background="#1a1235" CornerRadius="12" Padding="20">
+                                <StackPanel Spacing="12">
+                                    <TextBlock Text="Recent Photos" 
+                                              FontSize="16" 
+                                              FontWeight="Bold" 
+                                              Foreground="White"/>
+                                    <ScrollViewer x:Name="PhotosScrollViewer" Height="200">
+                                        <StackPanel x:Name="PhotosPanel" Spacing="8"/>
+                                    </ScrollViewer>
+                                </StackPanel>
+                            </Border>
+                            
+                            <!-- Reports Section -->
+                            <Border Background="#1a1235" CornerRadius="12" Padding="20">
+                                <StackPanel Spacing="12">
+                                    <TextBlock Text="Reports &amp; Moderation" 
+                                              FontSize="16" 
+                                              FontWeight="Bold" 
+                                              Foreground="White"/>
+                                    <ScrollViewer x:Name="ReportsScrollViewer" Height="150">
+                                        <StackPanel x:Name="ReportsPanel" Spacing="8"/>
+                                    </ScrollViewer>
+                                </StackPanel>
+                            </Border>
+                            
                         </StackPanel>
                         
                     </StackPanel>
