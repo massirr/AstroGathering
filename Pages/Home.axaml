@@ -24,7 +24,6 @@
                     <StackPanel Orientation="Horizontal" 
                                HorizontalAlignment="Center" 
                                Spacing="15">
-                        <TextBlock Text="📅" FontSize="24" VerticalAlignment="Center"/>
                         <TextBlock Text="Astronomical Calendar" 
                                   FontSize="20" 
                                   FontWeight="Bold" 
@@ -102,7 +101,7 @@
                     </Border>
                     
                     <!-- Calendar Note -->
-                    <TextBlock Text="💫 Future: Hover over days to see astronomical events" 
+                    <TextBlock Text="Future: Hover over days to see astronomical events" 
                               FontSize="12" 
                               Foreground="#8a7ca8" 
                               HorizontalAlignment="Center" 
@@ -123,7 +122,6 @@
                         <StackPanel Orientation="Horizontal" 
                                    HorizontalAlignment="Center" 
                                    Spacing="15">
-                            <TextBlock Text="⭐" FontSize="26" VerticalAlignment="Center"/>
                             <TextBlock Text="Today's Highlights" 
                                       FontSize="22" 
                                       FontWeight="Bold" 
@@ -164,7 +162,6 @@
                         <StackPanel Orientation="Horizontal" 
                                    HorizontalAlignment="Center" 
                                    Spacing="15">
-                            <TextBlock Text="📊" FontSize="26" VerticalAlignment="Center"/>
                             <TextBlock Text="This Month Summary" 
                                       FontSize="22" 
                                       FontWeight="Bold" 
@@ -194,7 +191,7 @@
                                           FontSize="16"/>
                                 <TextBlock Grid.Row="0" Grid.Column="1" 
                                           x:Name="TotalEventsText" 
-                                          Text="3" 
+                                          Text="0" 
                                           Foreground="White" 
                                           FontSize="16" 
                                           FontWeight="Bold"/>
@@ -206,7 +203,7 @@
                                           Margin="0,12,0,0"/>
                                 <TextBlock Grid.Row="1" Grid.Column="1" 
                                           x:Name="MeteorShowersText" 
-                                          Text="1" 
+                                          Text="0" 
                                           Foreground="White" 
                                           FontSize="16" 
                                           FontWeight="Bold" 
@@ -219,7 +216,7 @@
                                           Margin="0,12,0,0"/>
                                 <TextBlock Grid.Row="2" Grid.Column="1" 
                                           x:Name="MoonPhasesText" 
-                                          Text="1" 
+                                          Text="0" 
                                           Foreground="White" 
                                           FontSize="16" 
                                           FontWeight="Bold" 
@@ -232,7 +229,7 @@
                                           Margin="0,12,0,0"/>
                                 <TextBlock Grid.Row="3" Grid.Column="1" 
                                           x:Name="PlanetaryEventsText" 
-                                          Text="1" 
+                                          Text="0" 
                                           Foreground="White" 
                                           FontSize="16" 
                                           FontWeight="Bold" 

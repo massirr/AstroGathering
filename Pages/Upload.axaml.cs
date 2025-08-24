@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
+using Avalonia.Input;
 using AstroGathering.Services;
 using AstroGathering.Objects;
 using AstroGathering.Database;
@@ -16,6 +17,7 @@ namespace AstroGathering.Pages
     {
         private readonly PhotoUploadService _uploadService;
         private readonly DatabaseIn _databaseIn;
+        private readonly GeocodingService _geocodingService;
         private readonly User _user;
         private string? _selectedImagePath;
 
@@ -25,12 +27,23 @@ namespace AstroGathering.Pages
             _user = user;
             _uploadService = new PhotoUploadService();
             _databaseIn = new DatabaseIn();
+            _geocodingService = new GeocodingService();
             
             // Set current date and time
             if (DatePicker != null)
+            {
                 DatePicker.SelectedDate = DateTime.Now;
+                // Set date format to show full month name
+                DatePicker.DayFormat = "dd";
+                DatePicker.MonthFormat = "MMMM";
+                DatePicker.YearFormat = "yyyy";
+            }
             if (TimePicker != null)
+            {
                 TimePicker.SelectedTime = DateTime.Now.TimeOfDay;
+                // Set 12-hour time format
+                TimePicker.ClockIdentifier = "12HourClock";
+            }
         }
 
         private async void ChoosePhoto_Click(object sender, RoutedEventArgs e)
@@ -85,12 +98,82 @@ namespace AstroGathering.Pages
                     LatitudeBox.Text = "51.2993";
                 if (LongitudeBox != null)
                     LongitudeBox.Text = "4.4785";
+                if (LocationSearchBox != null)
+                    LocationSearchBox.Text = "Antwerp, Belgium";
                     
                 await ShowMessageAsync("Location Set", "Demo coordinates set to Antwerp, Belgium");
             }
             catch (Exception ex)
             {
                 await ShowMessageAsync("Error", $"Failed to set location: {ex.Message}");
+            }
+        }
+
+        private async void SearchLocation_Click(object sender, RoutedEventArgs e)
+        {
+            await PerformLocationSearch();
+        }
+
+        private async void LocationSearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                await PerformLocationSearch();
+            }
+        }
+
+        private async Task PerformLocationSearch()
+        {
+            if (LocationSearchBox == null || string.IsNullOrWhiteSpace(LocationSearchBox.Text))
+            {
+                await ShowMessageAsync("Error", "Please enter a location to search for.");
+                return;
+            }
+
+            try
+            {
+                // Disable search button and show loading state
+                if (SearchLocationButton != null)
+                {
+                    SearchLocationButton.IsEnabled = false;
+                    SearchLocationButton.Content = "🔄 Searching...";
+                }
+
+                var location = LocationSearchBox.Text.Trim();
+                var (latitude, longitude, error) = await _geocodingService.GetCoordinatesAsync(location);
+
+                if (error != null)
+                {
+                    await ShowMessageAsync("Location Search Error", error);
+                    return;
+                }
+
+                if (latitude.HasValue && longitude.HasValue)
+                {
+                    if (LatitudeBox != null)
+                        LatitudeBox.Text = latitude.Value.ToString("F6");
+                    if (LongitudeBox != null)
+                        LongitudeBox.Text = longitude.Value.ToString("F6");
+
+                    await ShowMessageAsync("Location Found", $"Coordinates found for: {location}");
+                }
+                else
+                {
+                    await ShowMessageAsync("Location Not Found", "Could not find coordinates for the specified location. Please try a different search term.");
+                }
+            }
+            catch (Exception ex)
+            {
+                await ShowMessageAsync("Search Error", $"An error occurred while searching: {ex.Message}");
+            }
+            finally
+            {
+                // Re-enable search button
+                if (SearchLocationButton != null)
+                {
+                    SearchLocationButton.IsEnabled = true;
+                    SearchLocationButton.Content = "🔍 Search";
+                }
             }
         }
 
@@ -199,12 +282,25 @@ namespace AstroGathering.Pages
         {
             if (NameBox != null) NameBox.Text = "";
             if (DescriptionBox != null) DescriptionBox.Text = "";
+            if (LocationSearchBox != null) LocationSearchBox.Text = "";
             if (LatitudeBox != null) LatitudeBox.Text = "";
             if (LongitudeBox != null) LongitudeBox.Text = "";
             if (TagsBox != null) TagsBox.Text = "";
             if (SelectedFileText != null) SelectedFileText.Text = "No file selected";
-            if (DatePicker != null) DatePicker.SelectedDate = DateTime.Now;
-            if (TimePicker != null) TimePicker.SelectedTime = DateTime.Now.TimeOfDay;
+            if (DatePicker != null) 
+            {
+                DatePicker.SelectedDate = DateTime.Now;
+                // Ensure date format is maintained after clearing
+                DatePicker.DayFormat = "dd";
+                DatePicker.MonthFormat = "MMMM";
+                DatePicker.YearFormat = "yyyy";
+            }
+            if (TimePicker != null) 
+            {
+                TimePicker.SelectedTime = DateTime.Now.TimeOfDay;
+                // Ensure time format is maintained after clearing
+                TimePicker.ClockIdentifier = "12HourClock";
+            }
             
             _selectedImagePath = null;
             
@@ -268,6 +364,12 @@ namespace AstroGathering.Pages
                 // Fallback: just log to console if we can't show the dialog
                 Console.WriteLine($"{title}: {message} (Error showing dialog: {ex.Message})");
             }
+        }
+
+        protected override void OnDetachedFromVisualTree(Avalonia.VisualTreeAttachmentEventArgs e)
+        {
+            base.OnDetachedFromVisualTree(e);
+            _geocodingService?.Dispose();
         }
     }
 }

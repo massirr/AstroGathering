@@ -55,7 +55,7 @@
 
                     <!-- Photo Upload Header -->
                     <StackPanel Grid.Row="0" HorizontalAlignment="Center">
-                        <TextBlock Text="📸 Photo Upload" 
+                        <TextBlock Text="Photo Upload" 
                                    FontSize="20" 
                                    FontWeight="Bold" 
                                    Foreground="White" 
@@ -72,7 +72,7 @@
                             MinHeight="200">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Button Name="ChoosePhotoButton"
-                                    Content="📁 Choose Photo"
+                                    Content="Choose Photo"
                                     Background="#3b82f6"
                                     Foreground="White"
                                     Padding="20,12"
@@ -179,7 +179,7 @@
 
                     <!-- Observation Details Header -->
                     <StackPanel Grid.Row="0" HorizontalAlignment="Center">
-                        <TextBlock Text="⭐ Observation Details" 
+                        <TextBlock Text="Observation Details" 
                                    FontSize="20" 
                                    FontWeight="Bold" 
                                    Foreground="White" 
@@ -191,111 +191,168 @@
                         <StackPanel Spacing="25">
                             <!-- Location Section -->
                             <StackPanel>
-                                <TextBlock Text="📍 Location" 
+                                <TextBlock Text="Location" 
                                            Foreground="White" 
                                            FontWeight="SemiBold" 
                                            FontSize="16"
-                                           Margin="0,0,0,12"/>
+                                           Margin="0,0,0,18"/>
                                 
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="15"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="8"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="15"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
+                                <StackPanel Spacing="20">
+                                    <!-- Location Search -->
+                                    <StackPanel>
+                                        <TextBlock Text="Search Location" 
+                                                   Foreground="#9ca3af" 
+                                                   FontSize="14"
+                                                   FontWeight="Medium"
+                                                   Margin="0,0,0,10"/>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="10"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <TextBox Name="LocationSearchBox"
+                                                     Grid.Column="0"
+                                                     Background="#0f1729"
+                                                     Foreground="White"
+                                                     BorderBrush="#374151"
+                                                     BorderThickness="1"
+                                                     CornerRadius="8"
+                                                     Padding="16,12"
+                                                     FontSize="15"
+                                                     Height="50"
+                                                     Watermark="Enter city, address or place name..."
+                                                     KeyDown="LocationSearchBox_KeyDown"/>
+                                            
+                                            <Button Name="SearchLocationButton"
+                                                    Grid.Column="2"
+                                                    Content="Search"
+                                                    Background="#3b82f6"
+                                                    Foreground="White"
+                                                    CornerRadius="8"
+                                                    Padding="16,12"
+                                                    FontSize="14"
+                                                    FontWeight="SemiBold"
+                                                    Height="50"
+                                                    Click="SearchLocation_Click"/>
+                                        </Grid>
+                                    </StackPanel>
+                                    
+                                    <!-- Coordinates Display -->
+                                    <StackPanel>
+                                        <TextBlock Text="Coordinates" 
+                                                   Foreground="#9ca3af" 
+                                                   FontSize="14"
+                                                   FontWeight="Medium"
+                                                   Margin="0,0,0,10"/>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="15"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="8"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
 
-                                    <TextBlock Grid.Column="0" Grid.Row="0"
-                                               Text="Latitude" 
-                                               Foreground="#9ca3af" 
-                                               FontSize="12"/>
-                                    <TextBox Name="LatitudeBox"
-                                             Grid.Column="0" Grid.Row="2"
-                                             Background="#0f1729"
-                                             Foreground="White"
-                                             BorderBrush="#374151"
-                                             CornerRadius="6"
-                                             Padding="12"
-                                             FontSize="14"
-                                             Watermark="51.2993"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="0"
+                                                       Text="Latitude" 
+                                                       Foreground="#6b7280" 
+                                                       FontSize="12"/>
+                                            <TextBox Name="LatitudeBox"
+                                                     Grid.Column="0" Grid.Row="2"
+                                                     Background="#0f1729"
+                                                     Foreground="White"
+                                                     BorderBrush="#374151"
+                                                     BorderThickness="1"
+                                                     CornerRadius="6"
+                                                     Padding="12"
+                                                     FontSize="14"
+                                                     IsReadOnly="True"
+                                                     Watermark="Latitude will appear here"/>
 
-                                    <TextBlock Grid.Column="2" Grid.Row="0"
-                                               Text="Longitude" 
-                                               Foreground="#9ca3af" 
-                                               FontSize="12"/>
-                                    <TextBox Name="LongitudeBox"
-                                             Grid.Column="2" Grid.Row="2"
-                                             Background="#0f1729"
-                                             Foreground="White"
-                                             BorderBrush="#374151"
-                                             CornerRadius="6"
-                                             Padding="12"
-                                             FontSize="14"
-                                             Watermark="4.4785"/>
-
-                                    <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3"
-                                            Name="UseCurrentLocationButton"
-                                            Content="📍 Use Current Location"
+                                            <TextBlock Grid.Column="2" Grid.Row="0"
+                                                       Text="Longitude" 
+                                                       Foreground="#6b7280" 
+                                                       FontSize="12"/>
+                                            <TextBox Name="LongitudeBox"
+                                                     Grid.Column="2" Grid.Row="2"
+                                                     Background="#0f1729"
+                                                     Foreground="White"
+                                                     BorderBrush="#374151"
+                                                     BorderThickness="1"
+                                                     CornerRadius="6"
+                                                     Padding="12"
+                                                     FontSize="14"
+                                                     IsReadOnly="True"
+                                                     Watermark="Longitude will appear here"/>
+                                        </Grid>
+                                    </StackPanel>
+                                    
+                                    <!-- Quick Location Button -->
+                                    <Button Name="UseCurrentLocationButton"
+                                            Content="Use Demo Location (Antwerp)"
                                             Background="#374151"
                                             Foreground="White"
-                                            CornerRadius="6"
-                                            Padding="12,8"
-                                            FontSize="12"
+                                            CornerRadius="8"
+                                            Padding="16,12"
+                                            FontSize="14"
+                                            FontWeight="Medium"
                                             HorizontalAlignment="Stretch"
                                             Click="UseCurrentLocation_Click"/>
-                                </Grid>
+                                </StackPanel>
                             </StackPanel>
 
                             <!-- Date and Time Section -->
                             <StackPanel>
-                                <TextBlock Text="🕐 Date &amp; Time" 
+                                <TextBlock Text="Date &amp; Time" 
                                            Foreground="White" 
                                            FontWeight="SemiBold" 
                                            FontSize="16"
-                                           Margin="0,0,0,12"/>
+                                           Margin="0,0,0,18"/>
                                 
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="15"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="8"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-
-                                    <TextBlock Grid.Column="0" Grid.Row="0"
-                                               Text="Date" 
-                                               Foreground="#9ca3af" 
-                                               FontSize="12"/>
-                                    <DatePicker Name="DatePicker"
-                                                Grid.Column="0" Grid.Row="2"
-                                                Background="#0f1729"
-                                                Foreground="White"
-                                                BorderBrush="#374151"
-                                                CornerRadius="6"
-                                                Padding="12"/>
-
-                                    <TextBlock Grid.Column="2" Grid.Row="0"
-                                               Text="Time" 
-                                               Foreground="#9ca3af" 
-                                               FontSize="12"/>
-                                    <TimePicker Name="TimePicker"
-                                                Grid.Column="2" Grid.Row="2"
-                                                Background="#0f1729"
-                                                Foreground="White"
-                                                BorderBrush="#374151"
-                                                CornerRadius="6"
-                                                Padding="12"/>
-                                </Grid>
+                                <StackPanel Spacing="20">
+                                    <!-- Date Section -->
+                                    <StackPanel>
+                                        <TextBlock Text="Date" 
+                                                   Foreground="#9ca3af" 
+                                                   FontSize="14"
+                                                   FontWeight="Medium"
+                                                   Margin="0,0,0,10"/>
+                                        <DatePicker Name="DatePicker"
+                                                    Background="#0f1729"
+                                                    Foreground="White"
+                                                    BorderBrush="#374151"
+                                                    BorderThickness="1"
+                                                    CornerRadius="8"
+                                                    Padding="16,12"
+                                                    FontSize="15"
+                                                    Height="50"
+                                                    HorizontalAlignment="Stretch"/>
+                                    </StackPanel>
+                                    
+                                    <!-- Time Section -->
+                                    <StackPanel>
+                                        <TextBlock Text="Time" 
+                                                   Foreground="#9ca3af" 
+                                                   FontSize="14"
+                                                   FontWeight="Medium"
+                                                   Margin="0,0,0,10"/>
+                                        <TimePicker Name="TimePicker"
+                                                    Background="#0f1729"
+                                                    Foreground="White"
+                                                    BorderBrush="#374151"
+                                                    BorderThickness="1"
+                                                    CornerRadius="8"
+                                                    Padding="16,12"
+                                                    FontSize="15"
+                                                    Height="50"
+                                                    HorizontalAlignment="Stretch"/>
+                                    </StackPanel>
+                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
@@ -303,7 +360,7 @@
                     <!-- Upload Button -->
                     <Button Grid.Row="4"
                             Name="UploadButton"
-                            Content="🚀 Share with Community"
+                            Content="Share with Community"
                             Background="#10b981"
                             Foreground="White"
                             CornerRadius="8"

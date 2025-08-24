@@ -22,12 +22,10 @@
                 <!-- Header -->
                 <StackPanel Orientation="Horizontal" 
                            Margin="0,0,0,30">
-                    <TextBlock Text="❓" FontSize="24" VerticalAlignment="Center"/>
                     <TextBlock Text="Help Center" 
                               FontSize="24" 
                               FontWeight="Bold" 
                               Foreground="White" 
-                              Margin="15,0,0,0"
                               VerticalAlignment="Center"/>
                 </StackPanel>
                 
@@ -44,11 +42,9 @@
                             HorizontalContentAlignment="Left"
                             Padding="15,0">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="🆘" FontSize="16" VerticalAlignment="Center"/>
                             <TextBlock Text="Help &amp; Support" 
                                       FontSize="14" 
                                       FontWeight="Medium"
-                                      Margin="10,0,0,0"
                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
@@ -63,11 +59,9 @@
                             HorizontalContentAlignment="Left"
                             Padding="15,0">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="🗄️" FontSize="16" VerticalAlignment="Center"/>
                             <TextBlock Text="Data Sources" 
                                       FontSize="14" 
                                       FontWeight="Medium"
-                                      Margin="10,0,0,0"
                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
@@ -82,11 +76,9 @@
                             HorizontalContentAlignment="Left"
                             Padding="15,0">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="💬" FontSize="16" VerticalAlignment="Center"/>
                             <TextBlock Text="Contact &amp; Support" 
                                       FontSize="14" 
                                       FontWeight="Medium"
-                                      Margin="10,0,0,0"
                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
@@ -101,11 +93,9 @@
                             HorizontalContentAlignment="Left"
                             Padding="15,0">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="ℹ️" FontSize="16" VerticalAlignment="Center"/>
                             <TextBlock Text="About" 
                                       FontSize="14" 
                                       FontWeight="Medium"
-                                      Margin="10,0,0,0"
                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
@@ -120,11 +110,9 @@
                             HorizontalContentAlignment="Left"
                             Padding="15,0">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="🔒" FontSize="16" VerticalAlignment="Center"/>
                             <TextBlock Text="Terms &amp; Privacy" 
                                       FontSize="14" 
                                       FontWeight="Medium"
-                                      Margin="10,0,0,0"
                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
@@ -161,7 +149,7 @@
                             Padding="25"
                             Margin="0,0,0,20">
                         <StackPanel Spacing="15">
-                            <TextBlock Text="🚀 Getting Started" 
+                            <TextBlock Text="Getting Started" 
                                       FontSize="20" 
                                       FontWeight="Bold" 
                                       Foreground="White"/>
@@ -186,21 +174,21 @@
                             Padding="25"
                             Margin="0,0,0,20">
                         <StackPanel Spacing="15">
-                            <TextBlock Text="🌟 Features Guide" 
+                            <TextBlock Text="Features Guide" 
                                       FontSize="20" 
                                       FontWeight="Bold" 
                                       Foreground="White"/>
                             <StackPanel Spacing="10">
-                                <TextBlock Text="📅 Home Calendar: View astronomical events for any month" 
+                                <TextBlock Text="Home Calendar: View astronomical events for any month" 
                                           FontSize="14" 
                                           Foreground="#E0E0E0"/>
-                                <TextBlock Text="📸 Gallery: Browse and upload astrophotography" 
+                                <TextBlock Text="Gallery: Browse and upload astrophotography" 
                                           FontSize="14" 
                                           Foreground="#E0E0E0"/>
-                                <TextBlock Text="☁️ Upload: Share your celestial captures with the community" 
+                                <TextBlock Text="Upload: Share your celestial captures with the community" 
                                           FontSize="14" 
                                           Foreground="#E0E0E0"/>
-                                <TextBlock Text="⚙️ Settings: Manage your profile and app preferences" 
+                                <TextBlock Text="Settings: Manage your profile and app preferences" 
                                           FontSize="14" 
                                           Foreground="#E0E0E0"/>
                             </StackPanel>
@@ -228,7 +216,7 @@
                             Padding="25"
                             Margin="0,0,0,20">
                         <StackPanel Spacing="15">
-                            <TextBlock Text="🚀 NASA APOD API" 
+                            <TextBlock Text="NASA APOD API" 
                                       FontSize="20" 
                                       FontWeight="Bold" 
                                       Foreground="White"/>
@@ -248,7 +236,7 @@
                             Padding="25"
                             Margin="0,0,0,20">
                         <StackPanel Spacing="15">
-                            <TextBlock Text="☁️ Azure Blob Storage" 
+                            <TextBlock Text="Azure Blob Storage" 
                                       FontSize="20" 
                                       FontWeight="Bold" 
                                       Foreground="White"/>
@@ -280,7 +268,7 @@
                             Padding="25"
                             Margin="0,0,0,20">
                         <StackPanel Spacing="20">
-                            <TextBlock Text="💬 Send us a Message" 
+                            <TextBlock Text="Send us a Message" 
                                       FontSize="20" 
                                       FontWeight="Bold" 
                                       Foreground="White"/>
@@ -339,7 +327,7 @@
                             Padding="25"
                             Margin="0,0,0,20">
                         <StackPanel Spacing="15">
-                            <TextBlock Text="🌌 Our Mission" 
+                            <TextBlock Text="Our Mission" 
                                       FontSize="20" 
                                       FontWeight="Bold" 
                                       Foreground="White"/>
@@ -356,7 +344,7 @@
                             Padding="25"
                             Margin="0,0,0,20">
                         <StackPanel Spacing="15">
-                            <TextBlock Text="👨‍💻 Developer" 
+                            <TextBlock Text="Developer" 
                                       FontSize="20" 
                                       FontWeight="Bold" 
                                       Foreground="White"/>
@@ -390,7 +378,7 @@
                             Padding="25"
                             Margin="0,0,0,20">
                         <StackPanel Spacing="15">
-                            <TextBlock Text="🔒 Privacy Policy" 
+                            <TextBlock Text="Privacy Policy" 
                                       FontSize="20" 
                                       FontWeight="Bold" 
                                       Foreground="White"/>
@@ -415,7 +403,7 @@
                             Padding="25"
                             Margin="0,0,0,20">
                         <StackPanel Spacing="15">
-                            <TextBlock Text="📜 Terms of Service" 
+                            <TextBlock Text="Terms of Service" 
                                       FontSize="20" 
                                       FontWeight="Bold" 
                                       Foreground="White"/>

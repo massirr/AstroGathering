@@ -31,8 +31,7 @@
                 <StackPanel Grid.Column="0" 
                            Orientation="Horizontal" 
                            VerticalAlignment="Center">
-                    <TextBlock Text="⭐" FontSize="24" VerticalAlignment="Center"/>
-                    <TextBlock Text="AstroGathering (Desktop)" 
+                    <TextBlock Text="AstroGathering"
                               FontSize="18" 
                               FontWeight="Bold" 
                               Foreground="White" 

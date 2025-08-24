@@ -230,7 +230,7 @@ namespace AstroGathering.Pages
                 // User email and admin status
                 var emailText = new TextBlock
                 {
-                    Text = $"{user.Email} {(user.IsAdmin ? "🔰" : "")}",
+                    Text = $"{user.Email} {(user.IsAdmin ? "admin" : "")}",
                     Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.White),
                     FontWeight = Avalonia.Media.FontWeight.Bold,
                     FontSize = 14
@@ -400,7 +400,7 @@ namespace AstroGathering.Pages
             {
                 var noReportsText = new TextBlock
                 {
-                    Text = "✅ No pending reports - All clear!",
+                    Text = "No pending reports - All clear!",
                     Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0x90, 0xEE, 0x90)),
                     FontSize = 14,
                     HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
@@ -433,7 +433,7 @@ namespace AstroGathering.Pages
                 // Report header
                 var reportHeaderText = new TextBlock
                 {
-                    Text = $"⚠️ Report #{report.ReportId} - {report.ReportStatus}",
+                    Text = $"Report #{report.ReportId} - {report.ReportStatus}",
                     Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0xFF, 0xA5, 0x00)),
                     FontWeight = Avalonia.Media.FontWeight.Bold,
                     FontSize = 14
