@@ -147,5 +147,26 @@ namespace AstroGathering.Database
             string query = $"UPDATE users SET last_login = '{lastLogin:yyyy-MM-dd HH:mm:ss}' WHERE user_id = {userId};";
             return Insert(query) >= 0;
         }
+
+        // HELP CONTENT OPERATIONS
+        public bool InsertHelpContent(string section, string title, string content, int order = 0)
+        {
+            string query = $"INSERT INTO help_content (section, title, content, display_order) " +
+                $"VALUES ('{section.Replace("'", "''")}', '{title.Replace("'", "''")}', '{content.Replace("'", "''")}', {order}) " +
+                $"ON DUPLICATE KEY UPDATE " +
+                $"content = VALUES(content), display_order = VALUES(display_order);";
+
+            return Insert(query) > 0;
+        }
+
+        public bool UpdateHelpContent(int sectionId, string title, string content)
+        {
+            string query = $"UPDATE help_content SET " +
+                $"title = '{title.Replace("'", "''")}', " +
+                $"content = '{content.Replace("'", "''")}' " +
+                $"WHERE section_id = {sectionId};";
+
+            return Insert(query) >= 0;
+        }
     }
 }

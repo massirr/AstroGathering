@@ -34,7 +34,7 @@ class Program
             
             if (users.Count > 0)
             {
-                Console.WriteLine($"✅ Success! Found {users.Count} users:");
+                Console.WriteLine($"Success! Found {users.Count} users:");
                 foreach (User user in users)
                 {
                     Console.WriteLine($"  - ID: {user.UserId}, Email: {user.Email}, Name: {user.FirstName} {user.LastName}");
@@ -45,7 +45,7 @@ class Program
                         bool adminResult = db.MakeUserAdmin(user.Email);
                         if (adminResult)
                         {
-                            Console.WriteLine($"  ✅ Made {user.Email} an admin");
+                            Console.WriteLine($" Made {user.Email} an admin");
                         }
                     }
                 }

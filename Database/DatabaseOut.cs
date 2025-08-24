@@ -6,6 +6,16 @@ using AstroGathering.Objects;
 
 namespace AstroGathering.Database
 {
+    public class HelpContent
+    {
+        public int SectionId { get; set; }
+        public string Section { get; set; } = "";
+        public string Title { get; set; } = "";
+        public string Content { get; set; } = "";
+        public int DisplayOrder { get; set; }
+        public DateTime LastUpdated { get; set; }
+    }
+
     public class DatabaseOut
     {
         // Connection to database - UPDATE THESE VALUES FOR YOUR SETUP
@@ -710,6 +720,80 @@ namespace AstroGathering.Database
                 transaction?.Dispose();
                 connection?.Close();
             }
+        }
+
+        // HELP CONTENT OPERATIONS
+        public async Task<List<HelpContent>> GetHelpContentBySectionAsync(string section)
+        {
+            var helpContent = new List<HelpContent>();
+            
+            using var connection = new MySqlConnection(connectionString);
+            string query = $"SELECT section_id, section, title, content, display_order, last_updated " +
+                          $"FROM help_content WHERE section = '{section.Replace("'", "''")}' " +
+                          $"ORDER BY display_order ASC, last_updated ASC;";
+            
+            using var command = new MySqlCommand(query, connection);
+
+            try
+            {
+                await connection.OpenAsync();
+                using var reader = await command.ExecuteReaderAsync();
+                
+                while (await reader.ReadAsync())
+                {
+                    helpContent.Add(new HelpContent
+                    {
+                        SectionId = Convert.ToInt32(reader["section_id"]),
+                        Section = reader["section"]?.ToString() ?? "",
+                        Title = reader["title"]?.ToString() ?? "",
+                        Content = reader["content"]?.ToString() ?? "",
+                        DisplayOrder = reader["display_order"] == DBNull.Value ? 0 : Convert.ToInt32(reader["display_order"]),
+                        LastUpdated = Convert.ToDateTime(reader["last_updated"])
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching help content: {ex.Message}");
+            }
+
+            return helpContent;
+        }
+
+        public async Task<List<HelpContent>> GetAllHelpContentAsync()
+        {
+            var helpContent = new List<HelpContent>();
+            
+            using var connection = new MySqlConnection(connectionString);
+            string query = "SELECT section_id, section, title, content, display_order, last_updated " +
+                          "FROM help_content ORDER BY section, display_order ASC, last_updated ASC;";
+            
+            using var command = new MySqlCommand(query, connection);
+
+            try
+            {
+                await connection.OpenAsync();
+                using var reader = await command.ExecuteReaderAsync();
+                
+                while (await reader.ReadAsync())
+                {
+                    helpContent.Add(new HelpContent
+                    {
+                        SectionId = Convert.ToInt32(reader["section_id"]),
+                        Section = reader["section"]?.ToString() ?? "",
+                        Title = reader["title"]?.ToString() ?? "",
+                        Content = reader["content"]?.ToString() ?? "",
+                        DisplayOrder = reader["display_order"] == DBNull.Value ? 0 : Convert.ToInt32(reader["display_order"]),
+                        LastUpdated = Convert.ToDateTime(reader["last_updated"])
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching help content: {ex.Message}");
+            }
+
+            return helpContent;
         }
     }
 }
