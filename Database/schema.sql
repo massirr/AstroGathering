@@ -89,8 +89,10 @@ CREATE TABLE reports (
 -- Help content table
 CREATE TABLE help_content (
     section_id INT AUTO_INCREMENT PRIMARY KEY,
+    section VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
+    display_order INT,
     last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
