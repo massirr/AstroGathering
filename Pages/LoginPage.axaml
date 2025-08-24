@@ -5,7 +5,7 @@
         mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
         x:Class="AstroGathering.Pages.LoginPage">
     
-    <!-- Main Grid Layout - This is our foundation -->
+    <!-- Main Grid Layout -->
     <Grid Background="#1a1235">
         
         <!-- STEP 1: Create the starry background -->
@@ -80,7 +80,7 @@
                         Background="#4c3a8a" 
                         CornerRadius="30" 
                         HorizontalAlignment="Center">
-                    <TextBlock Text="⭐" 
+                    <TextBlock Text="★" 
                               FontSize="30" 
                               HorizontalAlignment="Center" 
                               VerticalAlignment="Center"/>
@@ -114,8 +114,8 @@
                         HorizontalAlignment="Center" 
                         HorizontalContentAlignment="Center">
                     <StackPanel Orientation="Horizontal" Spacing="10">
-                        <!-- Google icon (using emoji for simplicity) -->
-                        <TextBlock Text="🌐" FontSize="18" VerticalAlignment="Center"/>
+                        <!-- Google icon (using symbol) -->
+                        <TextBlock Text="G" FontSize="18" VerticalAlignment="Center"/>
                         <TextBlock Text="Continue with Google" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>

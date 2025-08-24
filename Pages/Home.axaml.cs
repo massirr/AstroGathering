@@ -241,11 +241,39 @@ namespace AstroGathering.Pages
                 if (_monthlyEvents.ContainsKey(selectedDate))
                 {
                     var events = _monthlyEvents[selectedDate];
-                    var eventText = string.Join("\n", events.Select(e => $"• {e.EventName}: {e.Description}")); // Updated to use EventName
+                    var eventText = string.Join("\n\n", events.Select(e => 
+                    {
+                        // Apply same formatting as LoadTodaysEvents for consistency
+                        var eventName = e.EventName;
+                        var description = e.Description;
+                        
+                        if (eventName.Contains("Moon Phase"))
+                        {
+                            return $"• {eventName}\n  Optimal for deep sky observation";
+                        }
+                        else if (eventName.Contains("Asteroid"))
+                        {
+                            return $"• {eventName}\n  {description}";
+                        }
+                        else
+                        {
+                            if (description.Length > 60)
+                            {
+                                var truncated = description.Substring(0, 57) + "...";
+                                var lastSpace = truncated.LastIndexOf(' ');
+                                if (lastSpace > 40)
+                                {
+                                    truncated = description.Substring(0, lastSpace) + "...";
+                                }
+                                description = truncated;
+                            }
+                            return $"• {eventName}\n  {description}";
+                        }
+                    }));
                     
                     if (TodaysEventsText != null)
                     {
-                        TodaysEventsText.Text = $"Events for {selectedDate:MMM dd}:\n{eventText}";
+                        TodaysEventsText.Text = $"Events for {selectedDate:MMM dd}:\n\n{eventText}";
                     }
                 }
                 else
@@ -272,8 +300,44 @@ namespace AstroGathering.Pages
                     if (_monthlyEvents.ContainsKey(today) && _currentMonth.Month == today.Month && _currentMonth.Year == today.Year)
                     {
                         var events = _monthlyEvents[today];
-                        var eventText = string.Join("\n", events.Select(e => $"• {e.EventName}: {e.Description}")); // Updated to use EventName
-                        TodaysEventsText.Text = $"Today's Events:\n{eventText}";
+                        var eventText = string.Join("\n\n", events.Select(e => 
+                        {
+                            // Preserve moon phase emoji and improve formatting
+                            var eventName = e.EventName;
+                            var description = e.Description;
+                            
+                            // Format based on event type for better readability
+                            if (eventName.Contains("Moon Phase"))
+                            {
+                                // Keep emoji for moon phases, add practical info
+                                return $"• {eventName}\n  Optimal for deep sky observation";
+                            }
+                            else if (eventName.Contains("Asteroid"))
+                            {
+                                // Keep asteroid info concise
+                                return $"• {eventName}\n  {description}";
+                            }
+                            else
+                            {
+                                // For other events, truncate and format description
+                                if (description.Length > 60)
+                                {
+                                    // Find a good break point
+                                    var truncated = description.Substring(0, 57) + "...";
+                                    // Try to break at word boundary
+                                    var lastSpace = truncated.LastIndexOf(' ');
+                                    if (lastSpace > 40)
+                                    {
+                                        truncated = description.Substring(0, lastSpace) + "...";
+                                    }
+                                    description = truncated;
+                                }
+                                
+                                // Add line break for better readability
+                                return $"• {eventName}\n  {description}";
+                            }
+                        }));
+                        TodaysEventsText.Text = $"Today's Events:\n\n{eventText}";
                     }
                     else
                     {

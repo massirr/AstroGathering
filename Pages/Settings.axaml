@@ -18,12 +18,10 @@
                 
                 <!-- Header -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
-                    <TextBlock Text="⚙️" FontSize="24" VerticalAlignment="Center"/>
                     <TextBlock Text="Profile Settings" 
                               FontSize="24" 
                               FontWeight="Bold" 
                               Foreground="White" 
-                              Margin="15,0,0,0"
                               VerticalAlignment="Center"/>
                 </StackPanel>
                 
@@ -32,7 +30,7 @@
                         CornerRadius="15" 
                         Padding="25">
                     <StackPanel Spacing="20">
-                        <TextBlock Text="👤 Profile Information" 
+                        <TextBlock Text="Profile Information" 
                                   FontSize="18" 
                                   FontWeight="Bold" 
                                   Foreground="White"/>
@@ -72,7 +70,7 @@
                                           FontSize="12" 
                                           Foreground="#b8a7d9"/>
                                 <TextBlock x:Name="AdminBadge" 
-                                          Text="🔰 Administrator" 
+                                          Text="Administrator" 
                                           FontSize="11" 
                                           Foreground="#FFD700"
                                           IsVisible="False"/>
@@ -112,7 +110,7 @@
                         CornerRadius="15" 
                         Padding="25">
                     <StackPanel Spacing="15">
-                        <TextBlock Text="🚀 Account Actions" 
+                        <TextBlock Text="Account Actions" 
                                   FontSize="16" 
                                   FontWeight="Bold" 
                                   Foreground="White"/>
@@ -150,7 +148,7 @@
                         CornerRadius="15" 
                         Padding="25">
                     <StackPanel Spacing="20">
-                        <TextBlock Text="📊 Your Statistics" 
+                        <TextBlock Text="Your Statistics" 
                                   FontSize="18" 
                                   FontWeight="Bold" 
                                   Foreground="White"/>
@@ -168,7 +166,7 @@
                                     Padding="20"
                                     Margin="0,0,10,0">
                                 <StackPanel HorizontalAlignment="Center" Spacing="5">
-                                    <TextBlock Text="📸" FontSize="24" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Photos" FontSize="12" HorizontalAlignment="Center"/>
                                     <TextBlock x:Name="PhotosUploadedText" 
                                               Text="24" 
                                               FontSize="28" 
@@ -189,7 +187,7 @@
                                     Padding="20"
                                     Margin="10,0,0,0">
                                 <StackPanel HorizontalAlignment="Center" Spacing="5">
-                                    <TextBlock Text="❤️" FontSize="24" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Likes" FontSize="12" HorizontalAlignment="Center"/>
                                     <TextBlock x:Name="LikesReceivedText" 
                                               Text="456" 
                                               FontSize="28" 
@@ -213,7 +211,7 @@
                         Padding="25"
                         IsVisible="False">
                     <StackPanel Spacing="20">
-                        <TextBlock Text="🛡️ Admin Panel" 
+                        <TextBlock Text="Admin Panel" 
                                   FontSize="18" 
                                   FontWeight="Bold" 
                                   Foreground="White"/>
@@ -236,15 +234,6 @@
                                     Padding="20"
                                     Margin="0,0,10,0">
                                 <StackPanel HorizontalAlignment="Center" Spacing="8">
-                                    <Border Width="48" Height="48" 
-                                            Background="#4c3a8a" 
-                                            CornerRadius="24" 
-                                            HorizontalAlignment="Center">
-                                        <TextBlock Text="👥" 
-                                                  FontSize="20" 
-                                                  HorizontalAlignment="Center" 
-                                                  VerticalAlignment="Center"/>
-                                    </Border>
                                     <TextBlock x:Name="TotalUsersText" 
                                               Text="3" 
                                               FontSize="24" 
@@ -265,15 +254,6 @@
                                     Padding="20"
                                     Margin="5,0">
                                 <StackPanel HorizontalAlignment="Center" Spacing="8">
-                                    <Border Width="48" Height="48" 
-                                            Background="#1976D2" 
-                                            CornerRadius="24" 
-                                            HorizontalAlignment="Center">
-                                        <TextBlock Text="🖼️" 
-                                                  FontSize="20" 
-                                                  HorizontalAlignment="Center" 
-                                                  VerticalAlignment="Center"/>
-                                    </Border>
                                     <TextBlock x:Name="TotalPhotosText" 
                                               Text="3" 
                                               FontSize="24" 
@@ -294,15 +274,6 @@
                                     Padding="20"
                                     Margin="10,0,0,0">
                                 <StackPanel HorizontalAlignment="Center" Spacing="8">
-                                    <Border Width="48" Height="48" 
-                                            Background="#FFA500" 
-                                            CornerRadius="24" 
-                                            HorizontalAlignment="Center">
-                                        <TextBlock Text="⚠️" 
-                                                  FontSize="20" 
-                                                  HorizontalAlignment="Center" 
-                                                  VerticalAlignment="Center"/>
-                                    </Border>
                                     <TextBlock x:Name="PendingReportsText" 
                                               Text="2" 
                                               FontSize="24" 
@@ -369,7 +340,7 @@
                         CornerRadius="15" 
                         Padding="25">
                     <StackPanel Spacing="15">
-                        <TextBlock Text="🔧 App Preferences" 
+                        <TextBlock Text="App Preferences" 
                                   FontSize="16" 
                                   FontWeight="Bold" 
                                   Foreground="White"/>

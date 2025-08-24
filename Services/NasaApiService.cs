@@ -199,7 +199,7 @@ namespace AstroGathering.Services
 
                     return new AstronomicalEvent
                     {
-                        EventName = $"🌌 {title}", // Updated to use EventName
+                        EventName = title, // Updated to use EventName
                         Type = "Astronomy Feature",
                         EventDate = date, // Updated to use EventDate
                         Description = truncatedExplanation,
@@ -297,7 +297,7 @@ namespace AstroGathering.Services
                                 
                                 events.Add(new AstronomicalEvent
                                 {
-                                    EventName = $"🌌 Asteroid {name}{hazardText}", // Updated to use EventName
+                                    EventName = $"Asteroid {name}{hazardText}", // Updated to use EventName
                                     Type = "Near Earth Object",
                                     EventDate = date, // Updated to use EventDate
                                     Description = $"Distance: {FormatDistance(distanceKm)} km, Size: ~{FormatSize(diameterM)} m",
@@ -373,7 +373,7 @@ namespace AstroGathering.Services
                                                 
                                                 monthlyEvents[neoDate].Add(new AstronomicalEvent
                                                 {
-                                                    EventName = $"🌌 Asteroid {name}{hazardText}", // Updated to use EventName
+                                                    EventName = $"Asteroid {name}{hazardText}", // Updated to use EventName
                                                     Type = "Near Earth Object",
                                                     EventDate = neoDate, // Updated to use EventDate
                                                     Description = $"Distance: {FormatDistance(distanceKm)} km, Size: ~{FormatSize(diameterM)} m",
