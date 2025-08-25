@@ -8,7 +8,6 @@ DROP TABLE IF EXISTS photo_tags;
 DROP TABLE IF EXISTS likes;
 DROP TABLE IF EXISTS reports;
 DROP TABLE IF EXISTS photos;
-DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS tags;
 DROP TABLE IF EXISTS help_content;
 DROP TABLE IF EXISTS users;
@@ -26,23 +25,15 @@ CREATE TABLE users (
     is_admin BOOLEAN DEFAULT FALSE
 );
 
--- Events table (for astronomy gatherings/events)
-CREATE TABLE events (
-    event_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    event_name VARCHAR(255) NOT NULL,
-    description TEXT,
-    event_date DATETIME NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
-);
-
 -- Photos table (user uploaded astronomical photos)
 CREATE TABLE photos (
     photo_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     image_url VARCHAR(500) NOT NULL,
+    event_name VARCHAR(255),
     location VARCHAR(255),
+    latitude DOUBLE,
+    longitude DOUBLE,
     description TEXT,
     date_taken DATETIME,
     time_uploaded TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -116,8 +107,6 @@ CREATE TABLE astronomical_events (
 
 -- Create indexes for better performance
 CREATE INDEX idx_users_google_id ON users(google_id);
-CREATE INDEX idx_events_date ON events(event_date);
-CREATE INDEX idx_events_user ON events(user_id);
 CREATE INDEX idx_photos_user ON photos(user_id);
 CREATE INDEX idx_photos_date ON photos(time_uploaded);
 CREATE INDEX idx_astronomical_events_date ON astronomical_events(event_date);

@@ -58,7 +58,9 @@ namespace AstroGathering.Pages
                     Type = "NASA APOD",
                     TypeTag = GetTypeTag(evt.Type ?? "Astronomical"),
                     LikeCount = GetRandomLikeCount(),
-                    IsUserPhoto = false
+                    IsUserPhoto = false,
+                    Location = FormatLocation(null, evt.Latitude, evt.Longitude),
+                    HasLocation = evt.Latitude.HasValue && evt.Longitude.HasValue
                 }).Where(photo => !string.IsNullOrEmpty(photo.ImageUrl));
 
                 var eventPhotosList = eventPhotos.ToList();
@@ -74,9 +76,9 @@ namespace AstroGathering.Pages
                 var userGalleryPhotos = photos.Select(photo => new GalleryPhoto
                 {
                     Id = photo.PhotoId,
-                    Name = ExtractPhotoName(photo.Description ?? "User Photo"),
-                    CleanName = CleanPhotoName(ExtractPhotoName(photo.Description ?? "User Photo")),
-                    Description = photo.Description ?? "",
+                    Name = photo.EventName ?? "User Photo", // Use event name stored directly in photo
+                    CleanName = CleanPhotoName(photo.EventName ?? "User Photo"),
+                    Description = photo.Description ?? "", // Use photo description
                     ImageUrl = photo.ImageUrl,
                     HdImageUrl = photo.ImageUrl, // Use same image for HD
                     Source = "Community Upload",
@@ -86,8 +88,9 @@ namespace AstroGathering.Pages
                     TypeTag = "#community",
                     LikeCount = GetRandomLikeCount(),
                     IsUserPhoto = true,
-                    Location = photo.Location ?? "",
-                    Tags = ExtractTagsFromDescription(photo.Description ?? "")
+                    Location = FormatLocation(photo.Location, photo.Latitude, photo.Longitude),
+                    HasLocation = !string.IsNullOrEmpty(photo.Location) || (photo.Latitude.HasValue && photo.Longitude.HasValue),
+                    Tags = ""  // We'll load tags separately later if needed
                 });
 
                 // Debug: Log user photos
@@ -227,6 +230,23 @@ namespace AstroGathering.Pages
             var random = new Random();
             return random.Next(50, 501);
         }
+
+        private string FormatLocation(string? locationText, double? latitude, double? longitude)
+        {
+            // Prioritize the location text if available
+            if (!string.IsNullOrEmpty(locationText))
+            {
+                return locationText;
+            }
+            
+            // If no location text but coordinates are available, format them
+            if (latitude.HasValue && longitude.HasValue)
+            {
+                return $"{latitude.Value:F2}°, {longitude.Value:F2}°";
+            }
+            
+            return "Unknown location";
+        }
     }
 
     // Data model for gallery photos
@@ -246,6 +266,7 @@ namespace AstroGathering.Pages
         public int LikeCount { get; set; }
         public bool IsUserPhoto { get; set; }
         public string Location { get; set; } = string.Empty;
+        public bool HasLocation { get; set; } = false;
         public string Tags { get; set; } = string.Empty;
         
         // Add bitmap property for loaded images

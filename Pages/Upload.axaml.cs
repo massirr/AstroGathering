@@ -191,7 +191,7 @@ namespace AstroGathering.Pages
                 if (UploadButton != null)
                 {
                     UploadButton.IsEnabled = false;
-                    UploadButton.Content = "🔄 Uploading...";
+                    UploadButton.Content = "Uploading...";
                 }
 
                 // Validate inputs
@@ -224,16 +224,30 @@ namespace AstroGathering.Pages
                     }
                 }
 
-                // Create photo object for upload
+                // Parse coordinates if available
+                double? latitude = null;
+                double? longitude = null;
+                if (!string.IsNullOrEmpty(LatitudeBox?.Text) && double.TryParse(LatitudeBox.Text, out double lat))
+                {
+                    latitude = lat;
+                }
+                if (!string.IsNullOrEmpty(LongitudeBox?.Text) && double.TryParse(LongitudeBox.Text, out double lng))
+                {
+                    longitude = lng;
+                }
+
+                // Create photo object for upload (with clean description)
+                var eventName = NameBox?.Text?.Trim() ?? "Untitled Observation";
                 var photo = new Photo
                 {
                     ImageUrl = imageUrl,
-                    Location = !string.IsNullOrEmpty(LatitudeBox?.Text) && !string.IsNullOrEmpty(LongitudeBox?.Text) 
-                        ? $"{LatitudeBox.Text}, {LongitudeBox.Text}" 
-                        : null,
-                    Description = $"{NameBox?.Text?.Trim() ?? "Untitled"}\n{DescriptionBox?.Text?.Trim() ?? ""}\nTags: {TagsBox?.Text?.Trim() ?? ""}",
+                    EventName = eventName, // Store event name directly
+                    Location = LocationSearchBox?.Text?.Trim(), // Store the search location text
+                    Latitude = latitude,
+                    Longitude = longitude,
+                    Description = DescriptionBox?.Text?.Trim() ?? "", // Clean description only
                     DateTaken = (DatePicker?.SelectedDate?.Date ?? DateTime.Now.Date) + (TimePicker?.SelectedTime ?? DateTime.Now.TimeOfDay),
-                    UserId = _user.UserId // Use the authenticated user's ID
+                    UserId = _user.UserId
                 };
 
                 // Save to database
@@ -255,7 +269,7 @@ namespace AstroGathering.Pages
 
                 if (photoId > 0)
                 {
-                    await ShowMessageAsync("Success", "Photo uploaded successfully! It will appear in the gallery.");
+                    await ShowMessageAsync("Success", $"Photo uploaded successfully! '{eventName}' saved to gallery.");
                     ClearForm();
                 }
                 else
@@ -273,7 +287,7 @@ namespace AstroGathering.Pages
                 if (UploadButton != null)
                 {
                     UploadButton.IsEnabled = !string.IsNullOrEmpty(_selectedImagePath);
-                    UploadButton.Content = "🚀 Upload Photo";
+                    UploadButton.Content = "Share with Community";
                 }
             }
         }

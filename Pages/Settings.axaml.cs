@@ -54,7 +54,7 @@ namespace AstroGathering.Pages
             // Load admin data if user is admin
             if (_user.IsAdmin)
             {
-                LoadAdminData();
+                _ = LoadAdminDataAsync(); // Fire and forget async call
             }
         }
 
@@ -172,7 +172,7 @@ namespace AstroGathering.Pages
         /// <summary>
         /// Load admin data and populate the UI tables
         /// </summary>
-        private void LoadAdminData()
+        private async Task LoadAdminDataAsync()
         {
             if (_user == null || !_user.IsAdmin) return;
 
@@ -180,7 +180,7 @@ namespace AstroGathering.Pages
             {
                 // Get all data from database
                 var users = _database.GetAllUsers();
-                var photos = _database.GetAllPhotos();
+                var photos = await _database.GetAllPhotosAsync();
                 var reports = _database.GetAllReports();
 
                 // Populate Users Panel
@@ -523,7 +523,7 @@ namespace AstroGathering.Pages
                     await ShowMessageDialog("Success", $"User {user.Email} and all associated data (photos, reports, photo_tags) have been deleted successfully.");
                     
                     // Reload admin data to reflect changes
-                    LoadAdminData();
+                    await LoadAdminDataAsync();
                     LoadStatistics();
                 }
                 else
@@ -554,7 +554,7 @@ namespace AstroGathering.Pages
                     await ShowMessageDialog("Success", $"Photo #{photo.PhotoId} and all associated data (photo_tags, likes, reports) have been deleted successfully.");
                     
                     // Reload admin data to reflect changes
-                    LoadAdminData();
+                    await LoadAdminDataAsync();
                     LoadStatistics();
                 }
                 else
@@ -585,7 +585,7 @@ namespace AstroGathering.Pages
                     await ShowMessageDialog("Success", $"Report #{report.ReportId} has been resolved.");
                     
                     // Reload admin data to reflect changes
-                    LoadAdminData();
+                    await LoadAdminDataAsync();
                     LoadStatistics();
                 }
                 else
@@ -616,7 +616,7 @@ namespace AstroGathering.Pages
                     await ShowMessageDialog("Success", $"Report #{report.ReportId} has been deleted successfully.");
                     
                     // Reload admin data to reflect changes
-                    LoadAdminData();
+                    await LoadAdminDataAsync();
                     LoadStatistics();
                 }
                 else
