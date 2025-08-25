@@ -159,44 +159,6 @@ namespace AstroGathering.Database
         }
 
         // PHOTO OPERATIONS
-        public List<Photo> GetAllPhotos()
-        {
-            List<Photo> photos = new List<Photo>();
-            string query = "SELECT * FROM photos ORDER BY time_uploaded DESC;";
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            MySqlCommand commandDatabase = new MySqlCommand(query, connection);
-
-            try
-            {
-                connection.Open();
-                MySqlDataReader reader = commandDatabase.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    photos.Add(new Photo
-                    {
-                        PhotoId = Convert.ToInt32(reader["photo_id"]),
-                        UserId = Convert.ToInt32(reader["user_id"]),
-                        ImageUrl = reader["image_url"].ToString() ?? "",
-                        Location = reader["location"]?.ToString(),
-                        Description = reader["description"]?.ToString(),
-                        DateTaken = reader["date_taken"] != DBNull.Value ? Convert.ToDateTime(reader["date_taken"]) : null,
-                        TimeUploaded = Convert.ToDateTime(reader["time_uploaded"])
-                    });
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Get All Photos Error: {ex.Message}");
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return photos;
-        }
-
         public async Task<List<Photo>> GetAllPhotosAsync()
         {
             var photos = new List<Photo>();
@@ -218,7 +180,10 @@ namespace AstroGathering.Database
                         PhotoId = Convert.ToInt32(reader["photo_id"]),
                         UserId = Convert.ToInt32(reader["user_id"]),
                         ImageUrl = reader["image_url"].ToString() ?? "",
+                        EventName = reader["event_name"]?.ToString(),
                         Location = reader["location"]?.ToString(),
+                        Latitude = reader["latitude"] == DBNull.Value ? null : Convert.ToDouble(reader["latitude"]),
+                        Longitude = reader["longitude"] == DBNull.Value ? null : Convert.ToDouble(reader["longitude"]),
                         Description = reader["description"]?.ToString(),
                         DateTaken = reader["date_taken"] != DBNull.Value ? Convert.ToDateTime(reader["date_taken"]) : null,
                         TimeUploaded = Convert.ToDateTime(reader["time_uploaded"])

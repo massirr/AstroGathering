@@ -75,9 +75,12 @@ namespace AstroGathering.Database
         public async Task<int> InsertPhotoAsync(Photo photo)
         {
             string dateTaken = photo.DateTaken?.ToString("yyyy-MM-dd HH:mm:ss") ?? "NULL";
+            string latitude = photo.Latitude?.ToString() ?? "NULL";
+            string longitude = photo.Longitude?.ToString() ?? "NULL";
             
-            string query = $"INSERT INTO photos (user_id, image_url, location, description, date_taken, time_uploaded) " +
-                $"VALUES ({photo.UserId}, '{photo.ImageUrl}', '{photo.Location?.Replace("'", "''")}', '{photo.Description?.Replace("'", "''")}', " +
+            string query = $"INSERT INTO photos (user_id, image_url, event_name, location, latitude, longitude, description, date_taken, time_uploaded) " +
+                $"VALUES ({photo.UserId}, '{photo.ImageUrl}', '{photo.EventName?.Replace("'", "''")}', '{photo.Location?.Replace("'", "''")}', " +
+                $"{latitude}, {longitude}, '{photo.Description?.Replace("'", "''")}', " +
                 $"'{dateTaken}', NOW());";
 
             return await InsertAsync(query);
