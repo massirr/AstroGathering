@@ -49,13 +49,24 @@
                                     CornerRadius="35" 
                                     Background="#4c3a8a"
                                     ClipToBounds="True">
-                                <TextBlock x:Name="ProfileInitials"
-                                          Text="ID" 
-                                          FontSize="24" 
-                                          FontWeight="Bold"
-                                          Foreground="White"
-                                          HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"/>
+                                <Grid>
+                                    <!-- Profile Image -->
+                                    <Image x:Name="ProfileImage"
+                                           Source=""
+                                           Stretch="UniformToFill"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           IsVisible="True"/>
+                                    <!-- Fallback Initials -->
+                                    <TextBlock x:Name="ProfileInitials"
+                                              Text="ID" 
+                                              FontSize="24" 
+                                              FontWeight="Bold"
+                                              Foreground="White"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              IsVisible="False"/>
+                                </Grid>
                             </Border>
                             
                             <!-- Basic Info -->
@@ -290,6 +301,45 @@
                         
                         <!-- Admin Data Tables -->
                         <StackPanel Spacing="20">
+                            
+                            <!-- Make User Admin Section -->
+                            <Border Background="#1a1235" CornerRadius="12" Padding="20">
+                                <StackPanel Spacing="12">
+                                    <TextBlock Text="Make User Admin" 
+                                              FontSize="16" 
+                                              FontWeight="Bold" 
+                                              Foreground="White"/>
+                                    <TextBlock Text="Enter email address to grant admin privileges" 
+                                              Foreground="#b8a7d9" 
+                                              FontSize="12"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox x:Name="AdminEmailTextBox" 
+                                                Grid.Column="0"
+                                                Watermark="Enter user email..."
+                                                Background="#2d1b69"
+                                                Foreground="White"
+                                                BorderBrush="#6b4c8a"
+                                                Margin="0,0,10,0"/>
+                                        <Button x:Name="MakeAdminButton" 
+                                               Grid.Column="1"
+                                               Content="Make Admin" 
+                                               Background="#4CAF50" 
+                                               Foreground="White" 
+                                               CornerRadius="6" 
+                                               Height="35" 
+                                               Width="100"/>
+                                    </Grid>
+                                    <TextBlock x:Name="AdminStatusMessage" 
+                                              Text="" 
+                                              Foreground="#FFD700" 
+                                              FontSize="12" 
+                                              IsVisible="False"/>
+                                </StackPanel>
+                            </Border>
                             
                             <!-- Recent Users Section -->
                             <Border Background="#1a1235" CornerRadius="12" Padding="20">
