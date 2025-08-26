@@ -16,6 +16,37 @@ namespace AstroGathering.Pages
 {
     public partial class GalleryPage : UserControl
     {
+        // Add static cache at class level to persist between gallery visits
+        private static readonly Dictionary<string, Bitmap> _imageCache = new();
+        
+        // Public static methods to access cache from GalleryPhoto
+        public static bool TryGetCachedImage(string url, out Bitmap? bitmap)
+        {
+            return _imageCache.TryGetValue(url, out bitmap);
+        }
+        
+        public static void CacheImage(string url, Bitmap bitmap)
+        {
+            _imageCache[url] = bitmap;
+        }
+        
+        // Optional: Clear cache for memory management
+        public static void ClearImageCache()
+        {
+            Console.WriteLine($"🗑️ Clearing image cache ({_imageCache.Count} images)");
+            foreach (var bitmap in _imageCache.Values)
+            {
+                bitmap?.Dispose();
+            }
+            _imageCache.Clear();
+        }
+        
+        // Optional: Get cache info for debugging
+        public static int GetCacheSize()
+        {
+            return _imageCache.Count;
+        }
+        
         public GalleryPage()
         {
             InitializeComponent();
@@ -82,16 +113,26 @@ namespace AstroGathering.Pages
                     ImageUrl = photo.ImageUrl,
                     HdImageUrl = photo.ImageUrl, // Use same image for HD
                     Source = "Community Upload",
-                    Date = photo.TimeUploaded,
-                    FormattedDate = photo.TimeUploaded.ToString("MMM dd, yyyy"),
+                    Date = photo.DateTaken ?? photo.TimeUploaded, // Use DateTaken if available, otherwise TimeUploaded
+                    FormattedDate = (photo.DateTaken ?? photo.TimeUploaded).ToString("MMM dd, yyyy"),
                     Type = "User Upload",
-                    TypeTag = "#community",
+                    TypeTag = "#community", // Temporary value, will be updated below
                     LikeCount = GetRandomLikeCount(),
                     IsUserPhoto = true,
                     Location = FormatLocation(photo.Location, photo.Latitude, photo.Longitude),
                     HasLocation = !string.IsNullOrEmpty(photo.Location) || (photo.Latitude.HasValue && photo.Longitude.HasValue),
                     Tags = ""  // We'll load tags separately later if needed
-                });
+                }).ToList();
+
+                // Now update tags asynchronously for each photo
+                foreach (var galleryPhoto in userGalleryPhotos)
+                {
+                    var originalPhoto = photos.FirstOrDefault(p => p.PhotoId == galleryPhoto.Id);
+                    if (originalPhoto != null)
+                    {
+                        galleryPhoto.TypeTag = await GetUserPhotoTagAsync(originalPhoto);
+                    }
+                }
 
                 // Debug: Log user photos
                 Console.WriteLine($"Sample user photo URLs:");
@@ -224,6 +265,59 @@ namespace AstroGathering.Pages
             };
         }
 
+        private async Task<string> GetUserPhotoTagAsync(Objects.Photo photo)
+        {
+            try
+            {
+                // First, try to get tags from the database
+                var dbInstance = new DatabaseOut();
+                var databaseTags = await dbInstance.GetPhotoTagsAsync(photo.PhotoId);
+                
+                if (databaseTags.Count > 0)
+                {
+                    // Return the first tag from the database
+                    return databaseTags[0];
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error getting database tags for photo {photo.PhotoId}: {ex.Message}");
+            }
+            
+            // Fallback to text analysis if no database tags found
+            var description = photo.Description?.ToLowerInvariant() ?? "";
+            var eventName = photo.EventName?.ToLowerInvariant() ?? "";
+            
+            // Priority 1: Check for specific astronomical events
+            if (eventName.Contains("meteor") || description.Contains("meteor"))
+                return "#meteor";
+            if (eventName.Contains("moon") || description.Contains("moon"))
+                return "#moon";
+            if (eventName.Contains("planet") || description.Contains("planet"))
+                return "#planet";
+            if (eventName.Contains("star") || description.Contains("star"))
+                return "#stars";
+            if (eventName.Contains("galaxy") || description.Contains("galaxy"))
+                return "#galaxy";
+            if (eventName.Contains("nebula") || description.Contains("nebula"))
+                return "#nebula";
+            if (eventName.Contains("comet") || description.Contains("comet"))
+                return "#comet";
+            if (eventName.Contains("eclipse") || description.Contains("eclipse"))
+                return "#eclipse";
+            if (eventName.Contains("conjunction") || description.Contains("conjunction"))
+                return "#conjunction";
+            
+            // Priority 2: Check for general space terms
+            if (eventName.Contains("space") || description.Contains("space"))
+                return "#space";
+            if (eventName.Contains("astro") || description.Contains("astro"))
+                return "#astronomy";
+            
+            // Default fallback
+            return "#community";
+        }
+
         private int GetRandomLikeCount()
         {
             // Simulate like counts between 50-500 for demo purposes
@@ -296,17 +390,35 @@ namespace AstroGathering.Pages
                     return;
                 }
 
+                // Check cache first
+                if (GalleryPage.TryGetCachedImage(ImageUrl, out var cachedBitmap))
+                {
+                    LoadedImage = cachedBitmap;
+                    IsImageLoaded = true;
+                    LoadingStatus = "Loaded from cache";
+                    Console.WriteLine($"Loaded from cache: {CleanName}");
+                    return;
+                }
+
+                // Only download if not cached
                 using var httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Add("User-Agent", "AstroGathering/1.0");
+                httpClient.Timeout = TimeSpan.FromSeconds(30);
                 
+                Console.WriteLine($".. Downloading image: {CleanName}");
                 var imageData = await httpClient.GetByteArrayAsync(ImageUrl);
                 using var stream = new MemoryStream(imageData);
                 
-                LoadedImage = new Bitmap(stream);
+                var bitmap = new Bitmap(stream);
+                
+                // Cache the bitmap for future use
+                GalleryPage.CacheImage(ImageUrl, bitmap);
+                
+                LoadedImage = bitmap;
                 IsImageLoaded = true;
                 LoadingStatus = "Loaded";
                 
-                Console.WriteLine($"✅ Successfully loaded image: {CleanName}");
+                Console.WriteLine($">> Successfully loaded and cached image: {CleanName}");
             }
             catch (Exception ex)
             {

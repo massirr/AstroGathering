@@ -55,7 +55,7 @@ namespace AstroGathering.Pages
             PopulateCalendarGrid();
             
             // Load today's events and monthly summary
-            await LoadTodaysEvents();
+            LoadTodaysEvents();
             LoadMonthlySummary();
         }
 
@@ -290,7 +290,7 @@ namespace AstroGathering.Pages
             }
         }
 
-        private async Task LoadTodaysEvents()
+        private void LoadTodaysEvents()
         {
             if (TodaysEventsText != null)
             {
@@ -300,12 +300,12 @@ namespace AstroGathering.Pages
                     if (_monthlyEvents.ContainsKey(today) && _currentMonth.Month == today.Month && _currentMonth.Year == today.Year)
                     {
                         var events = _monthlyEvents[today];
-                        var eventText = string.Join("\n\n", events.Select(e => 
+                        var eventText = string.Join("\n\n", events.Select(e =>
                         {
                             // Preserve moon phase emoji and improve formatting
                             var eventName = e.EventName;
                             var description = e.Description;
-                            
+
                             // Format based on event type for better readability
                             if (eventName.Contains("Moon Phase"))
                             {
@@ -332,7 +332,7 @@ namespace AstroGathering.Pages
                                     }
                                     description = truncated;
                                 }
-                                
+
                                 // Add line break for better readability
                                 return $"• {eventName}\n  {description}";
                             }
