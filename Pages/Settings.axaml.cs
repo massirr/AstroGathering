@@ -234,7 +234,7 @@ namespace AstroGathering.Pages
             // For now, just print to console - can be enhanced later with a proper dialog
             Console.WriteLine($"{title}: {message}");
             
-            // Optional: Show a simple notification in the UI if needed
+            // Optional: Show a simple notification in the UI
             await Task.Delay(10); // Just to make it async
         }
 
@@ -385,10 +385,10 @@ namespace AstroGathering.Pages
                 
                 var photoStack = new StackPanel { Spacing = 5 };
                 
-                // Photo ID and owner
+                // Photo Event Name and owner (instead of Photo ID)
                 var photoHeaderText = new TextBlock
                 {
-                    Text = $"Photo #{photo.PhotoId} by {owner?.Email ?? "Unknown User"}",
+                    Text = $"{(!string.IsNullOrEmpty(photo.EventName) ? photo.EventName : $"Photo #{photo.PhotoId}")} by {owner?.Email ?? "Unknown User"}",
                     Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.White),
                     FontWeight = Avalonia.Media.FontWeight.Bold,
                     FontSize = 14
