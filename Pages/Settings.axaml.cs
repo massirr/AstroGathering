@@ -259,7 +259,7 @@ namespace AstroGathering.Pages
                 PopulatePhotosPanel(photos, users);
                 
                 // Populate Reports Panel
-                PopulateReportsPanel(reports, users, photos);
+                // PopulateReportsPanel(reports, users, photos);
             }
             catch (Exception ex)
             {
@@ -455,120 +455,120 @@ namespace AstroGathering.Pages
         /// <summary>
         /// Populate the reports panel with report information
         /// </summary>
-        private void PopulateReportsPanel(System.Collections.Generic.List<Report> reports, System.Collections.Generic.List<User> users, System.Collections.Generic.List<Photo> photos)
-        {
-            if (ReportsPanel == null) return;
+        // private void PopulateReportsPanel(System.Collections.Generic.List<Report> reports, System.Collections.Generic.List<User> users, System.Collections.Generic.List<Photo> photos)
+        // {
+        //     if (ReportsPanel == null) return;
 
-            ReportsPanel.Children.Clear();
+        //     ReportsPanel.Children.Clear();
 
-            var pendingReports = reports.Where(r => r.ReportStatus == "Pending")
-                                      .OrderByDescending(r => r.DateReported)
-                                      .ToList();
+        //     var pendingReports = reports.Where(r => r.ReportStatus == "Pending")
+        //                               .OrderByDescending(r => r.DateReported)
+        //                               .ToList();
 
-            if (!pendingReports.Any())
-            {
-                var noReportsText = new TextBlock
-                {
-                    Text = "No pending reports - All clear!",
-                    Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0x90, 0xEE, 0x90)),
-                    FontSize = 14,
-                    HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
-                    FontWeight = Avalonia.Media.FontWeight.Bold
-                };
-                ReportsPanel.Children.Add(noReportsText);
-                return;
-            }
+        //     if (!pendingReports.Any())
+        //     {
+        //         var noReportsText = new TextBlock
+        //         {
+        //             Text = "No pending reports - All clear!",
+        //             Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0x90, 0xEE, 0x90)),
+        //             FontSize = 14,
+        //             HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+        //             FontWeight = Avalonia.Media.FontWeight.Bold
+        //         };
+        //         ReportsPanel.Children.Add(noReportsText);
+        //         return;
+        //     }
 
-            foreach (var report in pendingReports)
-            {
-                var reporter = users.FirstOrDefault(u => u.UserId == report.UserId);
-                var reportedPhoto = photos.FirstOrDefault(p => p.PhotoId == report.PhotoId);
+        //     foreach (var report in pendingReports)
+        //     {
+        //         var reporter = users.FirstOrDefault(u => u.UserId == report.UserId);
+        //         var reportedPhoto = photos.FirstOrDefault(p => p.PhotoId == report.PhotoId);
                 
-                // Create report row
-                var reportBorder = new Border
-                {
-                    Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0x2d, 0x1b, 0x69)),
-                    CornerRadius = new Avalonia.CornerRadius(8),
-                    Padding = new Avalonia.Thickness(15),
-                    Margin = new Avalonia.Thickness(0, 0, 0, 5)
-                };
+        //         // Create report row
+        //         var reportBorder = new Border
+        //         {
+        //             Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0x2d, 0x1b, 0x69)),
+        //             CornerRadius = new Avalonia.CornerRadius(8),
+        //             Padding = new Avalonia.Thickness(15),
+        //             Margin = new Avalonia.Thickness(0, 0, 0, 5)
+        //         };
 
-                var mainReportGrid = new Grid();
-                mainReportGrid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
-                mainReportGrid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
+        //         var mainReportGrid = new Grid();
+        //         mainReportGrid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+        //         mainReportGrid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
                 
-                var reportStack = new StackPanel { Spacing = 5 };
+        //         var reportStack = new StackPanel { Spacing = 5 };
                 
-                // Report header
-                var reportHeaderText = new TextBlock
-                {
-                    Text = $"Report #{report.ReportId} - {report.ReportStatus}",
-                    Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0xFF, 0xA5, 0x00)),
-                    FontWeight = Avalonia.Media.FontWeight.Bold,
-                    FontSize = 14
-                };
+        //         // Report header
+        //         var reportHeaderText = new TextBlock
+        //         {
+        //             Text = $"Report #{report.ReportId} - {report.ReportStatus}",
+        //             Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0xFF, 0xA5, 0x00)),
+        //             FontWeight = Avalonia.Media.FontWeight.Bold,
+        //             FontSize = 14
+        //         };
                 
-                // Report details
-                var reportDetailsText = new TextBlock
-                {
-                    Text = $"Reason: {report.Reason}",
-                    Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.White),
-                    FontSize = 12
-                };
+        //         // Report details
+        //         var reportDetailsText = new TextBlock
+        //         {
+        //             Text = $"Reason: {report.Reason}",
+        //             Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.White),
+        //             FontSize = 12
+        //         };
                 
-                // Reporter and date
-                var reportInfoText = new TextBlock
-                {
-                    Text = $"Reporter: {reporter?.Email ?? "Unknown"} | Date: {report.DateReported:dd/MM/yyyy HH:mm} | Photo ID: {report.PhotoId}",
-                    Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0xb8, 0xa7, 0xd9)),
-                    FontSize = 11
-                };
+        //         // Reporter and date
+        //         var reportInfoText = new TextBlock
+        //         {
+        //             Text = $"Reporter: {reporter?.Email ?? "Unknown"} | Date: {report.DateReported:dd/MM/yyyy HH:mm} | Photo ID: {report.PhotoId}",
+        //             Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0xb8, 0xa7, 0xd9)),
+        //             FontSize = 11
+        //         };
                 
-                reportStack.Children.Add(reportHeaderText);
-                reportStack.Children.Add(reportDetailsText);
-                reportStack.Children.Add(reportInfoText);
+        //         reportStack.Children.Add(reportHeaderText);
+        //         reportStack.Children.Add(reportDetailsText);
+        //         reportStack.Children.Add(reportInfoText);
                 
-                // Add action buttons
-                var buttonStack = new StackPanel { Spacing = 5 };
+        //         // Add action buttons
+        //         var buttonStack = new StackPanel { Spacing = 5 };
                 
-                // Resolve button
-                var resolveButton = new Button
-                {
-                    Content = "Resolve",
-                    Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0x4C, 0xAF, 0x50)),
-                    Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.White),
-                    CornerRadius = new Avalonia.CornerRadius(4),
-                    Padding = new Avalonia.Thickness(8, 4),
-                    FontSize = 10
-                };
-                resolveButton.Click += (s, e) => ResolveReportFromSettings(report);
+        //         // Resolve button
+        //         var resolveButton = new Button
+        //         {
+        //             Content = "Resolve",
+        //             Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0x4C, 0xAF, 0x50)),
+        //             Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.White),
+        //             CornerRadius = new Avalonia.CornerRadius(4),
+        //             Padding = new Avalonia.Thickness(8, 4),
+        //             FontSize = 10
+        //         };
+        //         resolveButton.Click += (s, e) => ResolveReportFromSettings(report);
                 
-                // Delete button
-                var deleteReportButton = new Button
-                {
-                    Content = "Delete",
-                    Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0xFF, 0x6B, 0x6B)),
-                    Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.White),
-                    CornerRadius = new Avalonia.CornerRadius(4),
-                    Padding = new Avalonia.Thickness(8, 4),
-                    FontSize = 10
-                };
-                deleteReportButton.Click += (s, e) => DeleteReportFromSettings(report);
+        //         // Delete button
+        //         var deleteReportButton = new Button
+        //         {
+        //             Content = "Delete",
+        //             Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0xFF, 0x6B, 0x6B)),
+        //             Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.White),
+        //             CornerRadius = new Avalonia.CornerRadius(4),
+        //             Padding = new Avalonia.Thickness(8, 4),
+        //             FontSize = 10
+        //         };
+        //         deleteReportButton.Click += (s, e) => DeleteReportFromSettings(report);
                 
-                buttonStack.Children.Add(resolveButton);
-                buttonStack.Children.Add(deleteReportButton);
+        //         buttonStack.Children.Add(resolveButton);
+        //         buttonStack.Children.Add(deleteReportButton);
                 
-                Grid.SetColumn(reportStack, 0);
-                Grid.SetColumn(buttonStack, 1);
+        //         Grid.SetColumn(reportStack, 0);
+        //         Grid.SetColumn(buttonStack, 1);
                 
-                mainReportGrid.Children.Add(reportStack);
-                mainReportGrid.Children.Add(buttonStack);
+        //         mainReportGrid.Children.Add(reportStack);
+        //         mainReportGrid.Children.Add(buttonStack);
                 
-                reportBorder.Child = mainReportGrid;
+        //         reportBorder.Child = mainReportGrid;
                 
-                ReportsPanel.Children.Add(reportBorder);
-            }
-        }
+        //         ReportsPanel.Children.Add(reportBorder);
+        //     }
+        // }
 
         /// <summary>
         /// Delete a user from the settings admin panel

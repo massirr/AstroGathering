@@ -760,5 +760,45 @@ namespace AstroGathering.Database
 
             return helpContent;
         }
+
+        // Get tags for a specific photo
+        public async Task<List<string>> GetPhotoTagsAsync(int photoId)
+        {
+            List<string> tags = new List<string>();
+            
+            try
+            {
+                using MySqlConnection connection = new MySqlConnection(connectionString);
+                await connection.OpenAsync();
+                
+                string query = @"
+                    SELECT t.name 
+                    FROM tags t 
+                    INNER JOIN photo_tags pt ON t.tag_id = pt.tag_id 
+                    WHERE pt.photo_id = @photoId";
+                
+                using MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@photoId", photoId);
+                
+                using var reader = await command.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    string tagName = reader["name"]?.ToString() ?? "";
+                    if (!string.IsNullOrEmpty(tagName))
+                    {
+                        // Ensure tag starts with # if it doesn't already
+                        if (!tagName.StartsWith("#"))
+                            tagName = "#" + tagName;
+                        tags.Add(tagName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching photo tags: {ex.Message}");
+            }
+            
+            return tags;
+        }
     }
 }

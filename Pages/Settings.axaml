@@ -368,6 +368,7 @@
                             </Border>
                             
                             <!-- Reports Section -->
+                            <!--
                             <Border Background="#1a1235" CornerRadius="12" Padding="20">
                                 <StackPanel Spacing="12">
                                     <TextBlock Text="Reports &amp; Moderation" 
@@ -379,6 +380,7 @@
                                     </ScrollViewer>
                                 </StackPanel>
                             </Border>
+                            -->
                             
                         </StackPanel>
                         

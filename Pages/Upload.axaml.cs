@@ -136,7 +136,7 @@ namespace AstroGathering.Pages
                 if (SearchLocationButton != null)
                 {
                     SearchLocationButton.IsEnabled = false;
-                    SearchLocationButton.Content = "🔄 Searching...";
+                    SearchLocationButton.Content = ".. Searching...";
                 }
 
                 var location = LocationSearchBox.Text.Trim();
@@ -172,7 +172,7 @@ namespace AstroGathering.Pages
                 if (SearchLocationButton != null)
                 {
                     SearchLocationButton.IsEnabled = true;
-                    SearchLocationButton.Content = "🔍 Search";
+                    SearchLocationButton.Content = ".. Search";
                 }
             }
         }
