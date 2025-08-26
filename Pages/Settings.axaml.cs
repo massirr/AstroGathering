@@ -50,6 +50,9 @@ namespace AstroGathering.Pages
             // Connect event handlers
             if (LogoutButton != null)
                 LogoutButton.Click += OnLogoutClick;
+                
+            if (MakeAdminButton != null)
+                MakeAdminButton.Click += OnMakeAdminClick;
             
             // Load admin data if user is admin
             if (_user.IsAdmin)
@@ -100,10 +103,76 @@ namespace AstroGathering.Pages
                 AdminBadge.IsVisible = _user.IsAdmin;
         }
 
-        private void LoadProfileImage()
+        private async void LoadProfileImage()
         {
-            // Profile image functionality removed as it's not being used in the UI
-            // The XAML shows ProfileInitials with static "ID" text instead
+            if (_user == null) return;
+
+            try
+            {
+                // Check if user has a profile picture URL
+                if (!string.IsNullOrEmpty(_user.ProfilePictureUrl))
+                {
+                    // Load the profile image from URL
+                    if (ProfileImage != null)
+                    {
+                        using var httpClient = new System.Net.Http.HttpClient();
+                        var imageBytes = await httpClient.GetByteArrayAsync(_user.ProfilePictureUrl);
+                        using var stream = new System.IO.MemoryStream(imageBytes);
+                        ProfileImage.Source = new Avalonia.Media.Imaging.Bitmap(stream);
+                        ProfileImage.IsVisible = true;
+                    }
+                    
+                    // Hide the initials fallback
+                    if (ProfileInitials != null)
+                        ProfileInitials.IsVisible = false;
+                }
+                else
+                {
+                    // No profile picture URL available, show initials instead
+                    ShowProfileInitials();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to load profile image: {ex.Message}");
+                // If image loading fails, show initials as fallback
+                ShowProfileInitials();
+            }
+        }
+
+        private void ShowProfileInitials()
+        {
+            if (_user == null) return;
+
+            // Hide the profile image
+            if (ProfileImage != null)
+                ProfileImage.IsVisible = false;
+
+            // Show initials
+            if (ProfileInitials != null)
+            {
+                string initials = "";
+                
+                // Try to get initials from first name and last name
+                if (!string.IsNullOrEmpty(_user.FirstName))
+                    initials += _user.FirstName[0].ToString().ToUpper();
+                
+                if (!string.IsNullOrEmpty(_user.LastName))
+                    initials += _user.LastName[0].ToString().ToUpper();
+                
+                // If no first/last name, try to get initials from email
+                if (string.IsNullOrEmpty(initials) && !string.IsNullOrEmpty(_user.Email))
+                {
+                    initials = _user.Email[0].ToString().ToUpper();
+                }
+                
+                // Final fallback
+                if (string.IsNullOrEmpty(initials))
+                    initials = "ID";
+                
+                ProfileInitials.Text = initials;
+                ProfileInitials.IsVisible = true;
+            }
         }
 
         private void LoadStatistics()
@@ -628,6 +697,91 @@ namespace AstroGathering.Pages
             {
                 await ShowMessageDialog("Error", $"Error deleting report: {ex.Message}");
             }
+        }
+
+        /// <summary>
+        /// Handle Make Admin button click
+        /// </summary>
+        private async void OnMakeAdminClick(object? sender, RoutedEventArgs e)
+        {
+            if (_user == null || !_user.IsAdmin) return;
+
+            string email = AdminEmailTextBox?.Text?.Trim() ?? "";
+            
+            if (string.IsNullOrEmpty(email))
+            {
+                ShowAdminStatusMessage("Please enter an email address.", true);
+                return;
+            }
+
+            try
+            {
+                Console.WriteLine($"Admin {_user.Email} is attempting to make {email} an admin");
+                
+                // Check if user exists first
+                var existingUser = _database.GetUserByEmail(email);
+                if (existingUser == null)
+                {
+                    ShowAdminStatusMessage("User with this email address not found.", true);
+                    return;
+                }
+
+                if (existingUser.IsAdmin)
+                {
+                    ShowAdminStatusMessage("User is already an admin.", false);
+                    return;
+                }
+
+                bool success = _database.MakeUserAdmin(email);
+                if (success)
+                {
+                    ShowAdminStatusMessage($"Successfully made {email} an admin!", false);
+                    
+                    // Clear the text box
+                    if (AdminEmailTextBox != null)
+                        AdminEmailTextBox.Text = "";
+                    
+                    // Reload admin data to reflect changes
+                    await LoadAdminDataAsync();
+                    LoadStatistics();
+                }
+                else
+                {
+                    ShowAdminStatusMessage("Failed to make user admin. Please try again.", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAdminStatusMessage($"Error: {ex.Message}", true);
+                Console.WriteLine($"Error making user admin: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Show admin status message with appropriate color
+        /// </summary>
+        private void ShowAdminStatusMessage(string message, bool isError)
+        {
+            if (AdminStatusMessage == null) return;
+
+            AdminStatusMessage.Text = message;
+            AdminStatusMessage.IsVisible = true;
+            
+            // Set color based on message type
+            AdminStatusMessage.Foreground = isError 
+                ? new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0xFF, 0x6B, 0x6B)) // Red for errors
+                : new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(0x4C, 0xAF, 0x50)); // Green for success
+            
+            // Auto-hide message after 5 seconds
+            _ = Task.Run(async () =>
+            {
+                await Task.Delay(5000);
+                await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    if (AdminStatusMessage != null)
+                        AdminStatusMessage.IsVisible = false;
+                });
+            });
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
