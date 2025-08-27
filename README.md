@@ -23,7 +23,7 @@ dotnet run
 ```
 
 ## Requirements
-- .NET 8.0 or later
+- .NET 8.0 not later as avalonia will not work
 - Valid Google OAuth credentials (see Google Cloud Console)
 
 ## What's Next: (probably)
