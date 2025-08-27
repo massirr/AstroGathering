@@ -33,7 +33,7 @@ namespace AstroGathering.Pages
         // Optional: Clear cache for memory management
         public static void ClearImageCache()
         {
-            Console.WriteLine($"🗑️ Clearing image cache ({_imageCache.Count} images)");
+            Console.WriteLine($"Clearing image cache ({_imageCache.Count} images)");
             foreach (var bitmap in _imageCache.Values)
             {
                 bitmap?.Dispose();
